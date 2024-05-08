@@ -1,0 +1,3 @@
+.config/cmus/*
+!.config/cmus/night.theme
+.tmuxifier/layouts
