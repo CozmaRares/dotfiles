@@ -48,7 +48,6 @@ alias t=tmuxifier
 alias tx=tmux
 alias txat="tmux a -t"
 alias password="pass show -c"
-alias cmux='tmux new-session -s cmus cmus'
 alias wifi='~/.config/rofi/scripts/rofi-wifi-menu.sh'
 alias bluetooth='~/.config/rofi/scripts/rofi-bluetooth'
 
