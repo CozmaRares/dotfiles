@@ -114,7 +114,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+mytextclock = wibox.widget.textclock('%a %b %d, %I:%M %p')
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -265,19 +265,6 @@ end
 
 -- TODO: FIREFOX_WORKSPACE = 1 (global variable)
 
-local function search(query)
-    query = query:gsub("%s+", "+")
-    local command = string.format('firefox "https://duckduckgo.com/?q=%s"', query)
-    awful.spawn(command)
-
-    local screen = awful.screen.focused()
-    local tag = screen.tags[1]
-    if tag then
-        tag:view_only()
-    end
-end
-
-
 -- {{{ Key bindings
 globalkeys = gears.table.join(
     awful.key({ modkey, }, "s", hotkeys_popup.show_help,
@@ -361,15 +348,26 @@ globalkeys = gears.table.join(
         { description = "restore minimized", group = "client" }),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
-              {description = "run prompt", group = "launcher"}),
+    -- awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
+    --           {description = "run prompt", group = "launcher"}),
     --
-    awful.key({ modkey, "Control" }, "s",
+    awful.key({ modkey }, "r",
         function()
             awful.prompt.run {
                 prompt       = "Search: ",
                 textbox      = awful.screen.focused().mypromptbox.widget,
-                exe_callback = search,
+                exe_callback = function(query)
+                    query = query:gsub("%s+", "+")
+                    local command = string.format('firefox "https://duckduckgo.com/?q=%s"', query)
+                    awful.spawn(command)
+
+                    local screen = awful.screen.focused()
+                    local tag = screen.tags[1]
+                    if tag then
+                        tag:view_only()
+                    end
+                end
+                ,
                 -- history_path = awful.util.get_cache_dir() .. "/history_eval"
             }
         end,
@@ -386,8 +384,8 @@ globalkeys = gears.table.join(
     --           end,
     --           {description = "lua execute prompt", group = "awesome"}),
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end,
-        { description = "show the menubar", group = "launcher" }),
+    -- awful.key({ modkey }, "p", function() menubar.show() end,
+    --     { description = "show the menubar", group = "launcher" }),
 
     -- Rofi
     awful.key({ modkey, }, "d", function() awful.spawn("rofi -show drun") end,
@@ -629,7 +627,7 @@ awful.rules.rules = {
     {
         rule_any = {
             instance = {
-                "DTA", -- Firefox addon DownThemAll.
+                "DTA",   -- Firefox addon DownThemAll.
                 "copyq", -- Includes session name in class.
                 "pinentry",
             },
@@ -638,7 +636,7 @@ awful.rules.rules = {
                 "Blueman-manager",
                 "Gpick",
                 "Kruler",
-                "MessageWin", -- kalarm.
+                "MessageWin",  -- kalarm.
                 "Sxiv",
                 "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
                 "Wpa_gui",
@@ -651,9 +649,9 @@ awful.rules.rules = {
                 "Event Tester", -- xev.
             },
             role = {
-                "AlarmWindow", -- Thunderbird's calendar.
+                "AlarmWindow",   -- Thunderbird's calendar.
                 "ConfigManager", -- Thunderbird's about:config.
-                "pop-up",  -- e.g. Google Chrome's (detached) Developer Tools.
+                "pop-up",        -- e.g. Google Chrome's (detached) Developer Tools.
             }
         },
         properties = { floating = true }
