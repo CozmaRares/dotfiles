@@ -241,6 +241,8 @@ local function notify_brightness()
             awful.spawn.easy_async("brillo",
                 function(stdout)
                     naughty.notify({
+                        id = 1,
+                        replaces_id = 1,
                         text = "Brightness: " .. stdout,
                     })
                 end
@@ -255,6 +257,8 @@ local function notify_volume()
             awful.spawn.easy_async("pamixer --get-volume-human",
                 function(stdout)
                     naughty.notify({
+                        id = 1,
+                        replaces_id = 1,
                         text = "Volume: " .. stdout,
                     })
                 end
