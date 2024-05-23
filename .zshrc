@@ -33,7 +33,6 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 source $HOME/.cargo/env
 
-
 alias ll='eza -lA --sd --group-directories-first'
 alias ls='eza --group-directories-first'
 alias cls='clear'
@@ -48,8 +47,9 @@ alias t=tmuxifier
 alias tx=tmux
 alias txat="tmux a -t"
 alias password="pass show -c"
-alias wifi='~/.config/rofi/scripts/rofi-wifi-menu.sh'
-alias bluetooth='~/.config/rofi/scripts/rofi-bluetooth'
+alias wifi='~/.config/scripts/rofi-wifi-menu.sh'
+alias bluetooth='~/.config/scripts/rofi-bluetooth'
+alias w="nitrogen --random --set-zoom-fill ~/Pictures/Wallpapers 1>/dev/null 2>&1"
 
 xev_keyboard() {
   xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
@@ -59,6 +59,20 @@ mdd() {
   md $1
   cd $1
 }
+
+# History
+HISTSIZE=5000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
 
 # package includes
 

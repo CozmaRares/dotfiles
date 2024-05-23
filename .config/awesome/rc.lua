@@ -67,11 +67,11 @@ modkey = "Mod4"
 awful.layout.layouts = {
     awful.layout.suit.tile.left,
     awful.layout.suit.floating,
-    -- awful.layout.suit.tile,
+    awful.layout.suit.fair.horizontal,
+    awful.layout.suit.tile,
     -- awful.layout.suit.tile.bottom,
     -- awful.layout.suit.tile.top,
     -- awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
     -- awful.layout.suit.spiral,
     -- awful.layout.suit.spiral.dwindle,
     -- awful.layout.suit.max,
@@ -86,16 +86,18 @@ awful.layout.layouts = {
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
-myawesomemenu = {
-    { "hotkeys",     function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-    { "manual",      terminal .. " -e man awesome" },
-    { "edit config", editor_cmd .. " " .. awesome.conffile },
-    { "restart",     awesome.restart },
-    { "quit",        function() awesome.quit() end },
-}
+-- myawesomemenu = {
+--     { "hotkeys",     function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
+--     { "manual",      terminal .. " -e man awesome" },
+--     { "edit config", editor_cmd .. " " .. awesome.conffile },
+--     { "restart",     awesome.restart },
+--     { "quit",        function() awesome.quit() end },
+-- }
 
 mymainmenu = awful.menu({
-    items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
+    items = {
+        { "hotkeys",       function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
+        -- { "awesome",       myawesomemenu,                                                      beautiful.awesome_icon },
         { "open terminal", terminal }
     }
 })
@@ -110,7 +112,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
+-- mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
@@ -217,7 +219,7 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         {             -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
+            -- mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
@@ -320,8 +322,8 @@ globalkeys = gears.table.join(
         { description = "open a terminal", group = "launcher" }),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
         { description = "reload awesome", group = "awesome" }),
-    awful.key({ modkey, "Shift" }, "q", awesome.quit,
-        { description = "quit awesome", group = "awesome" }),
+    -- awful.key({ modkey, "Shift" }, "q", awesome.quit,
+    --     { description = "quit awesome", group = "awesome" }),
     awful.key({ modkey, }, "l", function() awful.tag.incmwfact(0.05) end,
         { description = "increase master width factor", group = "layout" }),
     awful.key({ modkey, }, "h", function() awful.tag.incmwfact(-0.05) end,
@@ -392,9 +394,9 @@ globalkeys = gears.table.join(
     --     { description = "show the menubar", group = "launcher" }),
 
     -- Rofi
-    awful.key({ modkey, }, "d", function() awful.spawn("rofi -show drun") end,
+    awful.key({ "Mod1", }, "space", function() awful.spawn("rofi -show drun") end,
         { description = "application launcher", group = "launcher" }),
-    awful.key({ modkey, "Shift" }, "d",
+    awful.key({ "Mod1", "Shift" }, "space",
         function() awful.spawn('rofi -show combi -combi-modes "window,drun,run" -modes combi') end,
         { description = "all apps", group = "launcher" }),
     awful.key({ "Mod1" }, "Tab", function() awful.spawn("rofi -show window") end,
@@ -403,7 +405,7 @@ globalkeys = gears.table.join(
         { modkey, "Shift" },
         "x",
         function()
-            awful.spawn("rofi -show powermenu -modi powermenu:~/.config/rofi/scripts/rofi-power-menu")
+            awful.spawn("rofi -show powermenu -modi powermenu:~/.config/scripts/rofi-power-menu")
         end,
         { description = "power menu", group = "launcher" }
     ),
@@ -413,7 +415,7 @@ globalkeys = gears.table.join(
         {},
         "XF86MonBrightnessDown",
         function()
-            awful.util.spawn("brillo -q -U 5 -u 150000")
+            awful.spawn("brillo -q -U 5 -u 150000")
             notify_brightness()
         end
     ),
@@ -421,7 +423,7 @@ globalkeys = gears.table.join(
         {},
         "XF86MonBrightnessUp",
         function()
-            awful.util.spawn("brillo -q -A 5 -u 150000")
+            awful.spawn("brillo -q -A 5 -u 150000")
             notify_brightness()
         end
     ),
@@ -483,7 +485,9 @@ globalkeys = gears.table.join(
     awful.key(
         { modkey },
         "x",
-        function() awful.spawn('i3lock-fancy -g -t ""') end,
+        function()
+            awful.spawn("i3lock-fancy -g -t ''")
+        end,
         { description = "lock screen", group = "launcher" }
     ),
     awful.key(
@@ -504,7 +508,7 @@ clientkeys = gears.table.join(
             c:raise()
         end,
         { description = "toggle fullscreen", group = "client" }),
-    awful.key({ modkey, "Shift" }, "c", function(c) c:kill() end,
+    awful.key({ modkey }, "q", function(c) c:kill() end,
         { description = "close", group = "client" }),
     awful.key({ modkey, "Control" }, "space", awful.client.floating.toggle,
         { description = "toggle floating", group = "client" }),
@@ -744,8 +748,9 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- Auto run commands
 
 awful.spawn.with_shell("picom")
-awful.spawn.with_shell("nitrogen --random --set-auto")
-awful.spawn.with_shell("redshift -P -O 2500")
+awful.spawn.with_shell("nitrogen --random --set-zoom-fill ~/Pictures/Wallpapers")
+awful.spawn.with_shell("redshift -P -O 3000")
+-- awful.spawn.with_shell("~/.config/scripts/xautolock.sh")
 
 -- Configs
 
