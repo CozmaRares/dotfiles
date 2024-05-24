@@ -402,12 +402,20 @@ globalkeys = gears.table.join(
     awful.key({ "Mod1" }, "Tab", function() awful.spawn("rofi -show window") end,
         { description = "alt tab wtf", group = "launcher" }),
     awful.key(
-        { modkey, "Shift" },
+        { modkey },
         "x",
         function()
             awful.spawn("rofi -show powermenu -modi powermenu:~/.config/scripts/rofi-power-menu")
         end,
         { description = "power menu", group = "launcher" }
+    ),
+    awful.key(
+        { modkey, "Shift" },
+        "x",
+        function()
+            awful.spawn.with_shell("~/.config/scripts/lock.sh")
+        end,
+        { description = "lock screen", group = "launcher" }
     ),
 
     -- Brightness
@@ -481,14 +489,6 @@ globalkeys = gears.table.join(
         "Print",
         function() awful.spawn("flameshot gui") end,
         { description = "screenshot", group = "launcher" }
-    ),
-    awful.key(
-        { modkey },
-        "x",
-        function()
-            awful.spawn("i3lock-fancy -g -t ''")
-        end,
-        { description = "lock screen", group = "launcher" }
     ),
     awful.key(
         { modkey },

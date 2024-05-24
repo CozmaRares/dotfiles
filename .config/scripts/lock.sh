@@ -5,7 +5,7 @@
 
 set -o errexit -o noclobber -o nounset
 
-image="$HOME/.lock.png"
+image="/tmp/lock.png"
 
 flameshot screen -p "$image" 1>/dev/null 2>&1
 

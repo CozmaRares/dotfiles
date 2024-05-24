@@ -36,20 +36,29 @@ source $HOME/.cargo/env
 alias ll='eza -lA --sd --group-directories-first'
 alias ls='eza --group-directories-first'
 alias cls='clear'
+
 alias pnpmi='pnpm install'
 alias pnpmd='pnpm install -D'
+
 alias gcam="git commit --amend"
 alias gcne="git commit --amend --no-edit"
+
 alias vim=nvim
 alias vi=nvim
 alias v=nvim
+
 alias t=tmuxifier
 alias tx=tmux
 alias txat="tmux a -t"
+
 alias password="pass show -c"
+
 alias wifi='~/.config/scripts/rofi-wifi-menu.sh'
 alias bluetooth='~/.config/scripts/rofi-bluetooth'
-alias w="nitrogen --random --set-zoom-fill ~/Pictures/Wallpapers 1>/dev/null 2>&1"
+alias pwrmgr='~/.config/scripts/rofi-power-manager.sh'
+
+alias wrand="nitrogen --random --set-zoom-fill ~/Pictures/Wallpapers 1>/dev/null 2>&1"
+alias wrs="nitrogen --restore 1>/dev/null 2>&1"
 
 xev_keyboard() {
   xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
