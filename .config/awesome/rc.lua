@@ -750,7 +750,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 awful.spawn.with_shell("picom")
 awful.spawn.with_shell("nitrogen --random --set-zoom-fill ~/Pictures/Wallpapers")
 awful.spawn.with_shell("redshift -P -O 3000")
--- awful.spawn.with_shell("~/.config/scripts/xautolock.sh")
 
 -- Configs
 
