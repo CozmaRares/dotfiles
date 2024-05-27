@@ -366,14 +366,7 @@ globalkeys = gears.table.join(
                     query = query:gsub("%s+", "+")
                     local command = string.format('firefox "https://duckduckgo.com/?q=%s"', query)
                     awful.spawn(command)
-
-                    local screen = awful.screen.focused()
-                    local tag = screen.tags[1]
-                    if tag then
-                        tag:view_only()
-                    end
-                end
-                ,
+                end,
                 -- history_path = awful.util.get_cache_dir() .. "/history_eval"
             }
         end,
@@ -672,11 +665,11 @@ awful.rules.rules = {
         properties = { titlebars_enabled = true }
     },
 
-    -- Set Firefox to always map on the tag named "2" on screen 1.
-    {
-        rule = { class = "firefox" },
-        properties = { screen = 1, tag = "1" }
-    },
+    -- -- Set Firefox to always map on the tag named "2" on screen 1.
+    -- {
+    --     rule = { class = "firefox" },
+    --     properties = { screen = 1, tag = "1" }
+    -- },
 }
 -- }}}
 
@@ -743,6 +736,12 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+-- Focus urgent clients automatically
+client.connect_signal("property::urgent", function(c)
+    c.minimized = false
+    c:jump_to()
+end)
 
 
 -- Auto run commands
