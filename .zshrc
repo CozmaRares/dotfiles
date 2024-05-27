@@ -87,6 +87,7 @@ setopt hist_find_no_dups
 
 eval "$(zoxide init zsh)"
 eval "$(tmuxifier init -)"
+source <(fzf --zsh)
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
