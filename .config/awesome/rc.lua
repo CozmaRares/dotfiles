@@ -750,6 +750,9 @@ awful.spawn.with_shell("picom")
 awful.spawn.with_shell("nitrogen --random --set-zoom-fill ~/Pictures/Wallpapers")
 awful.spawn.with_shell("redshift -P -O 3000")
 
+-- awful.spawn.with_shell("jamesdsp")
+
+
 -- Configs
 
 beautiful.useless_gap = 8

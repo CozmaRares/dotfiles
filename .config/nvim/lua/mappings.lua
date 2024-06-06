@@ -8,22 +8,17 @@ nomap("n", "<C-n>")
 nomap("n", "<leader>h")
 nomap("n", "<leader>v")
 
-
 map("n", "<Up>", function() vim.notify("No arrow keys for you!", vim.log.levels.WARN) end, { desc = "Disabled" })
 map("n", "<Down>", function() vim.notify("No arrow keys for you!", vim.log.levels.WARN) end, { desc = "Disabled" })
 map("n", "<Left>", function() vim.notify("No arrow keys for you!", vim.log.levels.WARN) end, { desc = "Disabled" })
 map("n", "<Right>", function() vim.notify("No arrow keys for you!", vim.log.levels.WARN) end, { desc = "Disabled" })
 
 map("n", "J", "mzJ`z")
-map("n", "n", "nzzzv")
-map("n", "N", "Nzzzv")
 
 map("n", "|", "<cmd>vsplit<cr>", { desc = "Vertical Split" })
 map("n", "\\", "<cmd>split<cr>", { desc = "Horizontal Split" })
 map("n", ";", ":", { desc = "CMD enter command mode" })
 
-map("n", "<C-d>", "<C-d>zz")
-map("n", "<C-u>", "<C-u>zz")
 map("n", "<C-q>", "<cmd>confirm qall<cr>", { desc = "Quit all" })
 
 map('n', "<C-h>", require('nvim-tmux-navigation').NvimTmuxNavigateLeft, { desc = "mata" })
@@ -68,3 +63,9 @@ map("v", "<Right>", function() vim.notify("No arrow keys for you!", vim.log.leve
 
 -- shared
 map({ "n", "x" }, "<leader>p", '"_dP')
+
+map({ "n", "v" }, "n", "nzzzv")
+map({ "n", "v" }, "N", "Nzzzv")
+map({ "n", "v" }, "<C-d>", "<C-d>zz")
+map({ "n", "v" }, "<C-u>", "<C-u>zz")
+map({ "n", "v" }, "G", "Gzz")

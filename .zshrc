@@ -29,9 +29,25 @@ plugins=(
   sudo
   zsh-autosuggestions
   zsh-syntax-highlighting
+  fzf-tab
 )
 source $ZSH/oh-my-zsh.sh
 source $HOME/.cargo/env
+
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+# NOTE: don't use escape sequences here, fzf-tab will ignore them
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+# preview directory's content with eza when completing cd & zoxide
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza -1 --color=always $realpath'
+# switch group using `<` and `>`
+zstyle ':fzf-tab:*' switch-group '<' '>'
 
 alias ll='eza -lA --sd --group-directories-first'
 alias ls='eza --group-directories-first'
@@ -87,7 +103,7 @@ setopt hist_find_no_dups
 
 eval "$(zoxide init zsh)"
 eval "$(tmuxifier init -)"
-source <(fzf --zsh)
+eval "$(fzf --zsh)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
