@@ -62,8 +62,7 @@ map("v", "<Right>", function() vim.notify("No arrow keys for you!", vim.log.leve
 
 
 -- shared
-map({ "n", "x" }, "<leader>p", '"_dP')
-
+map({ "n", "v" }, "<leader>p", '"_dP')
 map({ "n", "v" }, "n", "nzzzv")
 map({ "n", "v" }, "N", "Nzzzv")
 map({ "n", "v" }, "<C-d>", "<C-d>zz")
