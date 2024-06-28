@@ -19,7 +19,8 @@ return {
     },
     -- vim options can be configured here
     options = {
-      opt = { -- vim.opt.<key>
+      opt = {
+        -- vim.opt.<key>
         relativenumber = true,
         number = true,
         spell = false,
@@ -41,7 +42,8 @@ return {
         undodir = os.getenv "HOME" .. "/.cache/nvim/undodir",
         undofile = true,
       },
-      g = { -- vim.g.<key>
+      g = {
+        -- vim.g.<key>
       },
     },
     mappings = {

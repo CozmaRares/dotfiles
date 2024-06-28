@@ -63,6 +63,7 @@ return {
       groups = {
         "Normal",
         "NormalNC",
+        "TabLineFill",
         "Comment",
         "Constant",
         "Special",
@@ -90,7 +91,18 @@ return {
       extra_groups = {
         "NormalFloat",
         "Float",
+        "NeoTreeNormal",
+        "NeoTreeNormalNC",
       },
+    },
+  },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      transparent = true,
+      on_colors = function(colors) colors.bg_float = "none" end,
     },
   },
 }

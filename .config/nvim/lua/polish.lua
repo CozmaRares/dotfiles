@@ -18,6 +18,3 @@ map("n", "<C-j>", require("nvim-tmux-navigation").NvimTmuxNavigateDown)
 map("n", "<C-k>", require("nvim-tmux-navigation").NvimTmuxNavigateUp)
 map("n", "<C-l>", require("nvim-tmux-navigation").NvimTmuxNavigateRight)
 map("n", "<C-\\>", require("nvim-tmux-navigation").NvimTmuxNavigateLastActive)
-
-require('transparent').clear_prefix('NeoTree')
-require("transparent").toggle(true)
