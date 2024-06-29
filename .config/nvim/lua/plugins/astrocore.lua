@@ -48,14 +48,6 @@ return {
     },
     mappings = {
       n = {
-        ["<Leader>x"] = {
-          function()
-            local bufs = vim.fn.getbufinfo { buflisted = 1 }
-            require("astrocore.buffer").close(0)
-            if require("astrocore").is_available "alpha-nvim" and not bufs[2] then require("alpha").start() end
-          end,
-          desc = "Close buffer",
-        },
         ["J"] = { "mzJ`z" },
         [";"] = { ":", desc = "Enter command mode" },
         ["<leader>s"] = { ":%s/<C-r><C-w>/<C-r><C-w>/gI<Left><Left><Left>", desc = "Replace current selectionn" },
@@ -85,10 +77,18 @@ return {
         },
 
         -- quit
-        ["<C-q>"] ={ "<cmd>confirm qall<cr>", desc = "Quit vim" },
-        ["<leader>q"] ={ "<cmd>confirm q<cr>", desc = "Quit window" },
+        ["<C-q>"] = { "<cmd>confirm qall<cr>", desc = "Quit vim" },
+        ["<Leader>q"] = {
+          function()
+            local bufs = vim.fn.getbufinfo { buflisted = 1 }
+            require("astrocore.buffer").close(0)
+            if require("astrocore").is_available "alpha-nvim" and not bufs[2] then require("alpha").start() end
+          end,
+          desc = "Close buffer",
+        },
 
         -- disable mappings
+        ["<Leader>Q"] = false,
         ["<Leader>c"] = false,
         ["<Leader>C"] = false,
         ["<C-n>"] = false,
