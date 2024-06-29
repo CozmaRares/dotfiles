@@ -13,6 +13,7 @@
 
 local map = vim.keymap.set
 
+-- astro core throws an error when trying to include the mappings there
 map("n", "<C-h>", require("nvim-tmux-navigation").NvimTmuxNavigateLeft)
 map("n", "<C-j>", require("nvim-tmux-navigation").NvimTmuxNavigateDown)
 map("n", "<C-k>", require("nvim-tmux-navigation").NvimTmuxNavigateUp)
