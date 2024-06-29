@@ -84,6 +84,10 @@ return {
           desc = "Close buffer from tabline",
         },
 
+        -- quit
+        ["<C-q>"] ={ "<cmd>confirm qall<cr>", desc = "Quit vim" },
+        ["<leader>q"] ={ "<cmd>confirm q<cr>", desc = "Quit window" },
+
         -- disable mappings
         ["<Leader>c"] = false,
         ["<Leader>C"] = false,
