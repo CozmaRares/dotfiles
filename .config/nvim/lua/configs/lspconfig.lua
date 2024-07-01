@@ -6,6 +6,7 @@ local on_attach = function(ign, bufnr)
 end
 local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local lspconfig = require "lspconfig"
 local root_pattern = lspconfig.util.root_pattern
@@ -16,7 +17,6 @@ local servers = {
     root_dir = root_pattern( '.clang-format', '.git')
   },
 
-  cssls = {},
 
   emmet_ls = {
     filetypes = {
@@ -25,10 +25,6 @@ local servers = {
       "php"
     }
   },
-
-  html = {},
-
-  lua_ls = {},
 
   rust_analyzer = {
     filetypes = { "rust" },
@@ -59,6 +55,15 @@ local servers = {
     }
   },
 
+  phpactor = {
+    filetypes = { "php" },
+    root_dir = root_pattern("composer.json", ".git"),
+  },
+
+  -- LSPs with default settings
+  cssls = {},
+  html = {},
+  lua_ls = {},
   tsserver = {}
 }
 
@@ -71,5 +76,5 @@ local defaults = {
 -- lsps with default config
 for server, opts in pairs(servers) do
   local merged_opts  = vim.tbl_deep_extend("force", defaults, opts)
-  lspconfig[server].setup (merged_opts)
+  lspconfig[server].setup(merged_opts)
 end
