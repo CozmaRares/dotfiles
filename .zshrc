@@ -4,7 +4,7 @@ fi
 
 export EDITOR=nvim
 export ZSH="$HOME/.oh-my-zsh"
-export PATH="$HOME/.tmuxifier/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.tmuxifier/bin:$PATH"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
@@ -75,6 +75,8 @@ alias pwrmgr='~/.config/scripts/rofi-power-manager.sh'
 
 alias wrand="nitrogen --random --set-zoom-fill ~/Pictures/Wallpapers 1>/dev/null 2>&1"
 alias wrs="nitrogen --restore 1>/dev/null 2>&1"
+
+alias clip="xclip -selection clipboard"
 
 xev_keyboard() {
   xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
