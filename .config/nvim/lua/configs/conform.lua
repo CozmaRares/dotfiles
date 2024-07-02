@@ -1,15 +1,16 @@
 local options = {
   formatters_by_ft = {
     lua = { "stylua" },
-    -- css = { "prettier" },
-    -- html = { "prettier" },
-  },
 
-  -- format_on_save = {
-  --   -- These options will be passed to conform.format()
-  --   timeout_ms = 500,
-  --   lsp_fallback = true,
-  -- },
+    javascript = { "prettierd" },
+    css = { "prettierd" },
+    html = { "prettierd" },
+
+    c = { "clang-format" },
+    cpp = { "clang-format" },
+
+    ["_"] = { "trim_whitespace" },
+  },
 }
 
 require("conform").setup(options)

@@ -1,9 +1,4 @@
-local on_attach = function(ign, bufnr)
-  vim.keymap.set('n', '<leader>lf', function() vim.diagnostic.open_float() end, { desc = "lsp open diagnostic float" })
-  vim.keymap.set('n', '<leader>lw', function() vim.diagnostic.goto_next() end, { desc = "lsp next diagnostic" })
-  vim.keymap.set('n', '<leader>ls', function() vim.diagnostic.goto_prev() end, { desc = "lsp prev diagnostic" })
-  require("nvchad.configs.lspconfig").on_attach(ign, bufnr)
-end
+local on_attach = require("nvchad.configs.lspconfig").on_attach
 local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -16,7 +11,6 @@ local servers = {
     filetypes = { "c", "cpp" },
     root_dir = root_pattern( '.clang-format', '.git')
   },
-
 
   emmet_ls = {
     filetypes = {
