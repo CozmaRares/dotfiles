@@ -9,29 +9,47 @@ local root_pattern = lspconfig.util.root_pattern
 local servers = {
   clangd = {
     filetypes = { "c", "cpp" },
-    root_dir = root_pattern( '.clang-format', '.git')
+    root_dir = root_pattern(".clang-format", ".git"),
   },
 
   emmet_ls = {
     filetypes = {
-      "astro", "html", "javascriptreact",
-      "svelte", "typescriptreact", "vue",
-      "php"
-    }
+      "astro",
+      "html",
+      "javascriptreact",
+      "svelte",
+      "typescriptreact",
+      "vue",
+      "php",
+    },
   },
 
   rust_analyzer = {
     filetypes = { "rust" },
-    root_dir = root_pattern("Cargo.toml"),
+    root_dir = root_pattern "Cargo.toml",
   },
 
   tailwindcss = {
     filetypes = {
-      "astro", "astro-markdown", "blade", "html", "markdown",
-      "mdx", "php", "css", "less", "postcss", "sass", "scss", "javascriptreact", "typescriptreact",
-      "vue", "svelte", "templ"
+      "astro",
+      "astro-markdown",
+      "blade",
+      "html",
+      "markdown",
+      "mdx",
+      "php",
+      "css",
+      "less",
+      "postcss",
+      "sass",
+      "scss",
+      "javascriptreact",
+      "typescriptreact",
+      "vue",
+      "svelte",
+      "templ",
     },
-    root_dir = root_pattern('tailwind.config.js', 'tailwind.config.cjs', 'tailwind.config.mjs', 'tailwind.config.ts'),
+    root_dir = root_pattern("tailwind.config.js", "tailwind.config.cjs", "tailwind.config.mjs", "tailwind.config.ts"),
     settings = {
       tailwindCSS = {
         classAttributes = { "class", "className", "class:list", "classList", "ngClass" },
@@ -42,11 +60,11 @@ local servers = {
           invalidScreen = "error",
           invalidTailwindDirective = "error",
           invalidVariant = "error",
-          recommendedVariantOrder = "warning"
+          recommendedVariantOrder = "warning",
         },
-        validate = true
-      }
-    }
+        validate = true,
+      },
+    },
   },
 
   phpactor = {
@@ -58,17 +76,17 @@ local servers = {
   cssls = {},
   html = {},
   lua_ls = {},
-  tsserver = {}
+  tsserver = {},
 }
 
 local defaults = {
-    on_attach = on_attach,
-    on_init = on_init,
-    capabilities = capabilities,
+  on_attach = on_attach,
+  on_init = on_init,
+  capabilities = capabilities,
 }
 
 -- lsps with default config
 for server, opts in pairs(servers) do
-  local merged_opts  = vim.tbl_deep_extend("force", defaults, opts)
+  local merged_opts = vim.tbl_deep_extend("force", defaults, opts)
   lspconfig[server].setup(merged_opts)
 end

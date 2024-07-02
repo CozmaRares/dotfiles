@@ -1,1 +1,1 @@
-vim.cmd("NvimTreeFocus")
+vim.cmd "NvimTreeFocus"
