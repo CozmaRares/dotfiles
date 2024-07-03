@@ -6,8 +6,7 @@ local options = {
     css = { "prettierd" },
     html = { "prettierd" },
 
-    c = { "clang-format" },
-    cpp = { "clang-format" },
+    markdown = { "markdownlint" },
 
     ["_"] = { "trim_whitespace" },
   },

@@ -87,8 +87,6 @@ return {
       require("nvim-tree").setup(opts)
     end,
   },
-
-  -- These are some examples, uncomment them if you want to see them work!
   {
     "neovim/nvim-lspconfig",
     config = function()
@@ -96,19 +94,32 @@ return {
       require "configs.lspconfig"
     end,
   },
-
   {
     "williamboman/mason.nvim",
     opts = {
       ensure_installed = {
-        "lua-language-server",
-        "stylua",
-        "html-lsp",
+        "clangd",
+        "cpplint",
         "css-lsp",
+        "emmet-ls",
+        "eslint_d",
+        "html-lsp",
+        "intelephense",
+        "lua-language-server",
+        "markdownlint",
         "prettierd",
-        "typescript-language-server",
         "rust-analyzer",
+        "stylua",
+        "tailwindcss-language-server",
+        "typescript-language-server",
       },
     },
+  },
+  {
+    "mfussenegger/nvim-lint",
+    lazy = false,
+    config = function()
+      require "configs.lint"
+    end,
   },
 }

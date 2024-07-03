@@ -10,8 +10,8 @@ nomap("n", "<leader>v")
 
 map("n", "J", "mzJ`z")
 
-map("n", "|", "<cmd>vsplit<cr>", { desc = "vertical split" })
-map("n", "\\", "<cmd>split<cr>", { desc = "horizontal split" })
+map("n", "|", "<cmd>vsplit<cr>", { desc = "split vertical" })
+map("n", "\\", "<cmd>split<cr>", { desc = "split horizontal" })
 map("n", ";", ":", { desc = "CMD enter command mode" })
 
 map("n", "<C-q>", "<cmd>confirm qall<cr>", { desc = "quit all" })
@@ -22,19 +22,19 @@ map("n", "<C-k>", require("nvim-tmux-navigation").NvimTmuxNavigateUp)
 map("n", "<C-l>", require("nvim-tmux-navigation").NvimTmuxNavigateRight)
 map("n", "<C-\\>", require("nvim-tmux-navigation").NvimTmuxNavigateLastActive)
 
-map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "NvimTree toggle window" })
+map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "toggle NvimTree window" })
 map("n", "<leader>rs", ":%s/<C-r><C-w>/<C-r><C-w>/gI<Left><Left><Left>", { desc = "replace current selectionn" })
 map("n", "<leader>q", "<cmd>confirm q<cr>", { desc = "quit" })
 
 map("n", "<leader>fd", function()
   require("telescope.builtin").diagnostics()
-end, { desc = "LSP find diagnostics" })
+end, { desc = "lsp find diagnostics" })
 
 map("n", "<leader>ts", function()
   require("auto-save").toggle()
 end, { desc = "toggle auto save" })
-map("n", "<leader>U", vim.cmd.UndotreeToggle, { desc = "open undo tree" })
-map("n", "<leader>T", vim.cmd.TodoTelescope, { desc = "open todo" })
+map("n", "<leader>U", vim.cmd.UndotreeToggle, { desc = "toggle undo tree" })
+map("n", "<leader>T", vim.cmd.TodoTelescope, { desc = "telescope todos " })
 map("n", "<leader>tw", function()
   vim.opt.wrap = not vim.opt.wrap
   vim.notify("toggled line wrap", { title = "NVIM API" }, vim.log.levels.INFO)
@@ -45,8 +45,8 @@ map("i", "jk", "<ESC>")
 map("i", "<C-s>", ":w<cr>", { desc = "save file" })
 
 -- visual
-map("v", "<S-Tab>", "<gv", { desc = "unindent line" })
-map("v", "<Tab>", ">gv", { desc = "indent line" })
+map("v", "<S-Tab>", "<gv", { desc = "line unindent" })
+map("v", "<Tab>", ">gv", { desc = "line indent" })
 map("v", "J", ":m'>+1<CR>gv=gv")
 map("v", "K", ":m-2<CR>gv=gv")
 

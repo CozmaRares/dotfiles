@@ -67,7 +67,7 @@ local servers = {
     },
   },
 
-  phpactor = {
+  intelephense = {
     filetypes = { "php" },
     root_dir = root_pattern("composer.json", ".git"),
   },
