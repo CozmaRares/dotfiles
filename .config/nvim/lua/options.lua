@@ -20,3 +20,11 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undodir = os.getenv "HOME" .. "/.cache/nvim/undodir"
 vim.opt.undofile = true
+
+vim.opt.list = true
+vim.opt.listchars = {
+  space = "·",
+  tab = ">~",
+  trail = "×",
+  eol = "¬",
+}
