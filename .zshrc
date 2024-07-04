@@ -77,6 +77,7 @@ alias wrand="nitrogen --random --set-zoom-fill ~/Pictures/Wallpapers 1>/dev/null
 alias wrs="nitrogen --restore 1>/dev/null 2>&1"
 
 alias clip="xclip -selection clipboard"
+alias nf="neofetch"
 
 xev_keyboard() {
   xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'

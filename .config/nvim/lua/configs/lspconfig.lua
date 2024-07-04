@@ -70,6 +70,13 @@ local servers = {
   intelephense = {
     filetypes = { "php" },
     root_dir = root_pattern("composer.json", ".git"),
+    settings = {
+      intelephense = {
+        format = {
+          braces = "k&r",
+        },
+      },
+    },
   },
 
   -- LSPs with default settings
