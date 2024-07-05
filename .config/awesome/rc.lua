@@ -752,7 +752,4 @@ awful.spawn.with_shell("redshift -P -O 3000")
 
 -- awful.spawn.with_shell("jamesdsp")
 
-
--- Configs
-
 beautiful.useless_gap = 8

@@ -2,7 +2,6 @@ session_root "~"
 
 if initialize_session "cmus"; then
   new_window "cmus"
-  select_window 1
   run_cmd "cmus"
 fi
 

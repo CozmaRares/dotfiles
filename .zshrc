@@ -65,6 +65,7 @@ alias v=nvim
 
 alias t=tmuxifier
 alias tx=tmux
+alias txa="tmux a"
 alias txat="tmux a -t"
 
 alias password="pass show -c"
