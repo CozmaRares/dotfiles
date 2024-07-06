@@ -7,7 +7,6 @@ local nomap = vim.keymap.del
 nomap("n", "<C-n>")
 nomap("n", "<leader>h")
 nomap("n", "<leader>v")
-nomap("n", "<leader>fa")
 
 map("n", "J", "mzJ`z")
 
@@ -30,14 +29,6 @@ map("n", "<leader>q", "<cmd>confirm q<cr>", { desc = "quit" })
 map("n", "<leader>fd", function()
   require("telescope.builtin").diagnostics()
 end, { desc = "telescope find diagnostics" })
-
-map(
-  "n",
-  "<leader>ff",
-  "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
-  { desc = "telescope find files" }
-)
-
 
 map("n", "<leader>ts", function()
   require("auto-save").toggle()

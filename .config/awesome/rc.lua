@@ -487,7 +487,7 @@ globalkeys = gears.table.join(
         { modkey },
         "e",
         function()
-            awful.spawn("nemo")
+            awful.spawn("thunar")
         end,
         { description = "file explorer", group = "launcher" }
     )
