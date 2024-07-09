@@ -48,6 +48,18 @@ M.ui = {
       bg = "none",
     },
   },
+
+  statusline = {
+    order = {
+      "mode",
+      "file",
+      "%=",
+      "lsp_msg",
+      "%=",
+      "diagnostics",
+      "lsp",
+    },
+  },
 }
 
 return M
