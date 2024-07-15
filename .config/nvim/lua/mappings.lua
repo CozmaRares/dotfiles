@@ -37,8 +37,7 @@ end, { desc = "toggle auto save" })
 map("n", "<leader>U", nvim.cmd.UndotreeToggle, { desc = "toggle undo tree" })
 map("n", "<leader>T", nvim.cmd.TodoTelescope, { desc = "telescope todos " })
 map("n", "<leader>tw", function()
-  nvim.opt.wrap = not nvim.opt.wrap
-  nvim.notify("toggled line wrap", { title = "NVIM API" }, nvim.log.levels.INFO)
+  nvim.o.wrap = not nvim.o.wrap
 end, { desc = "toggle wrap" })
 
 -- input

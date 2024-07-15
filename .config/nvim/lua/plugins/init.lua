@@ -28,10 +28,15 @@ return {
     },
     config = function(_, opts)
       require("notify").setup(opts)
-      local banned_messages = { "No information available" }
+      local banned_messages = { eq = { "No information available" }, starts = { "rust_analyzer" } }
       vim.notify = function(msg, ...)
-        for _, banned in ipairs(banned_messages) do
+        for _, banned in ipairs(banned_messages.eq) do
           if msg == banned then
+            return
+          end
+        end
+        for _, banned in ipairs(banned_messages.starts) do
+          if msg:find("^" .. banned) ~= nil then
             return
           end
         end
