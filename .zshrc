@@ -80,6 +80,9 @@ alias wrs="nitrogen --restore 1>/dev/null 2>&1"
 alias clip="xclip -selection clipboard"
 alias nf="neofetch"
 
+alias dcu="docker compose up"
+alias dcd="docker compose down"
+
 xev_keyboard() {
   xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
 }
