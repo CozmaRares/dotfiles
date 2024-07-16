@@ -33,11 +33,8 @@ local servers = {
     filetypes = {
       "astro",
       "astro-markdown",
-      "blade",
       "html",
-      "markdown",
       "mdx",
-      "php",
       "css",
       "less",
       "postcss",
@@ -47,7 +44,6 @@ local servers = {
       "typescriptreact",
       "vue",
       "svelte",
-      "templ",
     },
     root_dir = root_pattern("tailwind.config.js", "tailwind.config.cjs", "tailwind.config.mjs", "tailwind.config.ts"),
     settings = {
@@ -79,11 +75,18 @@ local servers = {
     },
   },
 
+  tsserver = {
+    init_options = {
+      preferences = {
+        disableSuggestions = true,
+      },
+    },
+  },
+
   -- LSPs with default settings
   cssls = {},
   html = {},
   lua_ls = {},
-  tsserver = {},
 }
 
 local defaults = {

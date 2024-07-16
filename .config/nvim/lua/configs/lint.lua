@@ -25,6 +25,3 @@ end
 
 require("lint").linters_by_ft = opts
 
-vim.keymap.set("n", "<leader>l", function()
-  require("lint").try_lint()
-end, { desc = "lint file" })

@@ -40,6 +40,10 @@ map("n", "<leader>tw", function()
   nvim.o.wrap = not nvim.o.wrap
 end, { desc = "toggle wrap" })
 
+map("n", "<leader>l", function()
+  require("lint").try_lint()
+end, { desc = "lint file" })
+
 -- input
 map("i", "jk", "<ESC>")
 map("i", "<C-s>", ":w<cr>", { desc = "save file" })
