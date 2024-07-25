@@ -12,6 +12,8 @@ local servers = {
     root_dir = root_pattern(".clang-format", ".git"),
   },
 
+  cssls = {},
+
   emmet_ls = {
     filetypes = {
       "astro",
@@ -23,6 +25,22 @@ local servers = {
       "php",
     },
   },
+
+  html = {},
+
+  intelephense = {
+    filetypes = { "php" },
+    root_dir = root_pattern("composer.json", ".git"),
+    settings = {
+      intelephense = {
+        format = {
+          braces = "k&r",
+        },
+      },
+    },
+  },
+
+  lua_ls = {},
 
   rust_analyzer = {
     filetypes = { "rust" },
@@ -63,18 +81,6 @@ local servers = {
     },
   },
 
-  intelephense = {
-    filetypes = { "php" },
-    root_dir = root_pattern("composer.json", ".git"),
-    settings = {
-      intelephense = {
-        format = {
-          braces = "k&r",
-        },
-      },
-    },
-  },
-
   tsserver = {
     init_options = {
       preferences = {
@@ -82,11 +88,6 @@ local servers = {
       },
     },
   },
-
-  -- LSPs with default settings
-  cssls = {},
-  html = {},
-  lua_ls = {},
 }
 
 local defaults = {
@@ -95,7 +96,6 @@ local defaults = {
   capabilities = capabilities,
 }
 
--- lsps with default config
 for server, opts in pairs(servers) do
   local merged_opts = vim.tbl_deep_extend("force", defaults, opts)
   lspconfig[server].setup(merged_opts)

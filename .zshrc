@@ -91,6 +91,11 @@ mdd() {
   md $1
   cd $1
 }
+gbak() {
+  git add .
+  git commit -m "backup: $(date +"%Y-%m-%d %H:%M")"
+  git push origin
+}
 
 # History
 HISTSIZE=5000

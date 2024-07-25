@@ -4,7 +4,7 @@ if initialize_session "lic"; then
   new_window "nvim"
   run_cmd "nvim"
 
-  new_window "cargo"
+  new_window
 
   select_window 1
 fi

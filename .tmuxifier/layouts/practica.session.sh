@@ -4,13 +4,11 @@ if initialize_session "prac"; then
   new_window "nvim"
   run_cmd "nvim"
 
-  new_window "server"
-  run_cmd "pnpm run dev:server"
-
   new_window "client"
   run_cmd "pnpm run dev:client"
 
-  new_window "term"
+  new_window
+  run_cmd "docker compose up -d"
 
   select_window 1
 fi
