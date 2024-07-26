@@ -6,6 +6,7 @@ local nomap = nvim.keymap.del
 
 -- normal
 nomap("n", "<C-n>")
+nomap("n", "<C-C>")
 nomap("n", "<leader>h")
 nomap("n", "<leader>v")
 
@@ -15,6 +16,7 @@ map("n", "|", "<cmd>vsplit<cr>", { desc = "split vertical" })
 map("n", "\\", "<cmd>split<cr>", { desc = "split horizontal" })
 map("n", ";", ":", { desc = "CMD enter command mode" })
 
+map("n", "<C-a>", "ggVGy", { desc = "file copy all" })
 map("n", "<C-q>", "<cmd>confirm qall<cr>", { desc = "quit all" })
 
 map("n", "<C-h>", require("nvim-tmux-navigation").NvimTmuxNavigateLeft)
@@ -42,17 +44,35 @@ end, { desc = "toggle wrap" })
 
 map("n", "<leader>l", function()
   require("lint").try_lint()
-end, { desc = "lint file" })
+end, { desc = "file lint" })
 
 -- input
 map("i", "jk", "<ESC>")
-map("i", "<C-s>", ":w<cr>", { desc = "save file" })
+map("i", "<C-s>", ":w<cr>", { desc = "file save" })
 
 -- visual
 map("v", "<S-Tab>", "<gv", { desc = "line unindent" })
 map("v", "<Tab>", ">gv", { desc = "line indent" })
 map("v", "J", ":m'>+1<CR>gv=gv")
 map("v", "K", ":m-2<CR>gv=gv")
+map("v", "<leader>r", function()
+  local patterns = {
+    ["Aa"] = "Ă",
+    ["Ai"] = "Â",
+    ["Ii"] = "Î",
+    ["Ss"] = "Ș",
+    ["Tt"] = "Ț",
+    ["aa"] = "ă",
+    ["ai"] = "â",
+    ["ii"] = "î",
+    ["ss"] = "ș",
+    ["tt"] = "ț",
+  }
+
+  for match, replace in pairs(patterns) do
+    pcall(vim.cmd, "s/\\%V" .. match .. "\\%V/" .. replace .. "/g")
+  end
+end, { desc = "replace patterns" })
 
 -- shared
 map({ "n", "v" }, "<leader>p", '"_dP')
