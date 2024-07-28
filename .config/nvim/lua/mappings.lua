@@ -46,6 +46,8 @@ map("n", "<leader>l", function()
   require("lint").try_lint()
 end, { desc = "file lint" })
 
+map("n", "<leader>dd", "<cmd>DevdocsOpenFloat<CR>", { desc = "DevDocs open float" })
+
 -- input
 map("i", "jk", "<ESC>")
 map("i", "<C-s>", ":w<cr>", { desc = "file save" })
@@ -57,11 +59,11 @@ map("v", "J", ":m'>+1<CR>gv=gv")
 map("v", "K", ":m-2<CR>gv=gv")
 map("v", "<leader>r", function()
   local patterns = {
-    ["Aa"] = "Ă",
-    ["Ai"] = "Â",
-    ["Ii"] = "Î",
-    ["Ss"] = "Ș",
-    ["Tt"] = "Ț",
+    ["AA"] = "Ă",
+    ["AI"] = "Â",
+    ["II"] = "Î",
+    ["SS"] = "Ș",
+    ["TT"] = "Ț",
     ["aa"] = "ă",
     ["ai"] = "â",
     ["ii"] = "î",
