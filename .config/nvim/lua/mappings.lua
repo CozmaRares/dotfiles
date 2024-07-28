@@ -45,8 +45,6 @@ map("n", "<leader>l", function()
   require("lint").try_lint()
 end, { desc = "file lint" })
 
-map("n", "<leader>dd", "<cmd>DevdocsOpenFloat<CR>", { desc = "DevDocs open float" })
-
 -- input
 map("i", "jk", "<ESC>")
 map("i", "<C-s>", ":w<cr>", { desc = "file save" })
