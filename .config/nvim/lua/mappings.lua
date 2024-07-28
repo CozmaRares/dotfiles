@@ -1,8 +1,7 @@
 require "nvchad.mappings"
 
-local nvim = vim
-local map = nvim.keymap.set
-local nomap = nvim.keymap.del
+local map = vim.keymap.set
+local nomap = vim.keymap.del
 
 -- normal
 nomap("n", "<C-n>")
@@ -36,10 +35,10 @@ end, { desc = "telescope find diagnostics" })
 map("n", "<leader>ts", function()
   require("auto-save").toggle()
 end, { desc = "toggle auto save" })
-map("n", "<leader>U", nvim.cmd.UndotreeToggle, { desc = "toggle undo tree" })
-map("n", "<leader>T", nvim.cmd.TodoTelescope, { desc = "telescope todos " })
+map("n", "<leader>U", vim.cmd.UndotreeToggle, { desc = "toggle undo tree" })
+map("n", "<leader>T", vim.cmd.TodoTelescope, { desc = "telescope todos " })
 map("n", "<leader>tw", function()
-  nvim.o.wrap = not nvim.o.wrap
+  vim.o.wrap = not vim.o.wrap
 end, { desc = "toggle wrap" })
 
 map("n", "<leader>l", function()
@@ -86,14 +85,14 @@ map({ "n", "v" }, "<C-u>", "<C-u>zz")
 map({ "n", "v" }, "G", "Gzz")
 
 map({ "n", "v" }, "<Up>", function()
-  nvim.notify("No arrow keys for you!", nvim.log.levels.WARN)
+  vim.notify("No arrow keys for you!", vim.log.levels.WARN)
 end, { desc = "disabled" })
 map({ "n", "v" }, "<Down>", function()
-  nvim.notify("No arrow keys for you!", nvim.log.levels.WARN)
+  vim.notify("No arrow keys for you!", vim.log.levels.WARN)
 end, { desc = "disabled" })
 map({ "n", "v" }, "<Left>", function()
-  nvim.notify("No arrow keys for you!", nvim.log.levels.WARN)
+  vim.notify("No arrow keys for you!", vim.log.levels.WARN)
 end, { desc = "disabled" })
 map({ "n", "v" }, "<Right>", function()
-  nvim.notify("No arrow keys for you!", nvim.log.levels.WARN)
+  vim.notify("No arrow keys for you!", vim.log.levels.WARN)
 end, { desc = "disabled" })
