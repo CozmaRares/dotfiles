@@ -56,11 +56,6 @@ map("v", "J", ":m'>+1<CR>gv=gv")
 map("v", "K", ":m-2<CR>gv=gv")
 map("v", "<leader>r", function()
   local patterns = {
-    ["AA"] = "Ă",
-    ["AI"] = "Â",
-    ["II"] = "Î",
-    ["SS"] = "Ș",
-    ["TT"] = "Ț",
     ["aa"] = "ă",
     ["ai"] = "â",
     ["ii"] = "î",
