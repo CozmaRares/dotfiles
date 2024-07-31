@@ -15,7 +15,7 @@ map("n", "|", "<cmd>vsplit<cr>", { desc = "split vertical" })
 map("n", "\\", "<cmd>split<cr>", { desc = "split horizontal" })
 map("n", ";", ":", { desc = "CMD enter command mode" })
 
-map("n", "<C-a>", "ggVGy", { desc = "file copy all" })
+map("n", "<C-a>", "ggVG", { desc = "file select all" })
 map("n", "<C-q>", "<cmd>confirm qall<cr>", { desc = "quit all" })
 
 map("n", "<C-h>", require("nvim-tmux-navigation").NvimTmuxNavigateLeft)
