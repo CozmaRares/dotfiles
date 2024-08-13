@@ -1,19 +1,19 @@
-if [[ ! -o interactive ]]; then
-    return
-fi
+# Ensure the completion system is initialized
+autoload -Uz compinit
+compinit
 
-compctl -K _tmuxifier tmuxifier
-
+# Define the tmuxifier completion function
 _tmuxifier() {
-  local word words completions
-  read -cA words
-  word="${words[2]}"
+  local -a completions
 
-  if [ "${#words}" -eq 2 ]; then
-    completions="$(tmuxifier commands)"
+  if (( CURRENT == 2 )); then
+    completions=("${(@f)$(tmuxifier commands)}")
+    _values 'tmuxifier commands' $completions
   else
-    completions="$(tmuxifier completions "${word}")"
+    completions=("${(@f)$(tmuxifier completions "${words[2]}")}")
+    _values 'tmuxifier command completions' $completions
   fi
-
-  reply=("${(ps:\n:)completions}")
 }
+
+# Register the completion function for the tmuxifier command
+compdef _tmuxifier tmuxifier
