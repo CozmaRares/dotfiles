@@ -59,6 +59,9 @@ return {
 	special = {
 		tab = "Tab",
 		esc = "Escape",
+		space = "space",
+		print = "Print",
+		enter = "Return",
 	},
 
 	-- list of all xf86 keys in xorg
@@ -75,11 +78,9 @@ return {
 				up = "XF86AudioRaiseVolume",
 				down = "XF86AudioLowerVolume",
 			},
-			media = {
-				prev = "XF86AudioPrev",
-				pause = "XF86AudioPlay",
-				next = "XF86AudioNext",
-			},
+			prev = "XF86AudioPrev",
+			pause = "XF86AudioPlay",
+			next = "XF86AudioNext",
 		},
 	},
 
