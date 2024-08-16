@@ -1,8 +1,9 @@
 configuration {
-    display-drun: "Applications:";
-    display-window: "Windows:";
-    display-combi: "All:";
-    display-run: "Programs:";
+    display-drun:   "App: ";
+    display-window: "Window: ";
+    display-run:    "Bin: ";
+    display-combi:  "> ";
+
     drun-display-format: "{icon} {name}";
     font: "JetBrainsMono Nerd Font Medium 10";
     modi: "window,drun,run";
