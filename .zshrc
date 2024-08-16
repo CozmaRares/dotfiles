@@ -127,7 +127,7 @@ mdd() {
 }
 
 gbak() {
-  git add .
+  git add --all
   git commit -m "backup: $(date +"%Y-%m-%d %H:%M")"
   git push origin
 }
