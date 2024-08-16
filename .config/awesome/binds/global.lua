@@ -1,5 +1,3 @@
-local awesome = awesome
-
 local keys = require("keys")
 local awful = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup")

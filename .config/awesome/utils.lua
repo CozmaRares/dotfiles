@@ -12,7 +12,7 @@ M.replaceable_notification = function(text)
 	naughty.notify({
 		id = 1,
 		replaces_id = 1,
-		text = text,
+		text = text:gsub("\n$", ""),
 	})
 end
 
