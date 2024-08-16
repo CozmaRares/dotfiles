@@ -416,27 +416,27 @@ globalkeys = gears.table.join(
 	end),
 
 	-- Audio
-	awful.key({}, keys.xf86.audio.mute, function()
-		awful.spawn("pamixer -t")
-		notify_volume()
-	end, { description = "toggle mute", group = "audio" }),
-	awful.key({}, keys.xf86.audio.volume.down, function()
-		awful.spawn("pamixer -u -d 5")
-		notify_volume()
-	end, { description = "lower volume", group = "audio" }),
-	awful.key({}, keys.xf86.audio.volume.up, function()
-		awful.spawn("pamixer -u -i 5")
-		notify_volume()
-	end, { description = "raise volume", group = "audio" }),
-	awful.key({}, keys.xf86.audio.prev, function()
-		awful.spawn("playerctl previous")
-	end, { description = "play previous", group = "audio" }),
-	awful.key({}, keys.xf86.audio.pause, function()
-		awful.spawn("playerctl play-pause")
-	end, { description = "toggle play", group = "audio" }),
-	awful.key({}, keys.xf86.audio.next, function()
-		awful.spawn("playerctl next")
-	end, { description = "play next", group = "audio" }),
+	-- awful.key({}, keys.xf86.audio.mute, function()
+	-- 	awful.spawn("pamixer -t")
+	-- 	notify_volume()
+	-- end, { description = "toggle mute", group = "audio" }),
+	-- awful.key({}, keys.xf86.audio.volume.down, function()
+	-- 	awful.spawn("pamixer -u -d 5")
+	-- 	notify_volume()
+	-- end, { description = "lower volume", group = "audio" }),
+	-- awful.key({}, keys.xf86.audio.volume.up, function()
+	-- 	awful.spawn("pamixer -u -i 5")
+	-- 	notify_volume()
+	-- end, { description = "raise volume", group = "audio" }),
+	-- awful.key({}, keys.xf86.audio.prev, function()
+	-- 	awful.spawn("playerctl previous")
+	-- end, { description = "play previous", group = "audio" }),
+	-- awful.key({}, keys.xf86.audio.pause, function()
+	-- 	awful.spawn("playerctl play-pause")
+	-- end, { description = "toggle play", group = "audio" }),
+	-- awful.key({}, keys.xf86.audio.next, function()
+	-- 	awful.spawn("playerctl next")
+	-- end, { description = "play next", group = "audio" }),
 
 	-- Utils
 	awful.key({}, keys.special.print, function()
@@ -449,6 +449,74 @@ globalkeys = gears.table.join(
 		awful.spawn("thunar")
 	end, { description = "file explorer", group = "launcher" })
 )
+
+local test = {
+	audio = {
+		{
+			mods = {},
+			key = keys.xf86.audio.mute,
+			fn = function()
+				awful.spawn("pamixer -t")
+				notify_volume()
+			end,
+			description = "toggle mute",
+		},
+		{
+			mods = {},
+			key = keys.xf86.audio.volume.down,
+			fn = function()
+				awful.spawn("pamixer -u -d 5")
+				notify_volume()
+			end,
+			description = "lower volume",
+		},
+		{
+			mods = {},
+			key = keys.xf86.audio.volume.up,
+			fn = function()
+				awful.spawn("pamixer -u -i 5")
+				notify_volume()
+			end,
+			description = "raise volume",
+		},
+		{
+			mods = {},
+			key = keys.xf86.audio.prev,
+			fn = function()
+				awful.spawn("playerctl previous")
+			end,
+			description = "play previous",
+		},
+		{
+			mods = {},
+			key = keys.xf86.audio.pause,
+			fn = function()
+				awful.spawn("playerctl play-pause")
+			end,
+			description = "toggle play",
+		},
+		{
+			mods = {},
+			key = keys.xf86.audio.next,
+			fn = function()
+				awful.spawn("playerctl next")
+			end,
+			description = "play next",
+		},
+	},
+}
+
+for group, binds in pairs(test) do
+	for _, bind in ipairs(binds) do
+		globalkeys = gears.table.join(
+			globalkeys,
+			awful.key(bind.mods, bind.key, bind.fn, {
+				description = bind.description,
+				group = group,
+			})
+		)
+	end
+end
 
 clientkeys = gears.table.join(
 	awful.key({ modkey }, keys.letter.f, function(c)
