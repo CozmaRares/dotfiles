@@ -507,10 +507,10 @@ end)
 
 -- Auto run commands
 
-awful.spawn.with_shell("picom")
-awful.spawn.with_shell("nitrogen --random --set-zoom-fill ~/Pictures/Wallpapers")
-awful.spawn.with_shell("redshift -P -O 3000")
+local startup = require("config").startup
 
--- awful.spawn.with_shell("jamesdsp")
+for _, app in ipairs(startup) do
+	awful.spawn.with_shell(app)
+end
 
 beautiful.useless_gap = 8

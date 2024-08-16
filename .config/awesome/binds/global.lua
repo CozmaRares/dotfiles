@@ -8,19 +8,19 @@ local utils = require("utils")
 local modkey = require("config").user.modkey
 
 local function notify_brightness()
-    utils.exec_after("0.2", function ()
-        utils.stdout_get("brillo", function (stdout)
-            utils.replaceable_notification("Brightness: ".. stdout)
-        end)
-    end)
+	utils.exec_after("0.2", function()
+		awful.spawn.easy_async("brillo", function(stdout)
+			utils.replaceable_notification("Brightness: " .. stdout)
+		end)
+	end)
 end
 
 local function notify_volume()
-    utils.exec_after("0.2", function ()
-        utils.stdout_get("pamixer --get-volume-human", function (stdout)
-            utils.replaceable_notification("Volume: ".. stdout)
-        end)
-    end)
+	utils.exec_after("0.2", function()
+		awful.spawn.easy_async("pamixer --get-volume-human", function(stdout)
+			utils.replaceable_notification("Volume: " .. stdout)
+		end)
+	end)
 end
 
 return {
