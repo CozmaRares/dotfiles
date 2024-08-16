@@ -4,6 +4,7 @@ local keys = require("keys")
 local awful = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local utils = require("utils")
+local config = require("config")
 
 local modkey = require("config").user.modkey
 
@@ -148,7 +149,7 @@ return {
 			mods = { modkey },
 			key = keys.special.enter,
 			fn = function()
-				awful.spawn(terminal)
+				awful.spawn(config.apps.terminal)
 			end,
 			description = "open terminal",
 		},
@@ -180,7 +181,7 @@ return {
 			mods = { modkey },
 			key = keys.letter.e,
 			fn = function()
-				awful.spawn("thunar")
+				awful.spawn(config.apps.file_exp)
 			end,
 			description = "open file explorer",
 		},
@@ -348,7 +349,7 @@ return {
 			fn = function()
 				awful.spawn("flameshot gui")
 			end,
-			description = "open screenshot tool",
+			description = "open screenshot gui",
 		},
 	},
 }

@@ -2,7 +2,15 @@ local keys = require("keys")
 
 local M = {}
 
-M.apps = {}
+M.apps = {
+	terminal = "kitty",
+	editor = "nvim",
+	file_exp = "thunar",
+}
+
+M.cmds = {
+	editor = M.apps.terminal .. " -e " .. M.apps.editor,
+}
 
 M.user = {
 	modkey = keys.mod.win,
