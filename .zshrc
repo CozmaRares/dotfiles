@@ -4,7 +4,6 @@ fi
 
 export EDITOR=nvim
 export ZSH="$HOME/.oh-my-zsh"
-export PATH="$HOME/.local/bin:$HOME/.tmuxifier/bin:$PATH"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
@@ -57,7 +56,6 @@ case ":$PATH:" in
 esac
 
 eval "$(zoxide init zsh)"
-eval "$(tmuxifier init -)"
 eval "$(fzf --zsh)"
 
 # zstyle ':omz:update' mode disabled  # disable automatic updates
@@ -97,10 +95,7 @@ alias vim=nvim
 alias vi=nvim
 alias v=nvim
 
-alias t=tmuxifier
-alias tx=tmux
-alias txa="tmux a"
-alias txat="tmux a -t"
+alias tx="~/.tx/tx"
 
 alias password="pass show -c"
 

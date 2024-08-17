@@ -1,0 +1,126 @@
+#! /bin/sh
+
+ROOT="$(dirname "$(readlink -f "$0")")"
+LAYOUT_ROOT="$ROOT/layouts"
+
+usage() {
+    cat <<EOF
+Usage:
+    -h | --help | help       --  show this help message
+    (-l | --layout) [layout] --  create a new layout or edit existing one
+    --ls | ls                --  show running sessions and layouts
+    [layout]                 --  create new session from the given layout, or a blank session with the given name
+    (no arguments)           --  attach to the last active session
+EOF
+}
+
+list() {
+    tmux_sessions=$(tmux ls 2> /dev/null)
+
+    if [ $? -eq 0 ]; then
+        max_len=$(echo "$tmux_sessions" | awk -F '[:,()]' '{print $1}' | awk '{print length}' | sort -nr | head -1 )
+        sessions=$(echo "$tmux_sessions" | awk -v max_len="$max_len" -F '[:,()]' '{printf "session: %-*s (%d windows)%s\n", max_len, $1, $2, ($0 ~ /attached/) ? " (attached)" : ""}')
+        echo "$sessions"
+    else 
+        sessions=""
+    fi
+
+    ls "$LAYOUT_ROOT" | sed 's/\.layout\.sh$//' | while read -r layout; do
+        echo "$sessions" | grep -q "session: $layout\s"
+        if [ $? -ne 0 ]; then
+            echo "layout:  $layout"
+        fi
+    done
+}
+
+example_layout() {
+    cat > $2 <<EOF
+. $ROOT/functions.sh
+
+# Set up project with a root dir, and name
+project_root ~
+session_name "$1"
+
+# create your session
+new_session
+
+# layout your session
+rename_window "code"
+run_command "nvim"
+
+new_window "servers"
+split_horizontal 50%
+
+# select the window you want first
+select_window "code"
+
+# attach to your session
+attach_to_session
+EOF
+}
+
+new_session() {
+    tmux_sessions=$(tmux ls | awk -F '[:,()]' '{print $1}')
+
+    if echo "$tmux_sessions" | grep -qx "$1"; then
+        tmux_attach_or_switch $1
+        return
+    fi
+
+    layouts=$(ls "$LAYOUT_ROOT")
+
+    if echo "$layouts" | grep -qx "$1.layout.sh"; then
+        . "$LAYOUT_ROOT/$1.layout.sh"
+        return
+    fi
+
+    tmux new-session -d -s "$1"
+    tmux_attach_or_switch $1
+}
+
+tmux_attach_or_switch() {
+    if [ -z "$TMUX" ]; then
+        tmux attach-session -t "$1"
+    else
+        tmux switch-client -t "$1"
+    fi
+}
+
+editor_session() {
+    file="$LAYOUT_ROOT/$1.layout.sh"
+
+    if [[ ! -f $file ]] then
+        example_layout $1 $file
+    fi
+
+    $EDITOR $file
+}
+
+if [[ $# -gt 0 ]]; then
+    case "$1" in
+        --ls | ls)
+            list
+            ;;
+        -h | --help | help)
+            usage
+            ;;
+        -l | --layout)
+            if [[ -n "$2" && "$2" != --* ]]; then
+                editor_session "$2"
+            else
+                echo "Error: --layout requires a value"
+                usage
+            fi
+            ;;
+        *)
+            new_session $1
+            ;;
+    esac
+else
+    if [ -z "$TMUX" ]; then
+        tmux attach
+    else
+        echo "Error: already attached"
+        exit 1
+    fi
+fi
