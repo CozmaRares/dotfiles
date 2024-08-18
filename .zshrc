@@ -97,6 +97,7 @@ alias v=nvim
 
 export TX_ROOT="$HOME/.tx"
 alias tx="$TX_ROOT/tx"
+source "$TX_ROOT/_tx"
 
 alias password="pass show -c"
 

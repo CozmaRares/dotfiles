@@ -1,0 +1,69 @@
+complete_flags() {
+    local -a flags
+    flags=(
+        "--help:show help message"
+        "--layout:create a new layout or edit existing one"
+        "--ls:show running sessions and layouts"
+    )
+
+    _describe 'flags' flags
+}
+
+complete_aliases() {
+    local -a aliases
+    aliases=(
+       "-h:alias for --help"
+       "help:alias for --help"
+       "-l:alias for --layout"
+       "ls:alias for --ls"
+    )
+
+    _describe 'aliases' aliases
+}
+
+complete_sessions() {
+    local -a sessions
+    sessions=("${(@f)$(tmux ls | awk -F '[:,()]' '{printf "%s:%d windows\n", $1, $2}')}")
+    _describe 'sessions' sessions
+}
+
+list_layouts() {
+    find "$TX_ROOT/layouts" -type f -name '*.layout.sh' -exec basename {} .layout.sh \;
+}
+
+complete_layouts() {
+    local -a sessions layouts
+    sessions=($(tmux ls | awk -F '[:,()]' '{print $1}'))
+    layouts=()
+
+    while read -r layout; do
+        if ! echo "${sessions[@]}" | grep -qx "$layout"; then
+            layouts+=("$layout")
+        fi
+    done < <(list_layouts)
+
+    _describe "layouts" layouts
+}
+
+complete_layouts_edit() {
+    local -a layouts
+    layouts=("${(@f)$(list_layouts)}")
+    _describe 'layouts' layouts
+}
+
+_tx() {
+    if (( CURRENT == 3 )); then
+        case "${words[2]}" in
+            -l | --layout)
+                complete_layouts_edit
+                ;;
+        esac
+    else
+        complete_flags
+        complete_aliases
+        complete_sessions
+        complete_layouts
+    fi
+}
+
+compdef _tx tx
