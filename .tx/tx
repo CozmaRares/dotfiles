@@ -1,7 +1,6 @@
 #! /bin/sh
 
-ROOT="$(dirname "$(readlink -f "$0")")"
-LAYOUT_ROOT="$ROOT/layouts"
+LAYOUT_ROOT="$TX_ROOT/layouts"
 
 usage() {
     cat <<EOF
@@ -25,7 +24,7 @@ list() {
         sessions=""
     fi
 
-    ls "$LAYOUT_ROOT" | sed 's/\.layout\.sh$//' | while read -r layout; do
+    find "$TX_ROOT/layouts" -type f -name '*.layout.sh' -exec basename {} .layout.sh \; | while read -r layout; do
         echo "$sessions" | grep -q "session: $layout\s"
         if [ $? -ne 0 ]; then
             echo "layout:  $layout"
@@ -35,7 +34,7 @@ list() {
 
 example_layout() {
     cat > $2 <<EOF
-. $ROOT/functions.sh
+. $TX_ROOT/functions.sh
 
 # Set up project with a root dir, and name
 project_root ~

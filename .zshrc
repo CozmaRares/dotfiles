@@ -95,7 +95,8 @@ alias vim=nvim
 alias vi=nvim
 alias v=nvim
 
-alias tx="~/.tx/tx"
+export TX_ROOT="$HOME/.tx"
+alias tx="$TX_ROOT/tx"
 
 alias password="pass show -c"
 
