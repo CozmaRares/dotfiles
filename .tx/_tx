@@ -59,10 +59,10 @@ _tx() {
                 ;;
         esac
     else
-        complete_flags
-        complete_aliases
         complete_sessions
         complete_layouts
+        complete_flags
+        complete_aliases
     fi
 }
 
