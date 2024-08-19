@@ -2,22 +2,74 @@
 
 LAYOUT_ROOT="$TX_ROOT/layouts"
 
+is_session() {
+    if tmux ls | awk -F '[:,()]' '{print $1}' | grep -qx "$1"; then
+        return 0
+    fi
+
+    return 1
+}
+
+ is_layout() {
+    if ls "$LAYOUT_ROOT" | grep -qx "$1.layout.sh"; then
+        return 0
+    fi
+
+    return 1
+ }
+
 usage() {
     cat <<EOF
 Usage:
-    -h | --help | help       --  show this help message
-    (-l | --layout) [layout] --  create a new layout or edit existing one
-    --ls | ls                --  show running sessions and layouts
-    [layout]                 --  create new session from the given layout, or a blank session with the given name
-    (no arguments)           --  attach to the last active session
+    -h | --help | help        --  show this help message
+    (-l | --layout) [layout]  --  create a new layout or edit existing one
+    --ls | ls                 --  show running sessions and layouts
+    --preview                 --  preview session or layout
+    --picker                  --  pick session or layout
+    [layout]                  --  create new session from the given layout, or a blank session with the given name
+    (no arguments)            --  attach to the last active session
 EOF
+}
+
+preview() {
+    if is_session $1; then
+        tmux capture-pane -ep -t "$1"
+        return
+    fi
+
+    if is_layout $1; then
+        bat "$LAYOUT_ROOT/$1.layout.sh" --color=always
+        return
+    fi
+}
+
+picker() {
+    if [ -z "$TMUX" ]; then
+        selected=$(
+            tx ls | \
+            fzf \
+                --preview 'echo {} | awk "{print \$1}" | xargs -I{} bash -c "tx --preview {}"' \
+        )
+    else
+        selected=$(
+            tx ls | \
+            fzf \
+                --tmux right,40%,70% \
+                --preview 'echo {} | awk "{print \$1}" | xargs -I{} bash -c "tx --preview {}"' \
+                --preview-window 'up,75%,border-bottom' \
+        )
+    fi
+
+    if [ $? -eq 0 ]; then
+        tx "$selected"
+    fi
 }
 
 list() {
     sessions=$(tmux ls | awk -F '[:,()]' '{print $1}')
 
     layouts=$(
-        find "$TX_ROOT/layouts" -type f -name '*.layout.sh' -exec basename {} .layout.sh \; | while read -r layout; do
+        find "$LAYOUT_ROOT" -type f -name '*.layout.sh' -exec basename {} .layout.sh \; | while read -r layout; do
             echo "$sessions" | grep -qx "$layout"
             if [ $? -ne 0 ]; then
                 echo "$layout"
@@ -58,16 +110,12 @@ EOF
 }
 
 new_session() {
-    tmux_sessions=$(tmux ls | awk -F '[:,()]' '{print $1}')
-
-    if echo "$tmux_sessions" | grep -qx "$1"; then
+    if is_session $1; then
         tmux_attach_or_switch $1
         return
     fi
 
-    layouts=$(ls "$LAYOUT_ROOT")
-
-    if echo "$layouts" | grep -qx "$1.layout.sh"; then
+    if is_layout $1; then
         . "$LAYOUT_ROOT/$1.layout.sh"
         return
     fi
@@ -109,6 +157,17 @@ if [[ $# -gt 0 ]]; then
                 echo "Error: --layout requires a value"
                 usage
             fi
+            ;;
+        --preview)
+            if [[ -n "$2" && "$2" != --* ]]; then
+                preview "$2"
+            else
+                echo "Error: --preview requires a value"
+                usage
+            fi
+            ;;
+        --picker)
+            picker
             ;;
         *)
             new_session $1

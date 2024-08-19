@@ -41,6 +41,9 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 source $HOME/.cargo/env
 
+export TX_ROOT="$HOME/.tx"
+source "$TX_ROOT/_tx"
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -94,10 +97,6 @@ alias gcne="git commit --amend --no-edit"
 alias vim=nvim
 alias vi=nvim
 alias v=nvim
-
-export TX_ROOT="$HOME/.tx"
-alias tx="$TX_ROOT/tx"
-source "$TX_ROOT/_tx"
 
 alias password="pass show -c"
 

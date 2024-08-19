@@ -4,6 +4,8 @@ complete_flags() {
         "--help:show help message"
         "--layout:create a new layout or edit existing one"
         "--ls:show running sessions and layouts"
+        "--preview:preview session or layout"
+        "--picker:pick session or layout"
     )
 
     _describe 'flags' flags
