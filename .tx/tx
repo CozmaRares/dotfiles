@@ -48,13 +48,15 @@ picker() {
         selected=$(
             tx ls | \
             fzf \
+                --bind=tab:up,btab:down \
                 --preview 'echo {} | awk "{print \$1}" | xargs -I{} bash -c "tx --preview {}"' \
         )
     else
         selected=$(
             tx ls | \
             fzf \
-                --tmux right,40%,70% \
+                --tmux center,75%,80% \
+                --bind=tab:up,btab:down \
                 --preview 'echo {} | awk "{print \$1}" | xargs -I{} bash -c "tx --preview {}"' \
                 --preview-window 'up,75%,border-bottom' \
         )
