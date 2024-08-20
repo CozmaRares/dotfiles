@@ -63,6 +63,10 @@ _tx() {
             -l | --layout)
                 complete_layouts_edit
                 ;;
+            *)
+                complete_sessions
+                complete_layouts
+                ;;
         esac
     else
         complete_sessions
