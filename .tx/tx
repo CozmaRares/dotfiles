@@ -4,6 +4,49 @@ LAYOUT_ROOT="$TX_ROOT/layouts"
 
 . $TX_ROOT/helpers.sh
 
+list() {
+    sessions=$(get_sessions)
+
+    layouts=$(
+        get_layouts | while read -r layout; do
+            echo "$sessions" | grep -qx "$layout"
+            if [ $? -ne 0 ]; then
+                echo "$layout"
+            fi
+        done
+    )
+
+    max_len=$( { echo "$sessions"; echo "$layouts"; } | awk '{print length}' | sort -nr | head -1 )
+
+    tmux_ls | awk -v max_len="$max_len" -F '[:,()]' '{printf "%-*s (session) (%d windows)%s\n", max_len, $1, $2, ($0 ~ /attached/) ? " (attached)" : ""}'
+    echo "$layouts" | awk -v max_len="$max_len" '{printf "%-*s (layout)\n", max_len, $1}'
+}
+
+new_session() {
+    if is_session $1; then
+        tmux_attach_or_switch $1
+        return
+    fi
+
+    if is_layout $1; then
+        . "$LAYOUT_ROOT/$1.layout.sh"
+        return
+    fi
+
+    tmux new-session -d -s "$1"
+    tmux_attach_or_switch $1
+}
+
+edit_layout() {
+    file="$LAYOUT_ROOT/$1.layout.sh"
+
+    if [[ ! -f $file ]] then
+        example_layout $1 $file
+    fi
+
+    $EDITOR $file
+}
+
 preview() {
     if is_session $1; then
         tmux capture-pane -ep -t "$1"
@@ -40,49 +83,6 @@ picker() {
     fi
 }
 
-list() {
-    sessions=$(get_sessions)
-
-    layouts=$(
-        get_layouts | while read -r layout; do
-            echo "$sessions" | grep -qx "$layout"
-            if [ $? -ne 0 ]; then
-                echo "$layout"
-            fi
-        done
-    )
-
-    max_len=$( { echo "$sessions"; echo "$layouts"; } | awk '{print length}' | sort -nr | head -1 )
-
-    tmux_ls | awk -v max_len="$max_len" -F '[:,()]' '{printf "%-*s (session) (%d windows)%s\n", max_len, $1, $2, ($0 ~ /attached/) ? " (attached)" : ""}'
-    echo "$layouts" | awk -v max_len="$max_len" '{printf "%-*s (layout)\n", max_len, $1}'
-}
-
-new_session() {
-    if is_session $1; then
-        tmux_attach_or_switch $1
-        return
-    fi
-
-    if is_layout $1; then
-        . "$LAYOUT_ROOT/$1.layout.sh"
-        return
-    fi
-
-    tmux new-session -d -s "$1"
-    tmux_attach_or_switch $1
-}
-
-editor_session() {
-    file="$LAYOUT_ROOT/$1.layout.sh"
-
-    if [[ ! -f $file ]] then
-        example_layout $1 $file
-    fi
-
-    $EDITOR $file
-}
-
 if [[ $# -gt 0 ]]; then
     case "$1" in
         --ls | ls)
@@ -93,7 +93,7 @@ if [[ $# -gt 0 ]]; then
             ;;
         -l | --layout)
             if [[ -n "$2" && "$2" != --* ]]; then
-                editor_session "$2"
+                edit_layout "$2"
             else
                 echo "Error: --layout requires a value"
                 usage
