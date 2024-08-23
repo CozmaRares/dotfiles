@@ -2,34 +2,7 @@
 
 LAYOUT_ROOT="$TX_ROOT/layouts"
 
-is_session() {
-    if tmux ls 2>/dev/null | awk -F '[:,()]' '{print $1}' | grep -qx "$1"; then
-        return 0
-    fi
-
-    return 1
-}
-
- is_layout() {
-    if ls "$LAYOUT_ROOT" | grep -qx "$1.layout.sh"; then
-        return 0
-    fi
-
-    return 1
- }
-
-usage() {
-    cat <<EOF
-Usage:
-    -h | --help | help        --  show this help message
-    (-l | --layout) [layout]  --  create a new layout or edit existing one
-    --ls | ls                 --  show running sessions and layouts
-    --preview                 --  preview session or layout
-    --picker                  --  pick session or layout
-    [layout]                  --  create new session from the given layout, or a blank session with the given name
-    (no arguments)            --  attach to the last active session
-EOF
-}
+. $TX_ROOT/helpers.sh
 
 preview() {
     if is_session $1; then
@@ -68,10 +41,10 @@ picker() {
 }
 
 list() {
-    sessions=$(tmux ls 2>/dev/null | awk -F '[:,()]' '{print $1}')
+    sessions=$(get_sessions)
 
     layouts=$(
-        find "$LAYOUT_ROOT" -type f -name '*.layout.sh' -exec basename {} .layout.sh \; | while read -r layout; do
+        get_layouts | while read -r layout; do
             echo "$sessions" | grep -qx "$layout"
             if [ $? -ne 0 ]; then
                 echo "$layout"
@@ -81,34 +54,8 @@ list() {
 
     max_len=$( { echo "$sessions"; echo "$layouts"; } | awk '{print length}' | sort -nr | head -1 )
 
-    tmux ls 2>/dev/null | awk -v max_len="$max_len" -F '[:,()]' '{printf "%-*s (session) (%d windows)%s\n", max_len, $1, $2, ($0 ~ /attached/) ? " (attached)" : ""}'
+    tmux_ls | awk -v max_len="$max_len" -F '[:,()]' '{printf "%-*s (session) (%d windows)%s\n", max_len, $1, $2, ($0 ~ /attached/) ? " (attached)" : ""}'
     echo "$layouts" | awk -v max_len="$max_len" '{printf "%-*s (layout)\n", max_len, $1}'
-}
-
-example_layout() {
-    cat > $2 <<EOF
-. $TX_ROOT/functions.sh
-
-# Set up project with a root dir, and name
-project_root ~
-session_name "$1"
-
-# create your session
-new_session
-
-# layout your session
-rename_window "code"
-run_command "nvim"
-
-new_window "servers"
-split_horizontal 50%
-
-# select the window you want first
-select_window "code"
-
-# attach to your session
-attach_to_session
-EOF
 }
 
 new_session() {
@@ -124,14 +71,6 @@ new_session() {
 
     tmux new-session -d -s "$1"
     tmux_attach_or_switch $1
-}
-
-tmux_attach_or_switch() {
-    if [ -z "$TMUX" ]; then
-        tmux attach-session -t "$1"
-    else
-        tmux switch-client -t "$1"
-    fi
 }
 
 editor_session() {
