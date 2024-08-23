@@ -2,10 +2,13 @@ complete_flags() {
     local -a flags
     flags=(
         "--help:show help message"
-        "--layout:create a new layout or edit existing one"
         "--ls:show running sessions and layouts"
+        "--layout:create a new layout or edit existing one"
         "--preview:preview session or layout"
         "--picker:pick session or layout"
+        "--sessions:open sessionizer"
+        "--add-sessions:add a new directory to sessionizer"
+        "--rm-sessions:remove a directory from sessionizer"
     )
 
     _describe 'flags' flags
@@ -15,9 +18,11 @@ complete_aliases() {
     local -a aliases
     aliases=(
        "-h:alias for --help"
-       "help:alias for --help"
-       "-l:alias for --layout"
        "ls:alias for --ls"
+       "-l:alias for --layout"
+       "-s:alias for --sessions"
+       "-as:alias for --add-sessions"
+       "-rs:alias for --rm-sessions"
     )
 
     _describe 'aliases' aliases
@@ -25,35 +30,19 @@ complete_aliases() {
 
 complete_sessions() {
     local -a sessions
-    sessions=$(tmux ls 2>/dev/null)
-
-    if [ $? -eq 0 ]; then
-        sessions=("${(@f)$(echo "$sessions" | awk -F '[:,()]' '{printf "%s:%d windows\n", $1, $2}')}")
-        _describe 'sessions' sessions
-    fi
-}
-
-list_layouts() {
-    find "$TX_ROOT/layouts" -type f -name '*.layout.sh' -exec basename {} .layout.sh \;
+    sessions=("${(@f)$(tx ls | grep "\(session\)" | awk '{print $1}')}")
+    _describe 'sessions' sessions
 }
 
 complete_layouts() {
-    local -a sessions layouts
-    sessions=($(tmux ls 2>/dev/null | awk -F '[:,()]' '{print $1}'))
-    layouts=()
-
-    while read -r layout; do
-        if ! echo "${sessions[@]}" | grep -qx "$layout"; then
-            layouts+=("$layout")
-        fi
-    done < <(list_layouts)
-
-    _describe "layouts" layouts
+    local -a layouts
+    layouts=("${(@f)$(tx ls | grep "\(layout\)" | awk '{print $1}')}")
+    _describe 'layouts' layouts
 }
 
 complete_layouts_edit() {
     local -a layouts
-    layouts=("${(@f)$(list_layouts)}")
+    layouts=("${(@f)$(find "$TX_ROOT/layouts" -type f -name '*.layout.sh' -exec basename {} .layout.sh \;)}")
     _describe 'layouts' layouts
 }
 

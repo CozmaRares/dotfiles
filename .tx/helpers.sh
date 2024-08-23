@@ -17,33 +17,28 @@ get_sessions() {
 }
 
 get_layouts() {
-    find "$LAYOUT_ROOT" -type f -name '*.layout.sh' -exec basename {} .layout.sh \;
+    find "$SESSIONS_ROOT" -type f -name '*.layout.sh' -exec basename {} .layout.sh \;
 }
 
 is_session() {
-    if get_sessions | grep -qx "$1"; then
-        return 0
-    fi
-
-    return 1
+    get_sessions | grep -qx "$1"
 }
 
 is_layout() {
-    if ls "$LAYOUT_ROOT" | grep -qx "$1.layout.sh"; then
-        return 0
-    fi
-
-    return 1
+    ls "$SESSIONS_ROOT" | grep -qx "$1.layout.sh"
 }
 
 usage() {
     cat <<EOF
 Usage:
-    -h | --help | help        --  show this help message
-    (-l | --layout) [layout]  --  create a new layout or edit existing one
+    -h | --help               --  show this help message
     --ls | ls                 --  show running sessions and layouts
+    (--layout | -l) [layout]  --  create a new layout or edit existing one
     --preview                 --  preview session or layout
     --picker                  --  pick session or layout
+    --sessions | -s           --  open sessionizer
+    --add-sessions | -as      --  add a new directory to sessionizer
+    --rm-sessions | -rs       --  remove a directory from sessionizer
     [layout]                  --  create new session from the given layout, or a blank session with the given name
     (no arguments)            --  attach to the last active session
 EOF
