@@ -3,6 +3,9 @@
 SESSIONS_ROOT="$TX_ROOT/sessions"
 DIRS="$SESSIONS_ROOT/dirs.txt"
 
+FZF_TMUX="--tmux center,75%,80%"
+FZF_ARGS="--color=dark,gutter:-1"
+
 . $TX_ROOT/helpers.sh
 
 list() {
@@ -65,6 +68,7 @@ picker() {
         selected=$(
             tx ls | \
             fzf \
+                $FZF_ARGS \
                 --bind "tab:up" \
                 --bind "btab:down" \
                 --preview 'echo {} | awk "{print \$1}" | xargs -I{} bash -c "tx --preview {}"' \
@@ -73,7 +77,8 @@ picker() {
         selected=$(
             tx ls | \
             fzf \
-                --tmux center,75%,80% \
+                $FZF_ARGS \
+                $FZF_TMUX \
                 --bind "tab:up" \
                 --bind "btab:down" \
                 --preview 'echo {} | awk "{print \$1}" | xargs -I{} bash -c "tx --preview {}"' \
@@ -99,7 +104,7 @@ sessionizer() {
         where=$(cat "$DIRS")
     fi
 
-    dir=$(cat "$DIRS" | xargs -I{} find {} -maxdepth 1 -type d | fzf)
+    dir=$(cat "$DIRS" | xargs -I{} find {} -maxdepth 1 -type d | fzf $FZF_ARGS $FZF_TMUX)
     selected=$(basename "$dir")
 
     while is_session "$selected"; do
@@ -113,7 +118,7 @@ sessionizer() {
 
 add_session_dir() {
     args="-mindepth 0 -maxdepth 1 -type d"
-    selected=$(find / $args | fzf --bind "tab:replace-query+reload(find '{}' $args)")
+    selected=$(find / $args | fzf $FZF_ARGS $FZF_TMUX --bind "tab:replace-query+reload(find '{}' $args)")
     if [ -n "$selected" ]; then
         tmp=$(mktemp)
         { echo "$selected"; cat "$DIRS"; } | sort | uniq > "$tmp"
@@ -122,7 +127,7 @@ add_session_dir() {
 }
 
 rm_session_dir() {
-    selected=$(cat "$DIRS" | fzf --multi --bind "tab:select+up" --bind "btab:deselect+down")
+    selected=$(cat "$DIRS" | fzf $FZF_ARGS $FZF_TMUX --multi --bind "tab:select+up" --bind "btab:deselect+down")
     if [ -n "$selected" ]; then
         tmp=$(mktemp)
         grep -vFx "$selected" "$DIRS" > "$tmp"
