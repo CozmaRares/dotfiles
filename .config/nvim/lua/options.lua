@@ -3,7 +3,7 @@ require "nvchad.options"
 local o = vim.opt
 
 o.relativenumber = true
-o.number = false
+o.number = true
 o.spell = false
 o.signcolumn = "auto"
 o.wrap = false

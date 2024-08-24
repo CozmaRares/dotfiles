@@ -43,6 +43,7 @@ source $HOME/.cargo/env
 
 export TX_ROOT="$HOME/.tx"
 source "$TX_ROOT/_tx"
+source "$HOME/.gud/_gud"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -93,6 +94,7 @@ alias pnpmd='pnpm install -D'
 
 alias gcam="git commit --amend"
 alias gcne="git commit --amend --no-edit"
+alias ggc="gud commit"
 
 alias vim=nvim
 alias vi=nvim
