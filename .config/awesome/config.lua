@@ -1,26 +1,26 @@
-local keys = require("keys")
+local keys = require "keys"
 
 local M = {}
 
 M.apps = {
-	terminal = "kitty",
-	editor = "nvim",
-	file_exp = "thunar",
+  terminal = "kitty",
+  editor = "nvim",
+  file_exp = "thunar",
 }
 
 M.cmds = {
-	editor = M.apps.terminal .. " -e " .. M.apps.editor,
+  editor = M.apps.terminal .. " -e " .. M.apps.editor,
 }
 
 M.user = {
-	modkey = keys.mod.win,
+  modkey = keys.mod.win,
 }
 
 M.startup = {
-	"picom",
-	"nitrogen --random --set-zoom-fill ~/Pictures/Wallpapers",
-	"redshift -P -O 3000",
-	-- "jamesdsp"
+  "picom",
+  "nitrogen --random --set-zoom-fill ~/Pictures/Wallpapers",
+  "redshift -P -O 3000",
+  -- "jamesdsp"
 }
 
 return M

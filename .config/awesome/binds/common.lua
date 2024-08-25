@@ -1,5 +1,5 @@
-local awful = require("awful")
-local gtable = require("gears.table")
+local awful = require "awful"
+local gtable = require "gears.table"
 
 local M = {}
 
@@ -20,21 +20,21 @@ and converts them into key bindings that can be used in AwesomeWM.
   }
 ]]
 M.format_shortcuts = function(shortcuts)
-	local ret = {}
+  local ret = {}
 
-	for group, binds in pairs(shortcuts) do
-		for _, bind in ipairs(binds) do
-			ret = gtable.join(
-				ret,
-				awful.key(bind.mods, bind.key, bind.fn, {
-					description = bind.description,
-					group = group,
-				})
-			)
-		end
-	end
+  for group, binds in pairs(shortcuts) do
+    for _, bind in ipairs(binds) do
+      ret = gtable.join(
+        ret,
+        awful.key(bind.mods, bind.key, bind.fn, {
+          description = bind.description,
+          group = group,
+        })
+      )
+    end
+  end
 
-	return ret
+  return ret
 end
 
 return M

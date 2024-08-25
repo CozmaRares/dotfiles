@@ -42,7 +42,7 @@ complete_layouts() {
 
 complete_layouts_edit() {
     local -a layouts
-    layouts=("${(@f)$(find "$TX_ROOT/layouts" -type f -name '*.layout.sh' -exec basename {} .layout.sh \;)}")
+    layouts=("${(@f)$(find "$TX_ROOT/sessions" -type f -name '*.layout.sh' -exec basename {} .layout.sh \;)}")
     _describe 'layouts' layouts
 }
 

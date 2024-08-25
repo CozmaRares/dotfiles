@@ -7,6 +7,8 @@ local lspconfig = require "lspconfig"
 local root_pattern = lspconfig.util.root_pattern
 
 local servers = {
+  astro = {},
+
   clangd = {
     filetypes = { "c", "cpp" },
     root_dir = root_pattern(".clang-format", ".git"),
