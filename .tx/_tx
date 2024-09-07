@@ -20,6 +20,7 @@ complete_aliases() {
        "-h:alias for --help"
        "ls:alias for --ls"
        "-l:alias for --layout"
+       "-p:alias for --preview"
        "-s:alias for --sessions"
        "-as:alias for --add-sessions"
        "-rs:alias for --rm-sessions"

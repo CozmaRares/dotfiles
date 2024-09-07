@@ -115,6 +115,8 @@ alias nf="neofetch"
 alias dcu="docker compose up"
 alias dcd="docker compose down"
 
+alias open="xdg-open"
+
 xev_keyboard() {
   xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
 }

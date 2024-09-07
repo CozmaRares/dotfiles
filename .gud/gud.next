@@ -1,5 +1,9 @@
 #! /bin/sh
 
+echo "Currently broken."
+echo "Stopped at handle_new"
+exit 1
+
 GUD_FILE=".gud.json"
 
 confirm() {
@@ -94,22 +98,39 @@ init() {
         "$prefix"
 }
 
+pick_x() {
+    x="$1"
+    extra_options="$2"
+
+    echo "Choose commit $x"
+    x=$(jaq -r ".${x}s[]" < "$GUD_FILE" | echo -e "$(cat -)\n$extra_options" | fzf --height=~100% --bind "tab:up" --bind "btab:down")
+    if [ -z "$x" ]; then
+        exit 1
+    fi
+
+    echo "$x"
+}
+
+new_choice="~new"
+
+handle_new() {
+    x="$1"
+
+    read -r -p "Enter a new commit $x: " value
+
+    if ! confirm "Add new commit $x to $GUD_FILE"; then
+        return
+    fi
+
+    echo "$value"
+}
+
 commit() {
     if ! check_gud; then
         echo "GUD is not initialized."
         exit 1
     fi
 
-    new_choice="~new"
-
-    echo "Choose commit type"
-    type=$(jaq -r ".types[]" < "$GUD_FILE" | echo -e "$(cat -)\n$new_choice" | fzf --height=~100% --bind "tab:up" --bind "btab:down")
-    if [ -z "$type" ]; then
-        exit 1
-    fi
-    if [[ "$type" == "$new_choice" ]]; then
-        read -r -p "Enter a new commit type: " type
-    fi
 
     echo "Choose commit scope"
     scope=$(jaq -r ".scopes[]" < "$GUD_FILE" | echo -e "$(cat -)\n$new_choice" | fzf --height=~100% --bind "tab:up" --bind "btab:down")
@@ -156,10 +177,6 @@ if [[ $# -gt 0 ]]; then
             ;;
     esac
 else
-    cat <<EOF
-Usage:
-    init    --  initialize gud
-    commit  --  start commit helper
-EOF
+    usage
     exit 1
 fi

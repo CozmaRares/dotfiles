@@ -35,7 +35,7 @@ Usage:
     --ls | ls                 --  show running sessions and layouts
     (--layout | -l) [layout]  --  create a new layout or edit existing one
     --preview                 --  preview session or layout
-    --picker                  --  pick session or layout
+    --picker | -s             --  pick session or layout
     --sessions | -s           --  open sessionizer
     --add-sessions | -as      --  add a new directory to sessionizer
     --rm-sessions | -rs       --  remove a directory from sessionizer
