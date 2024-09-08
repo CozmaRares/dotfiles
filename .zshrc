@@ -110,7 +110,7 @@ alias wrand="nitrogen --random --set-zoom-fill ~/Pictures/Wallpapers 1>/dev/null
 alias wrs="nitrogen --restore 1>/dev/null 2>&1"
 
 alias clip="xclip -selection clipboard"
-alias nf="neofetch"
+alias ff="fastfetch"
 
 alias dcu="docker compose up"
 alias dcd="docker compose down"
