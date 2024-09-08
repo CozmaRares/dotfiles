@@ -11,79 +11,26 @@ local wibox = require "wibox"
 -- Theme handling library
 local beautiful = require "beautiful"
 -- Notification library
-local naughty = require "naughty"
 local menubar = require "menubar"
 local hotkeys_popup = require "awful.hotkeys_popup"
--- Enable hotkeys help widget for VIM and other apps
--- when client with a matching name is opened:
 
 require "notifications"
+require "theme"
+require "signals"
 
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+local pref = require "preferences"
+local modkey = pref.user.modkey
+local menu = require "menu"
 
--- This is used later as the default terminal and editor to run.
-terminal = "kitty"
-editor = "nvim"
-editor_cmd = terminal .. " -e " .. editor
+awful.layout.layouts = pref.layouts
 
--- Default modkey.
--- Usually, Mod4 is the key with a logo between Control and Alt.
--- If you do not like this or do not have such a key,
--- I suggest you to remap Mod4 to another key using xmodmap or other tools.
--- However, you can use another modifier like Mod1, but it may interact with others.
-modkey = "Mod4"
-
--- Table of layouts to cover with awful.layout.inc, order matters.
-awful.layout.layouts = {
-  awful.layout.suit.tile.left,
-  awful.layout.suit.floating,
-  awful.layout.suit.fair.horizontal,
-  awful.layout.suit.tile,
-  -- awful.layout.suit.tile.bottom,
-  -- awful.layout.suit.tile.top,
-  -- awful.layout.suit.fair,
-  -- awful.layout.suit.spiral,
-  -- awful.layout.suit.spiral.dwindle,
-  -- awful.layout.suit.max,
-  -- awful.layout.suit.max.fullscreen,
-  -- awful.layout.suit.magnifier,
-  -- awful.layout.suit.corner.nw,
-  -- awful.layout.suit.corner.ne,
-  -- awful.layout.suit.corner.sw,
-  -- awful.layout.suit.corner.se,
-}
--- }}}
-
--- {{{ Menu
--- Create a launcher widget and a main menu
--- myawesomemenu = {
---     { "hotkeys",     function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
---     { "manual",      terminal .. " -e man awesome" },
---     { "edit config", editor_cmd .. " " .. awesome.conffile },
---     { "restart",     awesome.restart },
---     { "quit",        function() awesome.quit() end },
--- }
-
-mymainmenu = awful.menu {
-  items = {
-    {
-      "hotkeys",
-      function()
-        hotkeys_popup.show_help(nil, awful.screen.focused())
-      end,
-    },
-    -- { "awesome",       myawesomemenu,                                                      beautiful.awesome_icon },
-    { "open terminal", terminal },
-  },
-}
-
-mylauncher = awful.widget.launcher {
+local menu_launcher = awful.widget.launcher {
   image = beautiful.awesome_icon,
-  menu = mymainmenu,
+  menu = menu,
 }
 
 -- Menubar configuration
-menubar.utils.terminal = terminal -- Set the terminal for applications that require it
+menubar.utils.terminal = pref.apps.terminal -- Set the terminal for applications that require it
 -- }}}
 
 -- Keyboard map indicator and switcher
@@ -136,27 +83,10 @@ local tasklist_buttons = gears.table.join(
   end)
 )
 
-local function set_wallpaper(s)
-  -- Wallpaper
-  if beautiful.wallpaper then
-    local wallpaper = beautiful.wallpaper
-    -- If wallpaper is a function, call it with the screen
-    if type(wallpaper) == "function" then
-      wallpaper = wallpaper(s)
-    end
-    gears.wallpaper.maximized(wallpaper, s, true)
-  end
-end
-
--- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", set_wallpaper)
-
 awful.screen.connect_for_each_screen(function(s)
-  -- Wallpaper
-  set_wallpaper(s)
-
   -- Each screen has its own tag table.
   awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+
 
   -- Create a promptbox for each screen
   s.mypromptbox = awful.widget.prompt()
@@ -199,7 +129,7 @@ awful.screen.connect_for_each_screen(function(s)
     layout = wibox.layout.align.horizontal,
     { -- Left widgets
       layout = wibox.layout.fixed.horizontal,
-      mylauncher,
+      menu_launcher,
       s.mytaglist,
       s.mypromptbox,
     },
@@ -218,60 +148,17 @@ end)
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
   awful.button({}, 3, function()
-    mymainmenu:toggle()
+    menu:toggle()
   end),
   awful.button({}, 4, awful.tag.viewnext),
   awful.button({}, 5, awful.tag.viewprev)
 ))
 -- }}}
 
-local keys = require "keys"
-
 local globalkeys = require("binds.common").format_shortcuts(require "binds.global")
+local clientkeys = require("binds.common").format_shortcuts(require "binds.client")
 
 -- {{{ Key bindings
-
-clientkeys = gears.table.join(
-  awful.key({ modkey }, keys.letter.f, function(c)
-    c.fullscreen = not c.fullscreen
-    c:raise()
-  end, { description = "toggle fullscreen", group = "client" }),
-  awful.key({ modkey }, keys.letter.q, function(c)
-    c:kill()
-  end, { description = "close", group = "client" }),
-  awful.key(
-    { modkey, "Control" },
-    "space",
-    awful.client.floating.toggle,
-    { description = "toggle floating", group = "client" }
-  ),
-  awful.key({ modkey, "Control" }, "Return", function(c)
-    c:swap(awful.client.getmaster())
-  end, { description = "move to master", group = "client" }),
-  awful.key({ modkey }, "o", function(c)
-    c:move_to_screen()
-  end, { description = "move to screen", group = "client" }),
-  awful.key({ modkey }, "t", function(c)
-    c.ontop = not c.ontop
-  end, { description = "toggle keep on top", group = "client" }),
-  awful.key({ modkey }, "n", function(c)
-    -- The client currently has the input focus, so it cannot be
-    -- minimized, since minimized clients can't have the focus.
-    c.minimized = true
-  end, { description = "minimize", group = "client" }),
-  awful.key({ modkey }, "m", function(c)
-    c.maximized = not c.maximized
-    c:raise()
-  end, { description = "(un)maximize", group = "client" }),
-  awful.key({ modkey, "Control" }, "m", function(c)
-    c.maximized_vertical = not c.maximized_vertical
-    c:raise()
-  end, { description = "(un)maximize vertically", group = "client" }),
-  awful.key({ modkey, "Shift" }, "m", function(c)
-    c.maximized_horizontal = not c.maximized_horizontal
-    c:raise()
-  end, { description = "(un)maximize horizontally", group = "client" })
-)
 
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
@@ -280,7 +167,7 @@ for i = 1, 9 do
   globalkeys = gears.table.join(
     globalkeys,
     -- View tag only.
-    awful.key({ modkey }, "#" .. i + 9, function()
+    awful.key({ modkey }, i, function()
       local screen = awful.screen.focused()
       local tag = screen.tags[i]
       if tag then
@@ -288,7 +175,7 @@ for i = 1, 9 do
       end
     end, { description = "view tag #" .. i, group = "tag" }),
     -- Toggle tag display.
-    awful.key({ modkey, "Control" }, "#" .. i + 9, function()
+    awful.key({ modkey, "Control" }, i, function()
       local screen = awful.screen.focused()
       local tag = screen.tags[i]
       if tag then
@@ -361,7 +248,6 @@ awful.rules.rules = {
         "pinentry",
       },
       class = {
-        "Arandr",
         "Blueman-manager",
         "Gpick",
         "Kruler",
@@ -475,10 +361,8 @@ end)
 
 -- Auto run commands
 
-local startup = require("config").startup
+local startup = pref.startup
 
-for _, app in ipairs(startup) do
-  awful.spawn.with_shell(app)
+for _, cmd in ipairs(startup) do
+  awful.spawn.with_shell(cmd)
 end
-
-beautiful.useless_gap = 8

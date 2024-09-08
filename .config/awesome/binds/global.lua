@@ -1,10 +1,11 @@
-local keys = require "keys"
 local awful = require "awful"
 local hotkeys_popup = require "awful.hotkeys_popup"
-local utils = require "utils"
-local config = require "config"
 
-local modkey = require("config").user.modkey
+local keys = require "keys"
+local utils = require "utils"
+local pref = require "preferences"
+
+local modkey = pref.user.modkey
 
 local function notify_brightness()
   utils.exec_after("0.2", function()
@@ -38,7 +39,7 @@ return {
       mods = { modkey },
       key = keys.letter.w,
       fn = function()
-        mymainmenu:show()
+        require("menu"):show()
       end,
       description = "show main menu",
     },
@@ -58,7 +59,7 @@ return {
           textbox = awful.screen.focused().mypromptbox.widget,
           exe_callback = function(query)
             query = query:gsub("%s+", "+")
-            local command = string.format('firefox "https://duckduckgo.com/?q=%s"', query)
+            local command = string.format('xdg-open "https://duckduckgo.com/?q=%s"', query)
             awful.spawn(command)
           end,
         }
@@ -151,7 +152,7 @@ return {
       mods = { modkey },
       key = keys.special.enter,
       fn = function()
-        awful.spawn(config.apps.terminal)
+        awful.spawn(pref.apps.terminal)
       end,
       description = "open terminal",
     },
@@ -183,7 +184,7 @@ return {
       mods = { modkey },
       key = keys.letter.e,
       fn = function()
-        awful.spawn(config.apps.file_exp)
+        awful.spawn(pref.apps.file_exp)
       end,
       description = "open file explorer",
     },
