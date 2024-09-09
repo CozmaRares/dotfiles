@@ -4,7 +4,7 @@ SESSIONS_ROOT="$TX_ROOT/sessions"
 DIRS="$SESSIONS_ROOT/dirs.txt"
 
 FZF_TMUX="--tmux center,75%,80%"
-FZF_ARGS="--color=dark,gutter:-1"
+FZF_ARGS="--color=dark,gutter:-1 --cycle"
 
 . $TX_ROOT/helpers.sh
 
@@ -112,8 +112,11 @@ sessionizer() {
         read selected
     done
 
-    tmux new-session -d -s "$selected" -c "$dir" 2>/dev/null
-    tmux_attach_or_switch "$selected"
+
+    if [ -n "$selected" ]; then
+        tmux new-session -d -s "$selected" -c "$dir" 2>/dev/null
+        tmux_attach_or_switch "$selected"
+    fi
 }
 
 add_session_dir() {
