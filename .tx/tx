@@ -143,6 +143,12 @@ if [[ $# -gt 0 ]]; then
         --ls | ls)
             list
             ;;
+        --ls-sessions | lss)
+            list | grep "(session)"
+            ;;
+        --ls-layouts  | lsl)
+            list | grep "(layout)"
+            ;;
         --layout | -l)
             if [[ -n "$2" && "$2" != --* ]]; then
                 edit_layout "$2"

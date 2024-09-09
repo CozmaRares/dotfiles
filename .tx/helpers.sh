@@ -33,6 +33,8 @@ usage() {
 Usage:
     -h | --help               --  show this help message
     --ls | ls                 --  show running sessions and layouts
+    --ls-sessions | lss       --  list sessions only
+    --ls-layouts  | lsl       --  list layouts only
     (--layout | -l) [layout]  --  create a new layout or edit existing one
     --preview                 --  preview session or layout
     --picker | -s             --  pick session or layout

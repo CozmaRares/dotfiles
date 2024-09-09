@@ -3,6 +3,8 @@ complete_flags() {
     flags=(
         "--help:show help message"
         "--ls:show running sessions and layouts"
+        "--ls-sessions:list sessions only"
+        "--ls-layouts:list layouts only"
         "--layout:create a new layout or edit existing one"
         "--preview:preview session or layout"
         "--picker:pick session or layout"
@@ -19,6 +21,8 @@ complete_aliases() {
     aliases=(
        "-h:alias for --help"
        "ls:alias for --ls"
+       "lss: alias for --ls-sessions"
+       "lsl: alias for --ls-layouts"
        "-l:alias for --layout"
        "-p:alias for --preview"
        "-s:alias for --sessions"
