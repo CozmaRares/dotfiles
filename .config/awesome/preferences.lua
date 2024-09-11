@@ -22,7 +22,7 @@ M.startup = {
   "picom",
   "nitrogen --random --set-zoom-fill ~/Pictures/Wallpapers",
   "redshift -P -O 3500",
-  -- "jamesdsp"
+  "jamesdsp --tray"
 }
 
 M.layouts = {

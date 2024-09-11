@@ -16,13 +16,3 @@ naughty.config.defaults.icon_size = dpi(32)
 naughty.config.defaults.shape = gears.shape.rounded_rect
 naughty.config.defaults.border_width = 0
 naughty.config.defaults.hover_timeout = nil
-
--- Error handling
-if awesome.startup_errors then
-  naughty.notify {
-    preset = naughty.config.presets.critical,
-    title = "Oops, there were errors during startup!",
-    text = awesome.startup_errors,
-  }
-end
-

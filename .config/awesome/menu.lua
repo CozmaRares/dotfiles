@@ -30,11 +30,11 @@ local web_bookmarks = {
 
 local file_bookmarks = {
   { "Home", "thunar ~" },
-  { "Downloads", "thunar ~/Downloads/" },
-  { "Dotfiles", "thunar ~/.dotfiles/" },
-  { "Configs", "thunar ~/.config/" },
-  { "Wallpapers", "thunar ~/Pictures/Wallpapers/" },
-  { "Screen Shots", "thunar ~/Pictures/Screenshots/" },
+  { "Downloads", "thunar Downloads" },
+  { "Dotfiles", "thunar .dotfiles" },
+  { "Configs", "thunar .config" },
+  { "Wallpapers", "thunar Pictures/Wallpapers/" },
+  { "Screen Shots", "thunar Pictures/Screenshots/" },
   { "SSD", "thunar /mnt/SSD/" },
   { "Music", "thunar /mnt/SSD/muzica/" },
   { "Repos", "thunar /mnt/SSD/repos/" },

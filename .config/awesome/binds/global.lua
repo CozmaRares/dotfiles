@@ -188,6 +188,14 @@ return {
       end,
       description = "open file explorer",
     },
+    {
+      mods = { modkey },
+      key = "p",
+      fn = function()
+        awful.spawn "arandr"
+      end,
+      description = "open terminal",
+    },
   },
 
   layout = {
