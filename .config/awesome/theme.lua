@@ -9,9 +9,27 @@ local dpi = xresources.apply_dpi
 local gfs = require "gears.filesystem"
 local themes_path = gfs.get_themes_dir()
 
-local theme = {}
+local colors = {
+  bg_dark = "#1a1b26",
+  bg_dim = "#212539",
+  bg_normal = "#24283b",
+  bg_light = "#36424c",
+  mid_dark = "#414b68",
+  mid_normal = "#565f89",
+  mid_light = "#9aa5ce",
+  fg_normal = "#a9b1d6",
+  red = "#f7768e",
+  orange = "#ff9e64",
+  yellow = "#e0af68",
+  green = "#9ece6a",
+  cyan = "#7dcfff",
+  lightblue = "#89b4fa",
+  blue = "#7aa2f7",
+  magenta = "#8c43f1",
+  purple = "#bb9af7",
+}
 
-theme.font = "sans 8"
+local theme = {}
 
 theme.bg_normal = "#222222"
 theme.bg_focus = "#535d6c"
@@ -25,10 +43,32 @@ theme.fg_urgent = "#ffffff"
 theme.fg_minimize = "#ffffff"
 
 theme.useless_gap = dpi(8)
-theme.border_width = dpi(1)
+theme.border_width = dpi(2)
 theme.border_normal = "#000000"
 theme.border_focus = "#535d6c"
 theme.border_marked = "#91231c"
+
+theme.fg = colors.fg_normal
+theme.bg = colors.bg_dark
+theme.bg_normal = colors.bg_dark
+theme.fg_normal = colors.mid_light
+theme.bg_focus = colors.mid_dark
+theme.fg_focus = colors.fg_normal
+theme.border_width = 2
+theme.border_normal = colors.bg_normal
+theme.border_focus = colors.mid_normal
+
+theme.titlebar_bg = colors.bg_normal
+theme.titlebar_bg_focus = colors.mid_normal
+
+theme.taglist_bg_empty = colors.bg_dim
+theme.taglist_bg_occupied = colors.bg_dim
+theme.taglist_bg_focus = colors.bg_light
+
+theme.taglist_fg_empty = colors.mid_normal
+theme.taglist_fg_occupied = colors.fg_normal
+theme.taglist_fg_focus = colors.cyan
+theme.taglist_fg_urgent = colors.yellow
 
 -- There are other variable sets
 -- overriding the default one when
@@ -136,5 +176,14 @@ theme.awesome_icon = theme_assets.awesome_icon(theme.menu_height, theme.bg_focus
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
+
+theme.other = {
+  colors = colors,
+  font = function(size)
+    return "JetBrainsMono NF " .. size
+  end,
+}
+
+theme.font = theme.other.font(8)
 
 return theme

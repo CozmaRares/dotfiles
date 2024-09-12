@@ -112,4 +112,12 @@ return {
     comma = "comma",
     dot = "period",
   },
+
+  mouse = {
+    left = 1,
+    right = 2,
+    wheel = 3,
+    scroll_up = 4,
+    scroll_down = 5,
+  }
 }

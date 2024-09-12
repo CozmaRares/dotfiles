@@ -1,28 +1,40 @@
 local awful = require "awful"
 local hotkeys_popup = require "awful.hotkeys_popup"
+local naughty = require "naughty"
 
 local keys = require "keys"
-local utils = require "utils"
 local pref = require "preferences"
 
 local modkey = pref.user.modkey
 
 local function notify_brightness()
-  utils.exec_after("0.2", function()
+  awful.spawn.easy_async("sleep 0.2", function()
     awful.spawn.easy_async("brillo", function(stdout)
       stdout = stdout:gsub("\n$", "")
       local val = math.floor(tonumber(stdout) or 0)
       val = math.floor((val - 5) / 95 * 100)
-      utils.replaceable_notification("Brightness: " .. tostring(val) .. "%")
+      local id = require("notif_ids").brightness
+      naughty.notify {
+        id = id,
+        replaces_id = id,
+        title = "Brightness",
+        text = string.format("%9d", val) .. "%",
+      }
     end)
   end)
 end
 
 local function notify_volume()
-  utils.exec_after("0.2", function()
+  awful.spawn.easy_async("sleep 0.2", function()
     awful.spawn.easy_async("pamixer --get-volume-human", function(stdout)
       stdout = stdout:gsub("\n$", "")
-      utils.replaceable_notification("Volume: " .. stdout)
+      local id = require("notif_ids").volume
+      naughty.notify {
+        id = id,
+        replaces_id = id,
+        title = "Volume",
+        text = string.format("%+12s", stdout),
+      }
     end)
   end)
 end
@@ -48,23 +60,6 @@ return {
       key = keys.letter.r,
       fn = awesome.restart,
       description = "reload awesome",
-    },
-
-    {
-      mods = { modkey },
-      key = keys.letter.r,
-      fn = function()
-        awful.prompt.run {
-          prompt = "Search: ",
-          textbox = awful.screen.focused().mypromptbox.widget,
-          exe_callback = function(query)
-            query = query:gsub("%s+", "+")
-            local command = string.format('xdg-open "https://duckduckgo.com/?q=%s"', query)
-            awful.spawn(command)
-          end,
-        }
-      end,
-      description = "search online",
     },
   },
 
