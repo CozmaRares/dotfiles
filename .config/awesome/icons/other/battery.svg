@@ -1,0 +1,64 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 640 480"
+  color="currentColor"
+>
+  <g transform="matrix(0 -1 1 0 428.3 231.26)">
+    <g style="">
+      <g transform="matrix(1 0 0 1 11 0)">
+        <path
+          style="
+            stroke-width: 1.5;
+            stroke-dasharray: none;
+            stroke-linecap: round;
+            stroke-dashoffset: 0;
+            stroke-linejoin: round;
+            stroke-miterlimit: 4;
+            fill: none;
+            fill-rule: nonzero;
+            opacity: 1;
+          "
+          transform=" translate(-23, -12)"
+          d="M 23 10 V 14"
+          stroke-linecap="round"
+        />
+      </g>
+      <g transform="matrix(1 0 0 1 -1.5 0)">
+        <path
+          style="
+            stroke-width: 1.5;
+            stroke-dasharray: none;
+            stroke-linecap: butt;
+            stroke-dashoffset: 0;
+            stroke-linejoin: miter;
+            stroke-miterlimit: 4;
+            fill: none;
+            fill-rule: nonzero;
+            opacity: 1;
+          "
+          transform=" translate(-10.5, -12)"
+          d="M 1 16 V 8 C 1 6.89543 1.89543 6 3 6 H 18 C 19.1046 6 20 6.89543 20 8 V 16 C 20 17.1046 19.1046 18 18 18 H 3 C 1.89543 18 1 17.1046 1 16 Z"
+          stroke-linecap="round"
+        />
+      </g>
+      <g transform="matrix(1 0 0 1 -6.5 0)">
+        <path
+          style="
+            stroke-width: 1.5;
+            stroke-dasharray: none;
+            stroke-linecap: butt;
+            stroke-dashoffset: 0;
+            stroke-linejoin: miter;
+            stroke-miterlimit: 4;
+            fill: none;
+            fill-rule: nonzero;
+            opacity: 1;
+          "
+          transform=" translate(-5.5, -12)"
+          d="M 4 14.4 V 9.6 C 4 9.26863 4.26863 9 4.6 9 H 6.4 C 6.73137 9 7 9.26863 7 9.6 V 14.4 C 7 14.7314 6.73137 15 6.4 15 H 4.6 C 4.26863 15 4 14.7314 4 14.4 Z"
+          stroke-linecap="round"
+        />
+      </g>
+    </g>
+  </g>
+</svg>

@@ -15,8 +15,6 @@ local wibox = require "wibox"
 local watch = require "awful.widget.watch"
 local colors = beautiful.other.colors
 
-local icon_path = os.getenv "HOME" .. "/.config/awesome/icons/other/rocket.svg"
-
 local batteryarc_widget = {}
 
 return function()
@@ -24,59 +22,49 @@ return function()
   local arc_thickness = 2
   local size = 26
   local timeout = 10
-
-  local main_color = beautiful.fg_color
-  local bg_color = "#ffffff11"
-  local low_level_color = colors.red
-  local medium_level_color = colors.purple
-  local high_level_color = colors.blue
-  local charging_color = colors.blue
+  local warning_cooldown = 10
 
   local warning_msg_title = "Houston, we have a problem"
   local warning_msg_text = "Battery is dying"
-  local warning_msg_position = "bottom_right"
-  local warning_msg_icon = icon_path
+  local warning_msg_icon = os.getenv "HOME" .. "/.config/awesome/icons/other/battery.png"
 
-  local inner_text = wibox.widget.textbox()
+  local inner_text = wibox.widget {
+    widget = wibox.widget.textbox,
+  }
   local text = wibox.widget {
     inner_text,
     widget = wibox.container.margin,
     left = 1,
     font = font,
-    align = "center",
-    valign = "center",
   }
 
-  local text_with_background = wibox.container.background(text)
-
   batteryarc_widget = wibox.widget {
-    text_with_background,
+    text,
     max_value = 100,
     rounded_edge = true,
     thickness = arc_thickness,
     start_angle = 4.71238898, -- 2pi*3/4
     forced_height = size,
     forced_width = size,
-    bg = bg_color,
     paddings = 2,
     widget = wibox.container.arcchart,
   }
 
   local last_battery_check = os.time()
+  local notification_id = require("notif_ids").battery
 
   --[[ Show warning notification ]]
   local function show_battery_warning()
     naughty.notify {
       icon = warning_msg_icon,
-      icon_size = 100,
       text = warning_msg_text,
       title = warning_msg_title,
       timeout = 25, -- show the warning for a longer time
       hover_timeout = 0.5,
-      position = warning_msg_position,
-      bg = "#F06060",
-      fg = "#EEE9EF",
-      width = 300,
+      bg = colors.red,
+      fg = colors.bg_dim,
+      id = notification_id,
+      replaces_id = notification_id,
     }
   end
 
@@ -94,33 +82,36 @@ return function()
       end
     end
 
+    charge = 1
+    status = "Discharging"
+
     widget.value = charge
 
-    if status == "Charging" then
-      text_with_background.bg = charging_color
-      text_with_background.fg = "#000000"
-    else
-      text_with_background.bg = "#00000000"
-      text_with_background.fg = main_color
-    end
+    if charge < 10 then
+      inner_text.text = string.format("0%d", charge)
 
-    inner_text.text = charge == 100 and "" or string.format("%d", charge)
-
-    if charge < 15 then
-      widget.colors = { low_level_color }
-      if status ~= "Charging" and os.difftime(os.time(), last_battery_check) > 300 then
+      if status == "Discharging" and os.difftime(os.time(), last_battery_check) > warning_cooldown then
         last_battery_check = os.time()
         show_battery_warning()
       end
-    elseif charge < 40 then
-      widget.colors = { medium_level_color }
+    elseif charge < 100 then
+      inner_text.text = string.format("%d", charge)
     else
-      widget.colors = { high_level_color }
+      inner_text.text = ""
+    end
+
+    if status == "Charging" then
+      widget.colors = { colors.green }
+    elseif charge < 10 then
+      widget.colors = { colors.red }
+    elseif charge < 30 then
+      widget.colors = { colors.purple }
+    else
+      widget.colors = { colors.blue }
     end
   end
 
   watch("acpi", timeout, update_widget, batteryarc_widget)
-  local notification_id = require("notif_ids").battery
 
   local function show_battery_status()
     awful.spawn.easy_async("acpi", function(stdout)
