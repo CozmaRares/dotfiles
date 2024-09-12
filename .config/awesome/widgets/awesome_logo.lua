@@ -4,7 +4,6 @@ local wibox = require "wibox"
 local beautiful = require "beautiful"
 local dpi = beautiful.xresources.apply_dpi
 
-local colors = beautiful.other.colors
 -- local dashboard = require("popups.dashboard.home.main")
 
 --Main Logo
@@ -22,7 +21,6 @@ local widget = wibox.widget {
     bottom = dpi(7),
     widget = wibox.container.margin,
   },
-  bg = colors.bg_dark,
   shape = gears.shape.rounded_rect,
   widget = wibox.container.background,
 }

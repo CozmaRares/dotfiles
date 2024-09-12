@@ -37,11 +37,14 @@ return function()
   local warning_msg_position = "bottom_right"
   local warning_msg_icon = icon_path
 
+  local inner_text = wibox.widget.textbox()
   local text = wibox.widget {
+    inner_text,
+    widget = wibox.container.margin,
+    left = 1,
     font = font,
     align = "center",
     valign = "center",
-    widget = wibox.widget.textbox,
   }
 
   local text_with_background = wibox.container.background(text)
@@ -101,8 +104,7 @@ return function()
       text_with_background.fg = main_color
     end
 
-    text.text = 50
-    --charge == 100 and "F%" or string.format("%d", charge)
+    inner_text.text = charge == 100 and "" or string.format("%d", charge)
 
     if charge < 15 then
       widget.colors = { low_level_color }

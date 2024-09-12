@@ -1,16 +1,15 @@
 local gtable = require "gears.table"
 local awful = require "awful"
 local wibox = require "wibox"
-local batteryarc_widget = require "widgets.battery"
-local calendar_widget = require "widgets.calendar"
 local modkey = require("preferences").user.modkey
 local keys = require "keys"
 local colors = require("beautiful").other.colors
 
 local awesome_logo = require "widgets.awesome_logo"
-local battery = batteryarc_widget()
+local battery = require "widgets.battery"()
+local calendar = require "widgets.calendar"()
+local systray = require "widgets.systray"
 local separator = wibox.widget.textbox "  "
-local calendar = calendar_widget()
 
 local clock = wibox.widget.textclock(
   '<span color="' .. colors.fg_normal .. '" font="JetBrainsMono NF 10"> %a %b %d, %I:%M %p </span>'
@@ -100,7 +99,7 @@ awful.screen.connect_for_each_screen(function(s)
   -- }
 
   -- Create the wibox
-  s.wibox = awful.wibar { position = "top", screen = s, bg = colors.bg_dark }
+  s.wibox = awful.wibar { position = "top", screen = s }
 
   -- Add widgets to the wibox
   s.wibox:setup {
@@ -115,8 +114,7 @@ awful.screen.connect_for_each_screen(function(s)
     { -- Right widgets
       layout = wibox.layout.fixed.horizontal,
       -- mykeyboardlayout,
-      wibox.widget.systray(),
-      separator,
+      systray,
       {
         clock,
         valign = "center",

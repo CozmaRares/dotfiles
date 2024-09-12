@@ -61,14 +61,18 @@ theme.border_focus = colors.mid_normal
 theme.titlebar_bg = colors.bg_normal
 theme.titlebar_bg_focus = colors.mid_normal
 
-theme.taglist_bg_empty = colors.bg_dim
-theme.taglist_bg_occupied = colors.bg_dim
+theme.taglist_bg_empty = colors.bg_dark
+theme.taglist_bg_occupied = colors.bg_dark
 theme.taglist_bg_focus = colors.bg_light
 
 theme.taglist_fg_empty = colors.mid_normal
 theme.taglist_fg_occupied = colors.fg_normal
 theme.taglist_fg_focus = colors.cyan
 theme.taglist_fg_urgent = colors.yellow
+
+theme.wibar_bg = colors.bg_dim
+theme.bg_systray = colors.bg_dim
+theme.systray_icon_spacing = 10
 
 -- There are other variable sets
 -- overriding the default one when
@@ -106,8 +110,8 @@ theme.menu_width = dpi(100)
 -- beautiful.variable in your rc.lua
 --theme.bg_widget = "#cc0000"
 
-local titlebar_icon_path = os.getenv "HOME" .. "/.config/awesome/icons/titlebar/"
-local tip = titlebar_icon_path --alias to save time/space
+-- titlebar icon path
+local tip = os.getenv "HOME" .. "/.config/awesome/icons/titlebar/"
 
 -- Define the image to load
 theme.titlebar_close_button_normal = tip .. "x.svg"
