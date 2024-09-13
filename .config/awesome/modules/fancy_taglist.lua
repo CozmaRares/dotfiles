@@ -21,31 +21,18 @@ local gears = require "gears"
 local wibox = require "wibox"
 
 local dpi = beautiful.xresources.apply_dpi
-local internal_spacing = dpi(7)
-local box_height = dpi(5)
-local box_width = dpi(10)
-local icon_size = dpi(20)
 
-local function box_margins(widget)
+local function box_margins(widget, margins)
+  margins = margins or {}
+
   return {
     { widget, widget = wibox.container.place },
-    top = box_height,
-    bottom = box_height,
-    left = box_width,
-    right = box_width,
+    top = margins.top or 0,
+    bottom = margins.bottom or 0,
+    left = margins.left or 0,
+    right = margins.right or 0,
     widget = wibox.container.margin,
-  }
-end
-
-local function constrain_icon(widget)
-  return {
-    {
-      widget,
-      height = icon_size,
-      strategy = "exact",
-      widget = wibox.container.constraint,
-    },
-    widget = wibox.container.place,
+    id = margins.id,
   }
 end
 
@@ -62,7 +49,6 @@ local function fancy_tasklist(cfg, tag)
   local overrides = {
     filter = only_this_tag,
     layout = {
-      spacing = beautiful.taglist_spacing,
       layout = wibox.layout.fixed.horizontal,
     },
     widget_template = {
@@ -92,11 +78,11 @@ function module.new(cfg)
 
   local function update_callback(self, tag, _, _)
     -- make sure that empty tasklists take up no extra space
-    local list_separator = self:get_children_by_id("list_separator")[1]
+    local text_margin = self:get_children_by_id("text_margin")[1]
     if #tag:clients() == 0 then
-      list_separator.spacing = 0
+      text_margin.right = 0
     else
-      list_separator.spacing = internal_spacing
+      text_margin.right = dpi(5)
     end
   end
 
@@ -109,22 +95,29 @@ function module.new(cfg)
   local overrides = {
     filter = awful.widget.taglist.filter.all,
     widget_template = {
-      box_margins {
-        -- tag
-        {
+      box_margins({
+        box_margins({
           id = "text_role",
           widget = wibox.widget.textbox,
           align = "center",
-        },
-        -- tasklist
-        constrain_icon {
+        }, {
+          right = dpi(5),
+          id = "text_margin",
+        }),
+        {
           id = "tasklist_placeholder",
           layout = wibox.layout.fixed.horizontal,
         },
         id = "list_separator",
-        spacing = internal_spacing,
+        spacing = 0,
         layout = wibox.layout.fixed.horizontal,
-      },
+      }, {
+        top = dpi(5),
+        bottom = dpi(5),
+        left = dpi(5),
+        right = dpi(5),
+      }),
+
       id = "background_role",
       widget = wibox.container.background,
       create_callback = create_callback,

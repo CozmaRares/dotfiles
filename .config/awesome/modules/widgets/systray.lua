@@ -2,16 +2,12 @@
 local gears = require "gears"
 local wibox = require "wibox"
 local beautiful = require "beautiful"
-local colors = beautiful.other.colors
 local dpi = beautiful.xresources.apply_dpi
 
 -- topbar icons path
 local tip = os.getenv "HOME" .. "/.config/awesome/icons/topbar/"
 local open_icon = tip .. "arrow_left.svg"
 local close_icon = tip .. "arrow_right.svg"
-
---Separator
-local separator = wibox.widget.textbox "  "
 
 --Systray Widget
 local systray = wibox.widget {
@@ -46,9 +42,7 @@ local tray_toggle = wibox.widget {
 local widget = wibox.widget {
   {
     {
-      separator,
       systray,
-      separator,
       tray_toggle,
       layout = wibox.layout.fixed.horizontal,
     },

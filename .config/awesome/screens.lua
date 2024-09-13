@@ -12,7 +12,7 @@ awful.screen.connect_for_each_screen(function(s)
   bling.module.wallpaper.setup {
     set_function = bling.module.wallpaper.setters.random,
     wallpaper = os.getenv "HOME" .. "/Pictures/Wallpapers",
-    change_timer = 307,
+    change_timer = 607,
     screen = s,
     position = "maximized",
   }

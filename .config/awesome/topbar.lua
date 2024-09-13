@@ -6,11 +6,11 @@ local keys = require "keys"
 local beautiful = require "beautiful"
 local colors = beautiful.other.colors
 
-local awesome_logo = require "widgets.awesome_logo"
-local battery = require "widgets.battery"()
-local calendar = require "widgets.calendar"()
-local systray = require "widgets.systray"
-local fancy_taglist = require "fancy_taglist"
+local awesome_logo = require "modules.widgets.awesome_logo"
+local battery = require "modules.widgets.battery"()
+local calendar = require "modules.widgets.calendar"()
+local systray = require "modules.widgets.systray"
+local fancy_taglist = require "modules.fancy_taglist"
 
 local separator1 = wibox.widget.textbox " "
 local separator2 = wibox.widget.textbox "  "

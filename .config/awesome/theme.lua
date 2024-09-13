@@ -161,11 +161,11 @@ theme.layout_cornerse = themes_path .. "default/layouts/cornersew.png"
 
 theme.awesome_icon = theme_assets.awesome_icon(theme.menu_height, theme.bg_focus, theme.fg_focus)
 
-theme.icon_theme = "Papirus-Dark"
+theme.icon_theme = "Papirus"
 
 -- theme.tags = { "1", "2", "3", "4", "5", "6", "7", " 8", "9" }
-theme.tags = { "一", "二", "三", "四", "五", "六", "七", " 八", "九" }
--- theme.tags = { "🯱", "🯲", "🯳", "🯴", "🯵", "🯶", "🯷", "🯸", "🯹" }
+-- theme.tags = { "一", "二", "三", "四", "五", "六", "七", " 八", "九" }
+theme.tags = { "🯱", "🯲", "🯳", "🯴", "🯵", "🯶", "🯷", "🯸", "🯹" }
 
 theme.other = {
   colors = colors,
