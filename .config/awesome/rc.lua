@@ -25,7 +25,7 @@ awful.layout.layouts = pref.layouts
 
 menubar.utils.terminal = pref.apps.terminal
 
-require "topbar"
+require "screens"
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(

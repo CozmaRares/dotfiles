@@ -39,7 +39,6 @@ local tray_toggle = wibox.widget {
     bottom = dpi(3),
     widget = wibox.container.margin,
   },
-  bg = colors.bg_dim,
   shape = gears.shape.rounded_rect,
   widget = wibox.container.background,
 }
@@ -55,7 +54,6 @@ local widget = wibox.widget {
     },
     widget = wibox.container.background,
     shape = gears.shape.rounded_rect,
-    bg = colors.bg_dim,
   },
   left = dpi(3),
   right = dpi(0),

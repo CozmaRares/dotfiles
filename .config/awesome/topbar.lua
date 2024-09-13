@@ -10,7 +10,10 @@ local awesome_logo = require "widgets.awesome_logo"
 local battery = require "widgets.battery"()
 local calendar = require "widgets.calendar"()
 local systray = require "widgets.systray"
-local separator = wibox.widget.textbox "  "
+local fancy_taglist = require "fancy_taglist"
+
+local separator1 = wibox.widget.textbox " "
+local separator2 = wibox.widget.textbox "  "
 
 local clock = wibox.widget.textclock(
   '<span color="' .. colors.fg_normal .. '" font="' .. beautiful.other.font(12) .. '"> %a %b %d, %I:%M %p </span>'
@@ -45,11 +48,28 @@ local taglist_buttons = gtable.join(
   end)
 )
 
-awful.screen.connect_for_each_screen(function(s)
-  awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+local tasklist_buttons = gtable.join(
+  awful.button({}, 1, function(c)
+    if c == client.focus then
+      c.minimized = true
+    else
+      c:emit_signal("request::activate", "tasklist", { raise = true })
+    end
+  end),
+  awful.button({}, 3, function()
+    awful.menu.client_list { theme = { width = 250 } }
+  end),
+  awful.button({}, 4, function()
+    awful.client.focus.byidx(1)
+  end),
+  awful.button({}, 5, function()
+    awful.client.focus.byidx(-1)
+  end)
+)
 
-  s.mylayoutbox = awful.widget.layoutbox(s)
-  s.mylayoutbox:buttons(gtable.join(
+return function(s)
+  s.layoutbox = awful.widget.layoutbox(s)
+  s.layoutbox:buttons(gtable.join(
     awful.button({}, 1, function()
       awful.layout.inc(1)
     end),
@@ -64,37 +84,39 @@ awful.screen.connect_for_each_screen(function(s)
     end)
   ))
 
-  s.mytaglist = awful.widget.taglist {
+  s.taglist = fancy_taglist.new {
     screen = s,
-    filter = awful.widget.taglist.filter.all,
-    buttons = taglist_buttons,
+    taglist = { buttons = taglist_buttons },
+    tasklist = { buttons = tasklist_buttons },
   }
 
-  s.wibox = awful.wibar { position = "top", screen = s }
+  s.wibox = awful.wibar { position = beautiful.wibar_position, screen = s }
 
   s.wibox:setup {
-    layout = wibox.layout.align.horizontal,
     {
-      layout = wibox.layout.fixed.horizontal,
+      separator1,
       awesome_logo,
-      separator,
-      s.mytaglist,
+      separator2,
+      s.taglist,
+      layout = wibox.layout.fixed.horizontal,
     },
     nil,
     {
-      layout = wibox.layout.fixed.horizontal,
       systray,
+      separator1,
       {
         clock,
         valign = "center",
         halign = "center",
         layout = wibox.container.place,
       },
-      separator,
+      separator2,
       battery,
-      separator,
-      s.mylayoutbox,
-      separator,
+      separator2,
+      s.layoutbox,
+      separator1,
+      layout = wibox.layout.fixed.horizontal,
     },
+    layout = wibox.layout.align.horizontal,
   }
-end)
+end

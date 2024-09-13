@@ -33,7 +33,7 @@ local function notify_volume()
         id = id,
         replaces_id = id,
         title = "Volume",
-        text = string.format("%+12s", stdout),
+        text = string.format("%+6s", stdout),
       }
     end)
   end)

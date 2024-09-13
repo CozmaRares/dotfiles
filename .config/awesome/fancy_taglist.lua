@@ -15,10 +15,10 @@
 -- theme.taglist_shape = function(cr, w, h)
 --     return gears.shape.rounded_rect(cr, w, h, theme.border_radius)
 -- end
-local awful = require("awful")
-local beautiful = require("beautiful")
-local gears = require("gears")
-local wibox = require("wibox")
+local awful = require "awful"
+local beautiful = require "beautiful"
+local gears = require "gears"
+local wibox = require "wibox"
 
 local dpi = beautiful.xresources.apply_dpi
 local internal_spacing = dpi(7)
@@ -33,7 +33,7 @@ local function box_margins(widget)
     bottom = box_height,
     left = box_width,
     right = box_width,
-    widget = wibox.container.margin
+    widget = wibox.container.margin,
   }
 end
 
@@ -42,16 +42,20 @@ local function constrain_icon(widget)
     {
       widget,
       height = icon_size,
-      strategy = 'exact',
-      widget = wibox.container.constraint
+      strategy = "exact",
+      widget = wibox.container.constraint,
     },
-    widget = wibox.container.place
+    widget = wibox.container.place,
   }
 end
 
 local function fancy_tasklist(cfg, tag)
   local function only_this_tag(c, _)
-    for _, t in ipairs(c:tags()) do if t == tag then return true end end
+    for _, t in ipairs(c:tags()) do
+      if t == tag then
+        return true
+      end
+    end
     return false
   end
 
@@ -59,15 +63,15 @@ local function fancy_tasklist(cfg, tag)
     filter = only_this_tag,
     layout = {
       spacing = beautiful.taglist_spacing,
-      layout = wibox.layout.fixed.horizontal
+      layout = wibox.layout.fixed.horizontal,
     },
     widget_template = {
       id = "clienticon",
       widget = awful.widget.clienticon,
       create_callback = function(self, c, _, _)
         self:get_children_by_id("clienticon")[1].client = c
-      end
-    }
+      end,
+    },
   }
   return awful.widget.tasklist(gears.table.join(cfg, overrides))
 end
@@ -110,23 +114,24 @@ function module.new(cfg)
         {
           id = "text_role",
           widget = wibox.widget.textbox,
-          align = "center"
+          align = "center",
         },
         -- tasklist
         constrain_icon {
           id = "tasklist_placeholder",
-          layout = wibox.layout.fixed.horizontal
+          layout = wibox.layout.fixed.horizontal,
         },
         id = "list_separator",
         spacing = internal_spacing,
-        layout = wibox.layout.fixed.horizontal
+        layout = wibox.layout.fixed.horizontal,
       },
       id = "background_role",
       widget = wibox.container.background,
       create_callback = create_callback,
-      update_callback = update_callback
-    }
+      update_callback = update_callback,
+    },
   }
+
   return awful.widget.taglist(gears.table.join(taglist_cfg, overrides))
 end
 

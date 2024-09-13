@@ -21,8 +21,8 @@ return function()
   local font = beautiful.other.font(8)
   local arc_thickness = 2
   local size = 26
-  local timeout = 10
-  local warning_cooldown = 10
+  local timeout = 60
+  local warning_cooldown = 5 * 60
 
   local warning_msg_title = "Houston, we have a problem"
   local warning_msg_text = "Battery is dying"
@@ -59,6 +59,7 @@ return function()
       icon = warning_msg_icon,
       text = warning_msg_text,
       title = warning_msg_title,
+      icon_size = 50,
       timeout = 25, -- show the warning for a longer time
       hover_timeout = 0.5,
       bg = colors.red,
@@ -82,9 +83,6 @@ return function()
       end
     end
 
-    charge = 1
-    status = "Discharging"
-
     widget.value = charge
 
     if charge < 10 then
@@ -97,7 +95,7 @@ return function()
     elseif charge < 100 then
       inner_text.text = string.format("%d", charge)
     else
-      inner_text.text = ""
+      inner_text.text = "=="
     end
 
     if status == "Charging" then
@@ -116,7 +114,7 @@ return function()
   local function show_battery_status()
     awful.spawn.easy_async("acpi", function(stdout)
       naughty.notify {
-        text = stdout,
+        text = string.gsub(stdout, "\n", ""),
         title = "Battery",
         timeout = 5,
         id = notification_id,

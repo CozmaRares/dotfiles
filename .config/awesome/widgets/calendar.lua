@@ -11,7 +11,8 @@
 local awful = require "awful"
 local wibox = require "wibox"
 local gears = require "gears"
-local colors = require("beautiful").other.colors
+local beautiful = require "beautiful"
+local colors = beautiful.other.colors
 local keys = require "keys"
 
 local calendar_widget = {}
@@ -121,7 +122,7 @@ return function()
 
   local cal = wibox.widget {
     date = os.date "*t",
-    font = "JetBrainsMono NF 14",
+    font = beautiful.other.font(12),
     fn_embed = decorate_cell,
     long_weekdays = true,
     start_sunday = start_sunday,

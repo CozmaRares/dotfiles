@@ -5,8 +5,8 @@
 local theme_assets = require "beautiful.theme_assets"
 local xresources = require "beautiful.xresources"
 local dpi = xresources.apply_dpi
-
 local gfs = require "gears.filesystem"
+local gshape = require "gears.shape"
 local themes_path = gfs.get_themes_dir()
 
 local colors = {
@@ -30,7 +30,13 @@ local colors = {
   white = "#efefef",
 }
 
+local function font(size)
+  return "JetBrainsMono NF " .. size
+end
+
 local theme = {}
+
+theme.font = font(8)
 
 theme.bg_normal = colors.bg_normal
 theme.bg_focus = colors.mid_light
@@ -62,8 +68,8 @@ theme.border_focus = colors.mid_normal
 theme.titlebar_bg = colors.bg_normal
 theme.titlebar_bg_focus = colors.mid_normal
 
-theme.taglist_bg_empty = colors.bg_dark
-theme.taglist_bg_occupied = colors.bg_dark
+theme.taglist_bg_empty = colors.bg_dim
+theme.taglist_bg_occupied = colors.bg_dim
 theme.taglist_bg_focus = colors.bg_light
 
 theme.taglist_fg_empty = colors.mid_normal
@@ -71,13 +77,21 @@ theme.taglist_fg_occupied = colors.fg_normal
 theme.taglist_fg_focus = colors.cyan
 theme.taglist_fg_urgent = colors.yellow
 
-theme.wibar_bg = colors.bg_dim
-theme.bg_systray = colors.bg_dim
+theme.taglist_spacing = 5
+
+theme.wibar_bg = colors.bg_darm
+theme.wibar_position = "top"
+
+theme.bg_systray = colors.bg_dark
 theme.systray_icon_spacing = 10
 
-local taglist_square_size = dpi(4)
-theme.taglist_squares_sel = theme_assets.taglist_squares_sel(taglist_square_size, theme.fg_normal)
-theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(taglist_square_size, theme.fg_normal)
+-- local taglist_square_size = dpi(0)
+-- theme.taglist_squares_sel = theme_assets.taglist_squares_sel(taglist_square_size, theme.fg_normal)
+-- theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(taglist_square_size, theme.fg_normal)
+
+theme.taglist_shape = function(cr, w, h)
+  return gshape.rounded_rect(cr, w, h, theme.border_radius)
+end
 
 theme.menu_submenu_icon = themes_path .. "default/submenu.png"
 theme.menu_height = dpi(15)
@@ -146,15 +160,16 @@ theme.layout_cornersw = themes_path .. "default/layouts/cornersww.png"
 theme.layout_cornerse = themes_path .. "default/layouts/cornersew.png"
 
 theme.awesome_icon = theme_assets.awesome_icon(theme.menu_height, theme.bg_focus, theme.fg_focus)
-theme.icon_theme = nil
+
+theme.icon_theme = "Papirus-Dark"
+
+-- theme.tags = { "1", "2", "3", "4", "5", "6", "7", " 8", "9" }
+-- theme.tags = { "一", "二", "三", "四", "五", "六", "七", " 八", "九" }
+theme.tags = { "🯱", "🯲", "🯳", "🯴", "🯵", "🯶", "🯷", "🯸", "🯹" }
 
 theme.other = {
   colors = colors,
-  font = function(size)
-    return "JetBrainsMono NF " .. size
-  end,
+  font = font,
 }
-
-theme.font = theme.other.font(8)
 
 return theme
