@@ -95,6 +95,7 @@ alias pnpmd='pnpm install -D'
 alias gcam="git commit --amend"
 alias gcne="git commit --amend --no-edit"
 alias ggc="gud commit"
+alias gcl="git clone --depth=1 --recurse-submodules"
 
 alias vim=nvim
 alias vi=nvim

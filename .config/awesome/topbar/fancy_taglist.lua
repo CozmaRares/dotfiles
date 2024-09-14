@@ -19,8 +19,12 @@ local awful = require "awful"
 local beautiful = require "beautiful"
 local gears = require "gears"
 local wibox = require "wibox"
+local naughty = require "naughty"
+local menubar = require "menubar"
 
 local dpi = beautiful.xresources.apply_dpi
+
+local DEFAULT_ICON = os.getenv "HOME" .. "/.config/awesome/icons/other/default_app_icon.svg"
 
 local function box_margins(widget, margins)
   margins = margins or {}
@@ -52,10 +56,17 @@ local function fancy_tasklist(cfg, tag)
       layout = wibox.layout.fixed.horizontal,
     },
     widget_template = {
-      id = "clienticon",
-      widget = awful.widget.clienticon,
+      widget = wibox.widget.imagebox,
       create_callback = function(self, c, _, _)
-        self:get_children_by_id("clienticon")[1].client = c
+        local image = menubar.utils.lookup_icon(c.class)
+          or menubar.utils.lookup_icon(string.lower(c.class))
+          or DEFAULT_ICON
+
+        self.image = image
+
+        c:connect_signal("property::class", function(cl)
+          self.image = menubar.utils.lookup_icon(cl.class) or DEFAULT_ICON
+        end)
       end,
     },
   }
@@ -114,8 +125,8 @@ function module.new(cfg)
       }, {
         top = dpi(5),
         bottom = dpi(5),
-        left = dpi(5),
-        right = dpi(5),
+        left = dpi(8),
+        right = dpi(8),
       }),
 
       id = "background_role",

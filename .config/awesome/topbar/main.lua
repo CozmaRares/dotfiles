@@ -4,26 +4,16 @@ local wibox = require "wibox"
 local modkey = require("preferences").user.modkey
 local keys = require "keys"
 local beautiful = require "beautiful"
-local colors = beautiful.other.colors
 
-local awesome_logo = require "modules.widgets.awesome_logo"
-local battery = require "modules.widgets.battery"()
-local calendar = require "modules.widgets.calendar"()
-local systray = require "modules.widgets.systray"
-local fancy_taglist = require "modules.fancy_taglist"
+local awesome_logo = require "topbar.awesome_logo"
+local battery = require "topbar.battery"()
+local systray = require "topbar.systray"
+local fancy_taglist = require "topbar.fancy_taglist"
+local clock = require "topbar.clock"
+local buttons = require "topbar.buttons"
 
 local separator1 = wibox.widget.textbox " "
 local separator2 = wibox.widget.textbox "  "
-
-local clock = wibox.widget.textclock(
-  '<span color="' .. colors.fg_normal .. '" font="' .. beautiful.other.font(12) .. '"> %a %b %d, %I:%M %p </span>'
-)
-
-clock:connect_signal("button::press", function(_, _, _, button)
-  if button == keys.mouse.left then
-    calendar.toggle()
-  end
-end)
 
 local taglist_buttons = gtable.join(
   awful.button({}, keys.mouse.left, function(t)
@@ -111,9 +101,11 @@ return function(s)
         layout = wibox.container.place,
       },
       separator2,
-      battery,
+      buttons,
       separator2,
       s.layoutbox,
+      separator2,
+      battery,
       separator1,
       layout = wibox.layout.fixed.horizontal,
     },

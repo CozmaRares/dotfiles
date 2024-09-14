@@ -115,9 +115,9 @@ return {
 
   mouse = {
     left = 1,
-    right = 2,
-    wheel = 3,
+    wheel = 2,
+    right = 3,
     scroll_up = 4,
     scroll_down = 5,
-  }
+  },
 }

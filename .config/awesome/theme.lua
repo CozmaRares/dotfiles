@@ -77,13 +77,13 @@ theme.taglist_fg_occupied = colors.fg_normal
 theme.taglist_fg_focus = colors.cyan
 theme.taglist_fg_urgent = colors.yellow
 
-theme.taglist_spacing = 5
+theme.taglist_spacing = dpi(7)
 
 theme.wibar_bg = colors.bg_darm
 theme.wibar_position = "top"
 
 theme.bg_systray = colors.bg_dark
-theme.systray_icon_spacing = 10
+theme.systray_icon_spacing = dpi(10)
 
 -- local taglist_square_size = dpi(0)
 -- theme.taglist_squares_sel = theme_assets.taglist_squares_sel(taglist_square_size, theme.fg_normal)

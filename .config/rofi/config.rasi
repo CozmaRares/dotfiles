@@ -1,7 +1,7 @@
 configuration {
-    display-drun:   "App: ";
-    display-window: "Window: ";
-    display-run:    "Bin: ";
+    display-drun:   "> ";
+    display-window: "> ";
+    display-run:    "> ";
     display-combi:  "> ";
 
     drun-display-format: "{icon} {name}";
