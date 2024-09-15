@@ -29,11 +29,9 @@ M.cmds = {
     --   value = awful.spawn("brillo -q -S " .. value)
     -- end,
   },
-  nightlight = {
-    set = function(temp)
-      return "redshift -P -O " .. temp
-    end,
-  },
+  nightlight = function(temp)
+    return "redshift -P -O " .. temp
+  end,
   volume = {
     query = "pamixer --get-volume-human",
     toggle_mute = "pamixer -t",
@@ -79,7 +77,7 @@ M.user = {
 
 M.startup = {
   "picom",
-  M.cmds.nightlight.set(M.data.nightlight_temp.default),
+  M.cmds.nightlight(M.data.nightlight_temp.default),
   "jamesdsp --tray",
 }
 
