@@ -19,7 +19,6 @@ local awful = require "awful"
 local beautiful = require "beautiful"
 local gears = require "gears"
 local wibox = require "wibox"
-local naughty = require "naughty"
 local menubar = require "menubar"
 
 local dpi = beautiful.xresources.apply_dpi
@@ -58,15 +57,10 @@ local function fancy_tasklist(cfg, tag)
     widget_template = {
       widget = wibox.widget.imagebox,
       create_callback = function(self, c, _, _)
-        local image = menubar.utils.lookup_icon(c.class)
-          or menubar.utils.lookup_icon(string.lower(c.class))
+        self.image = menubar.utils.lookup_icon(c.class)
+          or menubar.utils.lookup_icon(string.lower(c.instance))
+          or c.icon
           or DEFAULT_ICON
-
-        self.image = image
-
-        c:connect_signal("property::class", function(cl)
-          self.image = menubar.utils.lookup_icon(cl.class) or DEFAULT_ICON
-        end)
       end,
     },
   }

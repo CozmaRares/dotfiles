@@ -27,7 +27,7 @@ local colors = {
   blue = "#7aa2f7",
   magenta = "#8c43f1",
   purple = "#bb9af7",
-  white = "#efefef",
+  white = "#ffffff",
 }
 
 local function font(size)
