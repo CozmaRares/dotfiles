@@ -29,10 +29,6 @@ return function()
     border = colors.bg_dark,
   }
 
-  local placement = "top_right"
-  local radius = 8
-  local start_sunday = false
-
   local styles = {}
   local function rounded_shape(size)
     return function(cr, width, height)
@@ -125,14 +121,14 @@ return function()
     font = beautiful.other.font(12),
     fn_embed = decorate_cell,
     long_weekdays = true,
-    start_sunday = start_sunday,
+    start_sunday = false,
     widget = wibox.widget.calendar.month,
   }
 
   local popup = awful.popup {
     ontop = true,
     visible = false,
-    shape = rounded_shape(radius),
+    shape = rounded_shape(beautiful.calendar_radius),
     offset = { y = 15 },
     border_width = 9,
     border_color = calendar_theme.border,
@@ -176,26 +172,7 @@ return function()
       popup:set_widget(cal)
       popup.visible = not popup.visible
     else
-      if placement == "top" then
-        awful.placement.top(popup, { margins = { top = 50 }, parent = awful.screen.focused() })
-      elseif placement == "top_right" then
-        awful.placement.top_right(popup, { margins = { top = 30, right = 10 }, parent = awful.screen.focused() })
-      elseif placement == "top_left" then
-        awful.placement.top_left(popup, { margins = { top = 30, left = 10 }, parent = awful.screen.focused() })
-      elseif placement == "bottom_right" then
-        awful.placement.bottom_right(popup, {
-          margins = { bottom = 30, right = 10 },
-          parent = awful.screen.focused(),
-        })
-      elseif placement == "bottom_left" then
-        awful.placement.bottom_left(popup, {
-          margins = { bottom = 30, left = 10 },
-          parent = awful.screen.focused(),
-        })
-      else
-        awful.placement.top(popup, { margins = { top = 45 }, parent = awful.screen.focused() })
-      end
-
+      beautiful.place_popup(popup)
       popup.visible = true
     end
   end

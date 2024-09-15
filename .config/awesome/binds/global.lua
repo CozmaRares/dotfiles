@@ -4,19 +4,24 @@ local naughty = require "naughty"
 
 local keys = require "keys"
 local pref = require "preferences"
+local data = pref.data
 
 local modkey = pref.user.modkey
 
+local function format_brightness(value)
+  local bright_min, bright_max = data.brightness.min, data.brightness.max
+  value = math.floor((value - bright_min) / (bright_max - bright_min) * 100)
+  return value
+end
+
 local function notify_brightness()
   awful.spawn.easy_async("sleep 0.2", function()
-    awful.spawn.easy_async("brillo", function(stdout)
+    awful.spawn.easy_async(pref.cmds.brightness.query, function(stdout)
       stdout = stdout:gsub("\n$", "")
-      local val = math.floor(tonumber(stdout) or 0)
-      val = math.floor((val - 5) / 95 * 100)
-      local id = require("notif_ids").brightness
+      local val = format_brightness(tonumber(stdout) or data.brightness.min)
       naughty.notify {
-        id = id,
-        replaces_id = id,
+        id = data.notif_ids.brightness,
+        replaces_id = data.notif_ids.brightness,
         title = "Brightness",
         text = string.format("%9d", val) .. "%",
       }
@@ -26,12 +31,11 @@ end
 
 local function notify_volume()
   awful.spawn.easy_async("sleep 0.2", function()
-    awful.spawn.easy_async("pamixer --get-volume-human", function(stdout)
+    awful.spawn.easy_async(pref.cmds.volume.query, function(stdout)
       stdout = stdout:gsub("\n$", "")
-      local id = require("notif_ids").volume
       naughty.notify {
-        id = id,
-        replaces_id = id,
+        id = data.notif_ids.volume,
+        replaces_id = data.notif_ids.volume,
         title = "Volume",
         text = string.format("%+6s", stdout),
       }
@@ -155,7 +159,7 @@ return {
       mods = { keys.mod.alt },
       key = keys.special.space,
       fn = function()
-        awful.spawn "rofi -show drun"
+        awful.spawn(pref.cmds.launcher.apps)
       end,
       description = "open desktop app",
     },
@@ -163,7 +167,7 @@ return {
       mods = { keys.mod.alt },
       key = keys.special.tab,
       fn = function()
-        awful.spawn "rofi -show window"
+        awful.spawn(pref.cmds.launcher.alttab)
       end,
       description = "switch app",
     },
@@ -171,7 +175,7 @@ return {
       mods = { modkey },
       key = keys.letter.x,
       fn = function()
-        awful.spawn "rofi -show powermenu -modi powermenu:~/.config/scripts/rofi-power-menu"
+        awful.spawn(pref.cmds.launcher.powermenu)
       end,
       description = "open power menu",
     },
@@ -187,9 +191,9 @@ return {
       mods = { modkey },
       key = "p",
       fn = function()
-        awful.spawn "arandr"
+        awful.spawn(pref.apps.screen_editor)
       end,
-      description = "open terminal",
+      description = "open screens layout editor",
     },
   },
 
@@ -265,7 +269,7 @@ return {
       mods = {},
       key = keys.xf86.audio.mute,
       fn = function()
-        awful.spawn "pamixer -t"
+        awful.spawn(pref.cmds.volume.toggle_mute)
         notify_volume()
       end,
       description = "toggle mute",
@@ -274,7 +278,7 @@ return {
       mods = {},
       key = keys.xf86.audio.volume.down,
       fn = function()
-        awful.spawn "pamixer -u -d 5 --allow-boost"
+        awful.spawn(pref.cmds.volume.lower(5))
         notify_volume()
       end,
       description = "lower volume",
@@ -283,7 +287,7 @@ return {
       mods = {},
       key = keys.xf86.audio.volume.up,
       fn = function()
-        awful.spawn "pamixer -u -i 5 --allow-boost"
+        awful.spawn(pref.cmds.volume.raise(5))
         notify_volume()
       end,
       description = "raise volume",
@@ -292,7 +296,7 @@ return {
       mods = {},
       key = keys.xf86.audio.prev,
       fn = function()
-        awful.spawn "playerctl previous"
+        awful.spawn(pref.cmds.audio.prev)
       end,
       description = "play previous",
     },
@@ -300,7 +304,7 @@ return {
       mods = {},
       key = keys.xf86.audio.pause,
       fn = function()
-        awful.spawn "playerctl play-pause"
+        awful.spawn(pref.cmds.audio.toggle_play)
       end,
       description = "toggle play",
     },
@@ -308,7 +312,7 @@ return {
       mods = {},
       key = keys.xf86.audio.next,
       fn = function()
-        awful.spawn "playerctl next"
+        awful.spawn(pref.cmds.audio.next)
       end,
       description = "play next",
     },
@@ -319,7 +323,7 @@ return {
       mods = { modkey, keys.mod.shift },
       key = keys.letter.x,
       fn = function()
-        awful.spawn.with_shell "~/.config/scripts/lock.sh"
+        awful.spawn.with_shell(pref.cmds.lock)
       end,
       description = "lock screen",
     },
@@ -327,7 +331,7 @@ return {
       mods = {},
       key = keys.xf86.brightness.down,
       fn = function()
-        awful.spawn "brillo -q -U 2 -u 150000"
+        awful.spawn(pref.cmds.brightness.lower(2))
         notify_brightness()
       end,
       description = "decrease brightness",
@@ -336,7 +340,7 @@ return {
       mods = {},
       key = keys.xf86.brightness.up,
       fn = function()
-        awful.spawn "brillo -q -A 2 -u 150000"
+        awful.spawn(pref.cmds.brightness.raise(2))
         notify_brightness()
       end,
       description = "increase brightness",
@@ -345,7 +349,7 @@ return {
       mods = {},
       key = keys.special.print,
       fn = function()
-        awful.spawn "flameshot screen"
+        awful.spawn(pref.cmds.screenshot.screen)
       end,
       description = "take screenshot",
     },
@@ -353,7 +357,7 @@ return {
       mods = { modkey, keys.mod.shift },
       key = keys.letter.s,
       fn = function()
-        awful.spawn "flameshot gui"
+        awful.spawn(pref.cmds.screenshot.gui)
       end,
       description = "open screenshot gui",
     },

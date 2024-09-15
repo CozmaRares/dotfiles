@@ -7,6 +7,7 @@ local xresources = require "beautiful.xresources"
 local dpi = xresources.apply_dpi
 local gfs = require "gears.filesystem"
 local gshape = require "gears.shape"
+local awful = require "awful"
 local themes_path = gfs.get_themes_dir()
 
 local colors = {
@@ -166,6 +167,12 @@ theme.icon_theme = "Papirus"
 theme.tags = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
 -- theme.tags = { "一", "二", "三", "四", "五", "六", "七", "八", "九" }
 -- theme.tags = { "🯱", "🯲", "🯳", "🯴", "🯵", "🯶", "🯷", "🯸", "🯹" }
+
+theme.calendar_radius = dpi(8)
+
+theme.place_popup = function(popup)
+  return awful.placement.top_right(popup, { margins = { top = 30, right = 10 }, parent = awful.screen.focused() })
+end
 
 theme.other = {
   colors = colors,

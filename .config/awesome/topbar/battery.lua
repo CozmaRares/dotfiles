@@ -51,7 +51,7 @@ return function()
   }
 
   local last_battery_check = os.time()
-  local notification_id = require("notif_ids").battery
+  local notification_id = require("preferences").data.notif_ids.battery
 
   --[[ Show warning notification ]]
   local function show_battery_warning()
@@ -60,7 +60,7 @@ return function()
       text = warning_msg_text,
       title = warning_msg_title,
       icon_size = 50,
-      timeout = 25, -- show the warning for a longer time
+      timeout = 25,
       hover_timeout = 0.5,
       bg = colors.red,
       fg = colors.bg_dim,
@@ -116,7 +116,6 @@ return function()
       naughty.notify {
         text = string.gsub(stdout, "\n", ""),
         title = "Battery",
-        timeout = 5,
         id = notification_id,
         replaces_id = notification_id,
       }
