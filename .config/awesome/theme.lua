@@ -31,8 +31,8 @@ local colors = {
   white = "#ffffff",
 }
 
-local function font(size)
-  return "JetBrainsMono NF " .. size
+local function font(modifiers)
+  return "JetBrainsMono NF " .. modifiers
 end
 
 local theme = {}

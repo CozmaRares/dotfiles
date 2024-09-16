@@ -1,4 +1,7 @@
+math.randomseed(os.time())
+
 pcall(require, "luarocks.loader")
+
 
 -- setup data property in preferences
 require "preferences"

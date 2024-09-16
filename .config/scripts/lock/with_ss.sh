@@ -15,7 +15,7 @@ script_dir="$(dirname "$(readlink -f "$0")")"
 
 # color > value then background is white
 if [[ $color -gt $value ]]; then
-    icon="$script_dir/lockdark.png"
+    icon="$script_dir/lock-dark.png"
     param=("--inside-color=0000001c" "--ring-color=0000003e" \
         "--line-color=00000000" "--keyhl-color=ffffff80" "--ringver-color=ffffff00" \
         "--separator-color=22222260" "--insidever-color=ffffff1c" \
@@ -34,7 +34,7 @@ fi
 
 magick "$image" -colorspace Gray -blur 0x8 "$icon" -gravity center -composite "$image"
 
-i3lock -i "$image" "${param[@]}" -e
+i3lock -i "$image" "${param[@]}" -e -n
 
 wait
 

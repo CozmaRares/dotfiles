@@ -3,7 +3,7 @@ local colors = beautiful.other.colors
 local wibox = require "wibox"
 local keys = require "keys"
 
-local calendar = require "topbar.popup.calendar"()
+local calendar = require "popup.calendar"()
 
 local clock = wibox.widget.textclock(
   '<span color="' .. colors.white .. '" font="' .. beautiful.other.font(12) .. '"> %a %b %d, %I:%M %p </span>'

@@ -54,7 +54,10 @@ M.cmds = {
     wifi = "~/.config/scripts/rofi-wifi-menu.sh",
     bluetooth = "~/.config/scripts/rofi-bluetooth",
   },
-  lock = "~/.config/scripts/lock.sh",
+  lock = {
+    normal = "~/.config/scripts/lock/with_ss.sh",
+    watch = "~/.config/scripts/lock/watch.sh",
+  },
   screenshot = {
     gui = "flameshot gui",
     screen = "flameshot screen",
@@ -72,6 +75,7 @@ M.data.nightlight_temp = {
 }
 
 M.user = {
+  name = "Raru",
   modkey = keys.mod.win,
 }
 
@@ -79,6 +83,7 @@ M.startup = {
   "picom",
   M.cmds.nightlight(M.data.nightlight_temp.default),
   "jamesdsp --tray",
+  "xss-lock -s " .. os.getenv "XDG_SESSION_ID" .. " -- " .. M.cmds.lock.watch,
 }
 
 M.layouts = {

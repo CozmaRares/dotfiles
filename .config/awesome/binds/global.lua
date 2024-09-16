@@ -323,7 +323,7 @@ return {
       mods = { modkey, keys.mod.shift },
       key = keys.letter.x,
       fn = function()
-        awful.spawn.with_shell(pref.cmds.lock)
+        awful.spawn.with_shell(pref.cmds.lock.normal)
       end,
       description = "lock screen",
     },
