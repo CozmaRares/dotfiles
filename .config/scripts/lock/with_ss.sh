@@ -10,7 +10,7 @@ image="/tmp/lock.png"
 flameshot screen -p "$image" 1>/dev/null 2>&1
 
 value="60"
-color=$(magick "$image" -gravity center -crop 100x100+0+0 +repage -colorspace hsb     -resize 1x1 txt:- | awk -F '[%$]' 'NR==2{gsub(",",""); printf "%.0f\n", $(NF-1)}')
+color=$(magick "$image" -gravity center -crop 100x100+0+0 +repage -colorspace hsb -resize 1x1 txt:- | awk -F '[%$]' 'NR==2{gsub(",",""); printf "%.0f\n", $(NF-1)}')
 script_dir="$(dirname "$(readlink -f "$0")")"
 
 # color > value then background is white

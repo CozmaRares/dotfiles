@@ -30,47 +30,15 @@ power:connect_signal("button::release", function(_, _, _, button)
   end
 end)
 
-local wifi = create_button "wifi"
-wifi:connect_signal("button::release", function()
-  awful.spawn.with_shell(cmds.launcher.wifi)
-end)
-
-local blth = create_button "bluetooth"
-blth:connect_signal("button::release", function()
-  awful.spawn.with_shell(cmds.launcher.bluetooth)
-end)
-
-local volume = create_button "speaker"
--- music:connect_signal("button::release", function()
---   media.visible = not media.visible
---   control.visible = false
--- end)
-
-local brightness = create_button "bulb"
--- music:connect_signal("button::release", function()
---   media.visible = not media.visible
---   control.visible = false
--- end)
-
-local nightlight = create_button "lamp"
--- music:connect_signal("button::release", function()
---   media.visible = not media.visible
---   control.visible = false
+local settings = create_button "settings"
+-- settings:connect_signal("button::release", function()
 -- end)
 
 --Main Window
 local grouped_buttons = wibox.widget {
   {
     separator,
-    nightlight,
-    separator,
-    brightness,
-    separator,
-    volume,
-    separator,
-    blth,
-    separator,
-    wifi,
+    settings,
     separator,
     power,
     separator,

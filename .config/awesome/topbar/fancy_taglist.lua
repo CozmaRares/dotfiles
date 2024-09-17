@@ -1,3 +1,5 @@
+-- https://gist.github.com/intrntbrn
+--
 -- awesomewm fancy_taglist: a taglist that contains a tasklist for each tag.
 -- Usage (add s.mytaglist to the wibar):
 -- awful.screen.connect_for_each_screen(function(s)

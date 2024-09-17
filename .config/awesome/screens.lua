@@ -1,5 +1,5 @@
 local awful = require "awful"
-local bling = require "bling"
+local wallpaper = require "bling.module.wallpaper"
 local beautiful = require "beautiful"
 
 awful.screen.connect_for_each_screen(function(s)
@@ -7,8 +7,8 @@ awful.screen.connect_for_each_screen(function(s)
 
   require "topbar.main"(s)
 
-  bling.module.wallpaper.setup {
-    set_function = bling.module.wallpaper.setters.random,
+  wallpaper.setup {
+    set_function = wallpaper.setters.random,
     wallpaper = os.getenv "HOME" .. "/Pictures/Wallpapers",
     change_timer = 3607,
     screen = s,

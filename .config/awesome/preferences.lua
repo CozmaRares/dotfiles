@@ -69,19 +69,17 @@ M.data = {}
 M.data.brightness = {}
 
 M.data.nightlight_temp = {
-  min = 2000,
-  max = 10000,
-  default = 3500,
+  night = 3500,
+  day = 6000,
 }
 
 M.user = {
-  name = "Raru",
   modkey = keys.mod.win,
 }
 
 M.startup = {
   "picom",
-  M.cmds.nightlight(M.data.nightlight_temp.default),
+  M.cmds.nightlight(M.data.nightlight_temp.night),
   "jamesdsp --tray",
   "xss-lock -s " .. os.getenv "XDG_SESSION_ID" .. " -- " .. M.cmds.lock.watch,
 }

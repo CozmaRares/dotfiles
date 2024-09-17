@@ -170,11 +170,10 @@ return function()
       cal:set_date(os.date "*t")
       popup:set_widget(nil)
       popup:set_widget(cal)
-      popup.visible = not popup.visible
     else
-      beautiful.place_popup(popup)
-      popup.visible = true
+      awful.placement.top_right(popup, { margins = { top = 30, right = 10 }, parent = awful.screen.focused() })
     end
+    popup.visible = not popup.visible
   end
 
   return calendar_widget

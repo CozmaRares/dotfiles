@@ -1,13 +1,8 @@
----------------------------
--- Default awesome theme --
----------------------------
-
 local theme_assets = require "beautiful.theme_assets"
 local xresources = require "beautiful.xresources"
 local dpi = xresources.apply_dpi
 local gfs = require "gears.filesystem"
 local gshape = require "gears.shape"
-local awful = require "awful"
 local themes_path = gfs.get_themes_dir()
 
 local colors = {
@@ -85,10 +80,6 @@ theme.wibar_position = "top"
 
 theme.bg_systray = colors.bg_dark
 theme.systray_icon_spacing = dpi(10)
-
--- local taglist_square_size = dpi(0)
--- theme.taglist_squares_sel = theme_assets.taglist_squares_sel(taglist_square_size, theme.fg_normal)
--- theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(taglist_square_size, theme.fg_normal)
 
 theme.taglist_shape = function(cr, w, h)
   return gshape.rounded_rect(cr, w, h, theme.border_radius)
@@ -169,10 +160,6 @@ theme.tags = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
 -- theme.tags = { "🯱", "🯲", "🯳", "🯴", "🯵", "🯶", "🯷", "🯸", "🯹" }
 
 theme.calendar_radius = dpi(8)
-
-theme.place_popup = function(popup)
-  return awful.placement.top_right(popup, { margins = { top = 30, right = 10 }, parent = awful.screen.focused() })
-end
 
 theme.other = {
   colors = colors,
