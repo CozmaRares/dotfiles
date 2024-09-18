@@ -1,0 +1,27 @@
+#!/bin/sh
+
+if [[ $# -gt 0 ]]; then
+    case "$1" in
+        on)
+            if rfkill list bluetooth | grep -q 'blocked: yes'; then
+                rfkill unblock bluetooth && sleep 3
+            fi
+            bluetoothctl power on
+            ;;
+        off)
+            bluetoothctl power off
+            ;;
+        query)
+            if bluetoothctl show | grep -q "Powered: yes"; then
+                echo 1
+            else
+                echo 0
+            fi
+            ;;
+        *)
+            exit 1
+            ;;
+    esac
+else
+    exit 1
+fi

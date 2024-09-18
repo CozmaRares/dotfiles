@@ -1,0 +1,20 @@
+#!/bin/sh
+
+if [[ $# -gt 0 ]]; then
+    case "$1" in
+        on)
+            nmcli radio wifi on
+            ;;
+        off)
+            nmcli radio wifi off
+            ;;
+        query)
+            nmcli radio wifi | sed -e 's/enabled/1/' -e 's/disabled/0/'
+            ;;
+        *)
+            exit 1
+            ;;
+    esac
+else
+    exit 1
+fi

@@ -1,125 +1,130 @@
 local awful = require "awful"
 local wibox = require "wibox"
-local gears = require "gears"
+local gshape = require "gears.shape"
 local beautiful = require "beautiful"
 local dpi = beautiful.xresources.apply_dpi
 local colors = beautiful.other.colors
 local font = beautiful.other.font
+local pref = require "preferences"
 
-local function create_button(container_widget, text, on_status, command1, command2)
+local function create_button(text, icon, script_path)
   local function on_off(status)
+    local text_status = "Off"
+
     if status == true then
-      return "On"
-    else
-      return "Off"
+      text_status = "On"
     end
+
+    return string.format('<span color="%s" font="%s">%s</span>', colors.white, font(11), text_status)
   end
 
+  local on_status = false
+
+  local bg_colors = {
+    on = colors.darkblue,
+    off = colors.bg_dark,
+  }
+
   local text_status = wibox.widget {
-    markup = string.format('<span color="%s" font="%s">%s</span>', colors.white, font(11), on_off(on_status)),
+    markup = on_off(on_status),
     widget = wibox.widget.textbox,
   }
 
-  local text_button = wibox.widget {
+  local title = wibox.widget {
+    markup = string.format('<span color="%s" font="%s">%s</span>', colors.lightblue, font "Bold 14", text),
+    widget = wibox.widget.textbox,
+  }
+
+  local button_image = wibox.widget {
     {
       {
-        markup = string.format('<span color="%s" font="%s">%s</span>', colors.lightblue, font "Bold 14", text),
-        widget = wibox.widget.textbox,
+        image = os.getenv "HOME" .. "/.config/awesome/icons/settings/" .. icon .. ".svg",
+        widget = wibox.widget.imagebox,
+        resize = true,
+        forced_height = dpi(24),
+        forced_width = dpi(24),
+        shape = function(cr, width, height)
+          gshape.rounded_rect(cr, width, height, 999)
+        end,
       },
-      text_status,
-      layout = wibox.layout.fixed.vertical,
-      id = "wifi",
+      widget = wibox.container.margin,
+      top = dpi(10),
+      bottom = dpi(10),
+      left = dpi(10),
+      right = dpi(10),
     },
-    widget = wibox.container.margin,
-    top = dpi(8),
-    bottom = dpi(8),
-    right = dpi(8),
-    left = dpi(8),
-    forced_height = dpi(56),
+    widget = wibox.container.background,
+    bg = (on_status and bg_colors.on) or bg_colors.off,
+    shape = function(cr)
+      gshape.rounded_bar(cr, dpi(44), dpi(44))
+    end,
   }
 
-  local button_container = wibox.widget {
-    container_widget,
-    widget = wibox.container.margin,
-    top = 3,
-    bottom = 3,
-    right = 10,
-    left = 7,
-    forced_height = dpi(56),
+  local container = wibox.widget {
+    {
+      {
+        button_image,
+        {
+          {
+            title,
+            text_status,
+            layout = wibox.layout.fixed.vertical,
+          },
+          widget = wibox.container.margin,
+          left = dpi(8),
+          right = dpi(16),
+        },
+        layout = wibox.layout.fixed.horizontal,
+      },
+      widget = wibox.container.margin,
+      top = dpi(8),
+      bottom = dpi(8),
+      right = dpi(8),
+      left = dpi(8),
+    },
+    widget = wibox.container.background,
+    bg = colors.bg_normal,
+    shape = function(cr, width, height)
+      gshape.rounded_rect(cr, width, height, 20)
+    end,
   }
 
-  --Functionality
-  button_container:connect_signal("button::press", function()
+  container.toggle = function()
     on_status = not on_status
+
     if on_status then
-      container_widget:set_bg(colors.cyan)
-      awful.spawn(command1)
+      button_image:set_bg(bg_colors.on)
+      awful.spawn.with_shell(script_path .. "on")
     else
-      container_widget:set_bg(colors.grey)
-      awful.spawn(command2)
-      text_status:set_markup_silently(
-        '<span color="' .. color.white .. '" font="Ubuntu Nerd Font 11">' .. "off" .. "</span>"
-      )
+      button_image:set_bg(bg_colors.off)
+      awful.spawn.with_shell(script_path .. "off")
     end
 
-    text_status:set_markup_silently(
-      string.format('<span color="%s" font="%s">%s</span>', colors.white, font(11), on_off(on_status))
-    )
+    text_status:set_markup_silently(on_off(on_status))
+  end
+
+  container.refresh = function()
+    awful.spawn.easy_async_with_shell(script_path .. "query", function(stdout)
+      on_status = string.sub(stdout, 1, 1) == "1"
+      if on_status then
+        button_image:set_bg(bg_colors.on)
+      else
+        button_image:set_bg(bg_colors.off)
+      end
+      text_status:set_markup_silently(on_off(on_status))
+    end)
+  end
+
+  button_image:connect_signal("button::press", function()
+    container.toggle()
   end)
 
-  local final_container = wibox.widget {
-    {
-      button_container,
-      text_button,
-      layout = wibox.layout.fixed.horizontal,
-    },
-    widget = wibox.container.margin,
-    top = dpi(3),
-    bottom = dpi(3),
-    left = dpi(2),
-    right = 0,
-  }
-
-  return final_container
+  return container
 end
 
-local buttons = {
-  wifi = create_button(container.wifi, "Wifi", true, "nmcli radio wifi on", "nmcli radio wifi off"),
-  bluetooth = create_button(container.bluetooth, "Bluetooth", false, "", ""),
-  dnd = create_button(container.dnd, "DND", false, "", ""),
+return {
+  wifi = create_button("Wifi", "wifi", pref.cmds.services.wifi),
+  bluetooth = create_button("Bluetooth", "bluetooth", pref.cmds.services.bluetooth),
+  silent = create_button("Silent", "speaker_off", pref.cmds.services.silent),
+  nightmode = create_button("Night Mode", "moon", pref.cmds.services.nightmode),
 }
-
---DND Button Functionality
-local dnd_on = false
-container.dnd:connect_signal("button::press", function()
-  dnd_on = not dnd_on
-  if dnd_on then
-    user.dnd_status = true
-  else
-    user.dnd_status = false
-  end
-end)
-
-local button = wibox.widget {
-  {
-    {
-      buttons.wifi,
-      buttons.bluetooth,
-      buttons.dnd,
-      layout = wibox.layout.fixed.vertical,
-    },
-    widget = wibox.container.margin,
-    top = dpi(6),
-    bottom = dpi(6),
-    right = dpi(3),
-    left = dpi(3),
-  },
-  widget = wibox.container.background,
-  bg = color.background_lighter,
-  forced_width = dpi(202),
-  shape = function(cr, width, height)
-    gears.shape.rounded_rect(cr, width, height, 10)
-  end,
-}
-
-return button

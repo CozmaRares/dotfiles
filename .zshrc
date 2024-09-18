@@ -106,9 +106,7 @@ alias password="pass show -c"
 alias wifi='~/.config/scripts/rofi-wifi-menu.sh'
 alias bluetooth='~/.config/scripts/rofi-bluetooth'
 alias pwrmgr='~/.config/scripts/rofi-power-manager.sh'
-
-alias wrand="nitrogen --random --set-zoom-fill ~/Pictures/Wallpapers 1>/dev/null 2>&1"
-alias wrs="nitrogen --restore 1>/dev/null 2>&1"
+alias nightmode="~/.config/scripts/awesome/nightmode"
 
 alias clip="xclip -selection clipboard"
 alias ff="fastfetch | lolcat -r"

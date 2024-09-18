@@ -1,0 +1,30 @@
+#!/bin/sh
+
+if [[ $# -gt 0 ]]; then
+    case "$1" in
+        on)
+            pamixer --mute
+            ;;
+        off)
+            pamixer --unmute
+            ;;
+        query)
+            if pamixer --get-mute | grep -q 'true'; then
+                echo 1
+            else
+                volume=$(pamixer --get-volume)
+
+                if [ "$volume" -eq 0 ]; then
+                    echo 1
+                else
+                    echo 0
+                fi
+            fi
+            ;;
+        *)
+            exit 1
+            ;;
+    esac
+else
+    exit 1
+fi

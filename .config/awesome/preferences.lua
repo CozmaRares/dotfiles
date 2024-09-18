@@ -29,9 +29,6 @@ M.cmds = {
     --   value = awful.spawn("brillo -q -S " .. value)
     -- end,
   },
-  nightlight = function(temp)
-    return "redshift -P -O " .. temp
-  end,
   volume = {
     query = "pamixer --get-volume-human",
     toggle_mute = "pamixer -t",
@@ -62,15 +59,16 @@ M.cmds = {
     gui = "flameshot gui",
     screen = "flameshot screen",
   },
+  services = {
+    nightmode = "~/.config/scripts/awesome/nightmode ",
+    wifi = "~/.config/scripts/awesome/wifi ",
+    bluetooth = "~/.config/scripts/awesome/bluetooth ",
+    silent = "~/.config/scripts/awesome/silent ",
+  },
 }
 
-M.data = {}
-
-M.data.brightness = {}
-
-M.data.nightlight_temp = {
-  night = 3500,
-  day = 6000,
+M.data = {
+  brightness = {},
 }
 
 M.user = {
@@ -79,9 +77,9 @@ M.user = {
 
 M.startup = {
   "picom",
-  M.cmds.nightlight(M.data.nightlight_temp.night),
   "jamesdsp --tray",
   "xss-lock -s " .. os.getenv "XDG_SESSION_ID" .. " -- " .. M.cmds.lock.watch,
+  M.cmds.services.nightmode .. "on",
 }
 
 M.layouts = {
@@ -105,6 +103,10 @@ M.layouts = {
 
 awful.spawn.easy_async(M.cmds.brightness.min, function(stdout)
   M.data.brightness.min = tonumber(stdout) or 0
+end)
+
+awful.spawn.easy_async(M.cmds.brightness.max, function(stdout)
+  M.data.brightness.max = tonumber(stdout) or 100
 end)
 
 awful.spawn.easy_async(M.cmds.brightness.max, function(stdout)

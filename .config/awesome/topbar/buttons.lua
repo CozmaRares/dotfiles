@@ -30,9 +30,11 @@ power:connect_signal("button::release", function(_, _, _, button)
   end
 end)
 
+local settings_popup = require "popup.settings.main"
 local settings = create_button "settings"
--- settings:connect_signal("button::release", function()
--- end)
+settings:connect_signal("button::release", function()
+  settings_popup.toggle()
+end)
 
 --Main Window
 local grouped_buttons = wibox.widget {

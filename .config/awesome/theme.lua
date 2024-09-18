@@ -19,11 +19,14 @@ local colors = {
   yellow = "#e0af68",
   green = "#9ece6a",
   cyan = "#7dcfff",
+  darkblue = "#3d59a1",
   lightblue = "#89b4fa",
   blue = "#7aa2f7",
   magenta = "#8c43f1",
   purple = "#bb9af7",
   white = "#ffffff",
+  -- TODO: refactor colros
+  -- https://lospec.com/palette-list/tokyo-night
 }
 
 local function font(modifiers)
@@ -75,7 +78,7 @@ theme.taglist_fg_urgent = colors.yellow
 
 theme.taglist_spacing = dpi(7)
 
-theme.wibar_bg = colors.bg_darm
+theme.wibar_bg = colors.bg_dark
 theme.wibar_position = "top"
 
 theme.bg_systray = colors.bg_dark
@@ -153,6 +156,11 @@ theme.layout_cornerse = themes_path .. "default/layouts/cornersew.png"
 
 theme.awesome_icon = theme_assets.awesome_icon(theme.menu_height, theme.bg_focus, theme.fg_focus)
 
+theme.hotkeys_bg = colors.bg_dark
+theme.hotkeys_fg = colors.lightblue
+theme.hotkeys_border_color = colors.cyan
+theme.hotkeys_modifiers_fg = colors.purple
+
 theme.icon_theme = "Papirus"
 
 theme.tags = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
@@ -161,9 +169,13 @@ theme.tags = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
 
 theme.calendar_radius = dpi(8)
 
+-- TODO: remove other
 theme.other = {
   colors = colors,
   font = font,
 }
+
+theme.settings_spacing = dpi(12)
+theme.settings_buttnons_radius = dpi(10)
 
 return theme
