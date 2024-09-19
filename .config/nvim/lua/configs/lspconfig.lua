@@ -49,6 +49,8 @@ local servers = {
     root_dir = root_pattern "Cargo.toml",
   },
 
+  svelte = {},
+
   tailwindcss = {
     filetypes = {
       "astro",

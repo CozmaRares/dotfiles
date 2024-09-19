@@ -8,6 +8,7 @@ local options = {
     javascriptreact = { "prettierd" },
     typescript = { "prettierd" },
     typescriptreact = { "prettierd" },
+    svelte = { "prettierd" },
 
     markdown = { "markdownlint" },
 
