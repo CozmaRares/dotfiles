@@ -1,7 +1,7 @@
 #! /bin/sh
 
-tmux_ls() {
-    tmux ls 2>/dev/null
+run_tmux() {
+    tmux "$@" 2>/dev/null
 }
 
 tmux_attach_or_switch() {
@@ -13,7 +13,7 @@ tmux_attach_or_switch() {
 }
 
 get_sessions() {
-    tmux_ls | awk -F '[:,()]' '{print $1}'
+    run_tmux ls | awk -F '[:,()]' '{print $1}'
 }
 
 get_layouts() {
@@ -21,7 +21,7 @@ get_layouts() {
 }
 
 is_session() {
-    get_sessions | grep -qx "$1"
+    run_tmux has-session -t "$1"
 }
 
 is_layout() {

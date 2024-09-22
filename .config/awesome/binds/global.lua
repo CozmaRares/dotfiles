@@ -65,6 +65,14 @@ return {
       fn = awesome.restart,
       description = "reload awesome",
     },
+    {
+      mods = { modkey },
+      key = keys.letter.a,
+      fn = function()
+        require("popup.settings.main").toggle()
+      end,
+      description = "show settings menu",
+    },
   },
 
   tag = {
