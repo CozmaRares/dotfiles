@@ -22,10 +22,9 @@ return function()
   local arc_thickness = 2
   local size = 26
   local timeout = 60
-  local warning_cooldown = 5 * 60
+  local warning_cooldown = 5 * timeout
 
   local warning_msg_title = "Houston, we have a problem"
-  local warning_msg_text = "Battery is dying"
   local warning_msg_icon = os.getenv "HOME" .. "/.config/awesome/icons/other/battery.png"
 
   local inner_text = wibox.widget {
@@ -50,22 +49,21 @@ return function()
     widget = wibox.container.arcchart,
   }
 
-  local last_battery_check = os.time()
+  local last_battery_check = 0
   local notification_id = require("preferences").data.notif_ids.battery
 
   --[[ Show warning notification ]]
-  local function show_battery_warning()
+  local function show_battery_warning(txt)
     naughty.notify {
       icon = warning_msg_icon,
-      text = warning_msg_text,
+      text = txt,
       title = warning_msg_title,
       icon_size = 50,
       timeout = 25,
       hover_timeout = 0.5,
-      bg = colors.red,
-      fg = colors.bg_dim,
       id = notification_id,
       replaces_id = notification_id,
+      preset = naughty.config.presets.critical,
     }
   end
 
@@ -87,11 +85,6 @@ return function()
 
     if charge < 10 then
       inner_text.text = string.format("0%d", charge)
-
-      if status == "Discharging" and os.difftime(os.time(), last_battery_check) > warning_cooldown then
-        last_battery_check = os.time()
-        show_battery_warning()
-      end
     elseif charge < 100 then
       inner_text.text = string.format("%d", charge)
     else
@@ -102,8 +95,16 @@ return function()
       widget.colors = { colors.green }
     elseif charge < 10 then
       widget.colors = { colors.red }
+      if status == "Discharging" and os.difftime(os.time(), last_battery_check) > warning_cooldown then
+        last_battery_check = os.time()
+        show_battery_warning "Battery is dying"
+      end
     elseif charge < 30 then
       widget.colors = { colors.purple }
+      if status == "Discharging" and os.difftime(os.time(), last_battery_check) > warning_cooldown then
+        last_battery_check = os.time()
+        show_battery_warning "Battery is getting low"
+      end
     else
       widget.colors = { colors.blue }
     end
@@ -111,20 +112,16 @@ return function()
 
   watch("acpi", timeout, update_widget, batteryarc_widget)
 
-  local function show_battery_status()
-    awful.spawn.easy_async("acpi", function(stdout)
-      naughty.notify {
-        text = string.gsub(stdout, "\n", ""),
-        title = "Battery",
-        id = notification_id,
-        replaces_id = notification_id,
-      }
-    end)
-  end
-
   batteryarc_widget:connect_signal("button::press", function(_, _, _, button)
     if button == 1 then
-      show_battery_status()
+      awful.spawn.easy_async("acpi", function(stdout)
+        naughty.notify {
+          text = string.gsub(stdout, "\n", ""),
+          title = "Battery",
+          id = notification_id,
+          replaces_id = notification_id,
+        }
+      end)
     end
   end)
 

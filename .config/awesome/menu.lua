@@ -34,7 +34,7 @@ local file_bookmarks = {
   { "Dotfiles", "thunar .dotfiles" },
   { "Configs", "thunar .config" },
   { "Wallpapers", "thunar Pictures/Wallpapers/" },
-  { "Screen Shots", "thunar Pictures/Screenshots/" },
+  { "Screenshots", "thunar Pictures/Screenshots/" },
   { "SSD", "thunar /mnt/SSD/" },
   { "Music", "thunar /mnt/SSD/muzica/" },
   { "Repos", "thunar /mnt/SSD/repos/" },

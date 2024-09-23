@@ -1,4 +1,5 @@
 --Standard Modules
+local awful = require "awful"
 local gears = require "gears"
 local wibox = require "wibox"
 local beautiful = require "beautiful"
@@ -9,9 +10,9 @@ local tip = os.getenv "HOME" .. "/.config/awesome/icons/topbar/"
 local open_icon = tip .. "arrow_left.svg"
 local close_icon = tip .. "arrow_right.svg"
 
---Systray Widget
+local base_systray = wibox.widget.systray()
 local systray = wibox.widget {
-  wibox.widget.systray(),
+  base_systray,
   widget = wibox.container.margin,
   left = dpi(2),
   right = dpi(2),
@@ -61,6 +62,7 @@ tray_toggle:connect_signal("button::press", function(_, _, _, button)
   if button == 1 then
     systray.visible = not systray.visible
     if systray.visible then
+      base_systray:set_screen(awful.screen.focused())
       arrow:set_image(close_icon)
     else
       arrow:set_image(open_icon)
