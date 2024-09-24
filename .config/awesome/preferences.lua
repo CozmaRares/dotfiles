@@ -23,11 +23,13 @@ M.cmds = {
     raise = function(percent)
       return string.format("brillo -q -A %d -u 150000", percent)
     end,
-    -- set = function(value)
-    --   local bright_min, bright_max = M.data.brightness.min, M.data.brightness.max
-    --   value = value / 100 * (bright_max - bright_min) + bright_min
-    --   value = awful.spawn("brillo -q -S " .. value)
-    -- end,
+
+    query_slider = "brillo",
+    min_slider = "brillo -c",
+    max_slider = "brillo -m",
+    set_slider = function(value)
+      awful.spawn("brillo -S " .. value)
+    end,
   },
   volume = {
     query = "pamixer --get-volume-human",
@@ -37,6 +39,11 @@ M.cmds = {
     end,
     raise = function(percent)
       return string.format("pamixer -u -i %d --allow-boost", percent)
+    end,
+
+    query_slider = "pamixer --get-volume",
+    set_slider = function(value)
+      awful.spawn("pamixer --set-volume " .. value)
     end,
   },
   audio = {
@@ -109,8 +116,12 @@ awful.spawn.easy_async(M.cmds.brightness.max, function(stdout)
   M.data.brightness.max = tonumber(stdout) or 100
 end)
 
-awful.spawn.easy_async(M.cmds.brightness.max, function(stdout)
-  M.data.brightness.max = tonumber(stdout) or 100
+awful.spawn.easy_async(M.cmds.brightness.min_slider, function(stdout)
+  M.data.brightness.min_slider = tonumber(stdout) or 0
+end)
+
+awful.spawn.easy_async(M.cmds.brightness.max_slider, function(stdout)
+  M.data.brightness.max_slider = tonumber(stdout) or 100
 end)
 
 do

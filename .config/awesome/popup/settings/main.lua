@@ -3,9 +3,10 @@ local wibox = require "wibox"
 local gshape = require "gears.shape"
 local beautiful = require "beautiful"
 local colors = beautiful.other.colors
-local buttons = require "popup.settings.buttons"
-
 local spacing = beautiful.settings_spacing
+
+local buttons = require "popup.settings.buttons"
+local sliders = require "popup.settings.sliders"
 
 local settings = awful.popup {
   widget = {
@@ -28,33 +29,33 @@ local settings = awful.popup {
       right = spacing,
       left = spacing,
     },
-    -- {
-    --   brightness,
-    --   widget = wibox.container.margin,
-    --   top = 0,
-    --   bottom = dpi(11),
-    --   right = dpi(11),
-    --   left = dpi(11),
-    -- },
-    -- {
-    --   volume,
-    --   widget = wibox.container.margin,
-    --   top = 0,
-    --   bottom = dpi(11),
-    --   right = dpi(11),
-    --   left = dpi(11),
-    -- },
-    layout = wibox.layout.fixed.horizontal,
+    {
+      sliders.volume,
+      widget = wibox.container.margin,
+      top = 0,
+      bottom = spacing,
+      right = spacing,
+      left = spacing,
+    },
+    {
+      sliders.brightness,
+      widget = wibox.container.margin,
+      top = 0,
+      bottom = spacing,
+      right = spacing,
+      left = spacing,
+    },
+    layout = wibox.layout.fixed.vertical,
     widget = wibox.container.background,
     bg = colors.bg_dark,
   },
   ontop = true,
-  visible = false,
+  visible = true,
   placement = function(popup)
     awful.placement.top_right(popup, { margins = { top = 30, right = 10 }, parent = awful.screen.focused() })
   end,
   shape = function(cr, width, height)
-    gshape.rounded_rect(cr, width, height, 20 + spacing)
+    gshape.rounded_rect(cr, width, height, beautiful.settings_buttnons_radius + spacing)
   end,
   opacity = 1,
 }
@@ -69,6 +70,10 @@ function settings.show()
   buttons.silent.refresh()
   buttons.nightmode.refresh()
 
+  sliders.volume.update()
+  sliders.brightness.update()
+
+  settings:move_next_to(awful.screen.focused())
   settings.visible = true
 end
 

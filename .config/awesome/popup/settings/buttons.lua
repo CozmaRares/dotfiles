@@ -44,7 +44,7 @@ local function create_button(text, icon, script_path)
         forced_height = dpi(24),
         forced_width = dpi(24),
         shape = function(cr, width, height)
-          gshape.rounded_rect(cr, width, height, 999)
+          gshape.circle(cr, width, height)
         end,
       },
       widget = wibox.container.margin,
@@ -85,7 +85,7 @@ local function create_button(text, icon, script_path)
     widget = wibox.container.background,
     bg = colors.bg_normal,
     shape = function(cr, width, height)
-      gshape.rounded_rect(cr, width, height, 20)
+      gshape.rounded_rect(cr, width, height, beautiful.settings_buttnons_radius)
     end,
   }
 
