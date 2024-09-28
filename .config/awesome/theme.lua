@@ -79,18 +79,26 @@ theme.taglist_fg_urgent = colors.yellow
 theme.taglist_spacing = dpi(7)
 
 theme.wibar_bg = colors.bg_dark
+theme.wibar_height = dpi(24)
 theme.wibar_position = "top"
 
 theme.bg_systray = colors.bg_dark
 theme.systray_icon_spacing = dpi(10)
 
 theme.taglist_shape = function(cr, w, h)
-  return gshape.rounded_rect(cr, w, h, theme.border_radius)
+  return gshape.rounded_rect(cr, w, h, 9999)
 end
 
 theme.menu_submenu_icon = themes_path .. "default/submenu.png"
-theme.menu_height = dpi(15)
-theme.menu_width = dpi(100)
+theme.menu_font = font(12)
+theme.menu_height = dpi(30)
+theme.menu_width = dpi(200)
+theme.menu_border_color = colors.bg_dark
+theme.menu_border_width = dpi(2)
+theme.menu_fg_focus = colors.cyan
+theme.menu_bg_focus = colors.bg_light .. "90"
+theme.menu_fg_normal = colors.fg_normal
+theme.menu_bg_normal = colors.bg_dark .. "90"
 
 -- titlebar icon path
 local tip = os.getenv "HOME" .. "/.config/awesome/icons/titlebar/"

@@ -3,8 +3,7 @@ local gears = require "gears"
 local wibox = require "wibox"
 local beautiful = require "beautiful"
 local dpi = beautiful.xresources.apply_dpi
-
--- local dashboard = require("popups.dashboard.home.main")
+local dashboard = require "popup.dashboard.main"
 
 local margin = dpi(5)
 
@@ -23,8 +22,8 @@ local widget = wibox.widget {
   widget = wibox.container.margin,
 }
 
--- widget:connect_signal("button::release", function()
--- 	dashboard.visible = not dashboard.visible
--- end)
+widget:connect_signal("button::release", function()
+  dashboard.visible = not dashboard.visible
+end)
 
 return widget

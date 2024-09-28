@@ -7,9 +7,27 @@ local colors = beautiful.other.colors
 local font = beautiful.other.font
 local pref = require "preferences"
 
-local function base_slider(icon, query_cmd, set_fn, min, max)
-  local handle_margins = 5
+local function create_button(text, cmd)
+  local button = wibox.widget {
+    {
+      markup = string.format('<span color="%s" font="%s">%s</span>', colors.lightblue, font(11), text),
+      widget = wibox.widget.textbox,
+    },
+    widget = wibox.container.margin,
+    top = dpi(10),
+    bottom = dpi(12),
+    right = dpi(8),
+    left = dpi(8),
+  }
 
+  button:connect_signal("button::press", function()
+    awful.spawn.with_shell(cmd)
+  end)
+
+  return button
+end
+
+local function create_slider(icon, query_cmd, set_fn, min, max)
   local slider = wibox.widget {
     widget = wibox.widget.slider,
     bar_shape = function(cr, width, height)
@@ -18,13 +36,7 @@ local function base_slider(icon, query_cmd, set_fn, min, max)
     bar_height = dpi(24),
     bar_color = colors.darkblue,
     handle_shape = gears.shape.circle,
-    handle_margins = {
-      top = handle_margins,
-      bottom = handle_margins,
-      left = handle_margins,
-      right = handle_margins,
-    },
-    handle_color = colors.bg_dim,
+    handle_color = colors.blue,
     handle_width = dpi(24),
     handle_border_color = colors.darkblue,
     minimum = min,
@@ -39,7 +51,7 @@ local function base_slider(icon, query_cmd, set_fn, min, max)
     {
       {
         widget = wibox.widget.imagebox,
-        image = icon,
+        image = os.getenv "HOME" .. "/.config/awesome/icons/settings/" .. icon .. ".svg",
         resize = true,
         forced_width = dpi(24),
         forced_height = dpi(24),
@@ -47,7 +59,7 @@ local function base_slider(icon, query_cmd, set_fn, min, max)
       {
         slider,
         widget = wibox.container.margin,
-        bottom = dpi(20),
+        bottom = dpi(24),
         right = dpi(5),
         left = dpi(5),
       },
@@ -67,18 +79,14 @@ local function base_slider(icon, query_cmd, set_fn, min, max)
   container.update_slider = function()
     awful.spawn.easy_async(query_cmd, function(stdout)
       local value = tonumber(stdout) or 69
-      value = math.min(value, max)
-      value = math.max(value, min)
-      slider.value = value
+      slider:set_value(value)
     end)
   end
 
   return container
 end
 
-local function create_widget(text, icon, query_cmd, set_fn, min, max)
-  local slider_widget = base_slider(icon, query_cmd, set_fn, min, max)
-
+local function crate_slider_widget(text, slider_widget, button)
   local textbox = wibox.widget {
     {
       markup = string.format('<span color="%s" font="%s">%s</span>', colors.lightblue, font "Bold 11", text),
@@ -91,10 +99,23 @@ local function create_widget(text, icon, query_cmd, set_fn, min, max)
     left = dpi(8),
   }
 
+  local upper_slider
+
+  if button ~= nil then
+    upper_slider = wibox.widget {
+      textbox,
+      nil,
+      button,
+      layout = wibox.layout.align.horizontal,
+    }
+  else
+    upper_slider = textbox
+  end
+
   local slider = wibox.widget {
     {
       {
-        textbox,
+        upper_slider,
         slider_widget,
         layout = wibox.layout.fixed.vertical,
       },
@@ -119,20 +140,19 @@ local function create_widget(text, icon, query_cmd, set_fn, min, max)
 end
 
 return {
-  volume = create_widget(
+  volume = crate_slider_widget(
     "Volume",
-    os.getenv "HOME" .. "/.config/awesome/icons/settings/bulb.svg",
-    pref.cmds.volume.query_slider,
-    pref.cmds.volume.set_slider,
-    0,
-    95
+    create_slider("speaker", pref.cmds.volume.query_slider, pref.cmds.volume.set_slider, 0, 100),
+    create_button("Open Contol", "pavucontrol")
   ),
-  brightness = create_widget(
+  brightness = crate_slider_widget(
     "Brightness",
-    os.getenv "HOME" .. "/.config/awesome/icons/settings/bulb.svg",
-    pref.cmds.brightness.query_slider,
-    pref.cmds.brightness.set_slider,
-    pref.data.brightness.min_slider,
-    pref.data.brightness.max_slider
+    create_slider(
+      "bulb",
+      pref.cmds.brightness.query_slider,
+      pref.cmds.brightness.set_slider,
+      pref.data.brightness.min_slider,
+      pref.data.brightness.max_slider
+    )
   ),
 }

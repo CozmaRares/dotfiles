@@ -21,4 +21,5 @@ naughty.config.defaults.hover_timeout = nil
 naughty.config.presets.critical = {
   bg = colors.red,
   fg = colors.bg_dim,
+  timeout = 0,
 }

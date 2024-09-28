@@ -1,2 +1,3 @@
 .config/cmus/*
 !.config/cmus/night.theme
+.config/scripts/journal

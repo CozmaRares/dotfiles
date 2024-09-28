@@ -72,6 +72,7 @@ M.cmds = {
     bluetooth = "~/.config/scripts/awesome/bluetooth ",
     silent = "~/.config/scripts/awesome/silent ",
   },
+  journalctl = "~/.config/scripts/journal",
 }
 
 M.data = {

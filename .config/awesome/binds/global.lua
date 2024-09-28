@@ -1,10 +1,10 @@
 local awful = require "awful"
 local hotkeys_popup = require "awful.hotkeys_popup"
 local naughty = require "naughty"
-
 local keys = require "keys"
 local pref = require "preferences"
 local data = pref.data
+local dashboard = require "popup.dashboard.main"
 
 local modkey = pref.user.modkey
 
@@ -45,6 +45,14 @@ end
 
 return {
   awesome = {
+    {
+      mods = { modkey },
+      key = keys.letter.b,
+      fn = function()
+        dashboard.visible = false
+      end,
+      description = "show help",
+    },
     {
       mods = { modkey },
       key = keys.letter.s,

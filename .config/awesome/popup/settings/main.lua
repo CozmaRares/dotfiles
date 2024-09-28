@@ -8,49 +8,51 @@ local spacing = beautiful.settings_spacing
 local buttons = require "popup.settings.buttons"
 local sliders = require "popup.settings.sliders"
 
-local settings = awful.popup {
-  widget = {
+local widget = {
+  {
     {
-      {
-        buttons.wifi,
-        buttons.bluetooth,
-        buttons.silent,
-        buttons.nightmode,
-        layout = wibox.layout.grid,
-        forced_num_cols = 2,
-        forced_num_rows = 2,
-        homogeneous = true,
-        expand = true,
-        spacing = spacing,
-      },
-      widget = wibox.container.margin,
-      top = spacing,
-      bottom = spacing,
-      right = spacing,
-      left = spacing,
+      buttons.wifi,
+      buttons.bluetooth,
+      buttons.silent,
+      buttons.nightmode,
+      layout = wibox.layout.grid,
+      forced_num_cols = 2,
+      forced_num_rows = 2,
+      homogeneous = true,
+      expand = true,
+      spacing = spacing,
     },
-    {
-      sliders.volume,
-      widget = wibox.container.margin,
-      top = 0,
-      bottom = spacing,
-      right = spacing,
-      left = spacing,
-    },
-    {
-      sliders.brightness,
-      widget = wibox.container.margin,
-      top = 0,
-      bottom = spacing,
-      right = spacing,
-      left = spacing,
-    },
-    layout = wibox.layout.fixed.vertical,
-    widget = wibox.container.background,
-    bg = colors.bg_dark,
+    widget = wibox.container.margin,
+    top = spacing,
+    bottom = spacing,
+    right = spacing,
+    left = spacing,
   },
+  {
+    sliders.volume,
+    widget = wibox.container.margin,
+    top = 0,
+    bottom = spacing,
+    right = spacing,
+    left = spacing,
+  },
+  {
+    sliders.brightness,
+    widget = wibox.container.margin,
+    top = 0,
+    bottom = spacing,
+    right = spacing,
+    left = spacing,
+  },
+  layout = wibox.layout.fixed.vertical,
+  widget = wibox.container.background,
+  bg = colors.bg_dark,
+}
+
+local settings = awful.popup {
+  widget = widget,
   ontop = true,
-  visible = true,
+  visible = false,
   placement = function(popup)
     awful.placement.top_right(popup, { margins = { top = 30, right = 10 }, parent = awful.screen.focused() })
   end,

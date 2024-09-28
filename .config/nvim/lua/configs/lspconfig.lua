@@ -30,18 +30,6 @@ local servers = {
 
   html = {},
 
-  intelephense = {
-    filetypes = { "php" },
-    root_dir = root_pattern("composer.json", ".git"),
-    settings = {
-      intelephense = {
-        format = {
-          braces = "k&r",
-        },
-      },
-    },
-  },
-
   lua_ls = {},
 
   rust_analyzer = {

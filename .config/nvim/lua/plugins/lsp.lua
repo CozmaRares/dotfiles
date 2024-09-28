@@ -13,27 +13,6 @@ return {
     end,
   },
   {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "clangd",
-        "cpplint",
-        "css-lsp",
-        "emmet-ls",
-        "eslint_d",
-        "html-lsp",
-        "intelephense",
-        "lua-language-server",
-        "markdownlint",
-        "prettierd",
-        "rust-analyzer",
-        "stylua",
-        "tailwindcss-language-server",
-        "typescript-language-server",
-      },
-    },
-  },
-  {
     "mfussenegger/nvim-lint",
     lazy = false,
     config = function()
