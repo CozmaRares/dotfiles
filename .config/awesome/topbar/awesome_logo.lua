@@ -23,7 +23,7 @@ local widget = wibox.widget {
 }
 
 widget:connect_signal("button::release", function()
-  dashboard.visible = not dashboard.visible
+  dashboard.toggle()
 end)
 
 return widget

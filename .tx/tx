@@ -92,31 +92,25 @@ picker() {
 }
 
 sessionizer() {
-    if [[ $# -eq 1 ]]; then
-        where=$1
-    else
-        if [ ! -f "$DIRS" ]; then
-            touch "$DIRS"
-            echo "File $DIRS did not exist, so it has been created. Please add directories to it."
-            exit 1
-        fi
-
-        where=$(cat "$DIRS")
+    if [ ! -f "$DIRS" ]; then
+        touch "$DIRS"
+        echo "File $DIRS did not exist, so it has been created. Please add directories to it."
+        exit 0
     fi
 
     dir=$(cat "$DIRS" | xargs -I{} find {} -maxdepth 1 -type d | fzf $FZF_ARGS $FZF_TMUX)
     selected=$(basename "$dir")
 
+    if [ -z "$selected" ]; then
+        exit 0
+    fi
+
     while is_session "$selected"; do
-        printf "Session with the same name exists.\nEnter another name: "
-        read selected
+        $selected=$RANDOM
     done
 
-
-    if [ -n "$selected" ]; then
-        tmux new-session -d -s "$selected" -c "$dir" 2>/dev/null
-        tmux_attach_or_switch "$selected"
-    fi
+    tmux new-session -d -s "$selected" -c "$dir" 2>/dev/null
+    tmux_attach_or_switch "$selected"
 }
 
 add_session_dir() {

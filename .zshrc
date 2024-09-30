@@ -92,6 +92,10 @@ alias chown='chown --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
 alias ls='eza --group-directories-first'
+alias tree='eza --tree'
+
+alias rat='bat --paging=never --style=plain'
+
 alias cls='clear'
 
 alias pnpmi='pnpm install'

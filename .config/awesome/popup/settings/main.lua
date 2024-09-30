@@ -8,7 +8,7 @@ local spacing = beautiful.settings_spacing
 local buttons = require "popup.settings.buttons"
 local sliders = require "popup.settings.sliders"
 
-local widget = {
+local widget = wibox.widget {
   {
     {
       buttons.wifi,
@@ -45,8 +45,6 @@ local widget = {
     left = spacing,
   },
   layout = wibox.layout.fixed.vertical,
-  widget = wibox.container.background,
-  bg = colors.bg_dark,
 }
 
 local settings = awful.popup {
@@ -60,6 +58,7 @@ local settings = awful.popup {
     gshape.rounded_rect(cr, width, height, beautiful.settings_buttnons_radius + spacing)
   end,
   opacity = 1,
+  bg = colors.bg_dark,
 }
 
 settings:connect_signal("mouse::leave", function()

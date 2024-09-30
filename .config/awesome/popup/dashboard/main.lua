@@ -7,12 +7,10 @@ local widget = {
   {
     text = "test",
     widget = wibox.widget.textbox,
+    forced_width = awful.screen.focused().geometry.width,
+    forced_height = awful.screen.focused().geometry.height - beautiful.wibar_height,
   },
-  widget = wibox.container.background,
-  forced_width = awful.screen.focused().geometry.width,
-  forced_height = awful.screen.focused().geometry.height - beautiful.wibar_height,
   layout = wibox.layout.grid,
-  bg = colors.cyan,
 }
 
 local dashboard = awful.popup {
@@ -25,6 +23,12 @@ local dashboard = awful.popup {
       { margins = { top = beautiful.wibar_height, left = 0 }, parent = awful.screen.focused() }
     )
   end,
+  bg = colors.bg_dark .. "70",
 }
+
+dashboard.toggle = function()
+  -- dashboard:move_next_to(awful.screen.focused())
+  dashboard.visible = not dashboard.visible
+end
 
 return dashboard

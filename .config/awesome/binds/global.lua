@@ -47,14 +47,6 @@ return {
   awesome = {
     {
       mods = { modkey },
-      key = keys.letter.b,
-      fn = function()
-        dashboard.visible = false
-      end,
-      description = "show help",
-    },
-    {
-      mods = { modkey },
       key = keys.letter.s,
       fn = hotkeys_popup.show_help,
       description = "show help",
