@@ -74,7 +74,7 @@ theme.taglist_bg_focus = colors.bg_light
 theme.taglist_fg_empty = colors.mid_normal
 theme.taglist_fg_occupied = colors.fg_normal
 theme.taglist_fg_focus = colors.cyan
-theme.taglist_fg_urgent = colors.yellow
+theme.taglist_fg_urgent = colors.red
 
 theme.taglist_spacing = dpi(7)
 

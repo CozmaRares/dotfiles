@@ -1,9 +1,25 @@
 return {
   {
     "stevearc/conform.nvim",
-    config = function()
-      require "configs.conform"
-    end,
+    opts = {
+      formatters_by_ft = {
+        lua = { "stylua" },
+
+        css = { "prettierd" },
+        html = { "prettierd" },
+        javascript = { "prettierd" },
+        javascriptreact = { "prettierd" },
+        typescript = { "prettierd" },
+        typescriptreact = { "prettierd" },
+        svelte = { "prettierd" },
+
+        markdown = { "markdownlint" },
+
+        java = { "google-java-format" },
+
+        ["_"] = { "trim_whitespace" },
+      },
+    },
   },
   {
     "neovim/nvim-lspconfig",
@@ -18,5 +34,14 @@ return {
     config = function()
       require "configs.lint"
     end,
+  },
+  {
+    "supermaven-inc/supermaven-nvim",
+    event = "InsertEnter",
+    opts = {
+      log_level = "info",
+      disable_inline_completion = true,
+      disable_keymaps = true,
+    },
   },
 }

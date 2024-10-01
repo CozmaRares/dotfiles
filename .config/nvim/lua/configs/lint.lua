@@ -24,4 +24,3 @@ for linter, fts in pairs(linters.by_linter) do
 end
 
 require("lint").linters_by_ft = opts
-
