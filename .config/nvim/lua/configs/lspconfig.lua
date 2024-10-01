@@ -30,7 +30,7 @@ local servers = {
 
   html = {},
 
-  java_language_server = {},
+  jdtls = {},
 
   lua_ls = {},
 

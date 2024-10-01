@@ -116,6 +116,7 @@ alias wifi='~/.config/scripts/rofi-wifi-menu.sh'
 alias bluetooth='~/.config/scripts/rofi-bluetooth'
 alias pwrmgr='~/.config/scripts/rofi-power-manager.sh'
 alias nightmode="~/.config/scripts/awesome/nightmode"
+alias mvn-init="~/.config/scripts/mvn-init"
 
 alias clip="xclip -selection clipboard"
 alias ff="fastfetch | lolcat -r"
