@@ -33,7 +33,7 @@ return function()
   local text = wibox.widget {
     inner_text,
     widget = wibox.container.margin,
-    left = 1,
+    left = 2,
     font = font,
   }
 

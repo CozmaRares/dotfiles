@@ -79,7 +79,7 @@ theme.taglist_fg_urgent = colors.red
 theme.taglist_spacing = dpi(7)
 
 theme.wibar_bg = colors.bg_dark
-theme.wibar_height = dpi(24)
+theme.wibar_height = dpi(25)
 theme.wibar_position = "top"
 
 theme.bg_systray = colors.bg_dark

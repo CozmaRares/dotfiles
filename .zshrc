@@ -141,4 +141,8 @@ gbak() {
   git push origin
 }
 
+pick-zip() {
+   find . -type f |  fzf --color=dark,gutter:-1 --multi --bind "tab:toggle+up" --bind "btab:toggle+down" --cycle | zip -@ $1
+}
+
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
