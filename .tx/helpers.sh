@@ -6,9 +6,9 @@ run_tmux() {
 
 tmux_attach_or_switch() {
     if [ -z "$TMUX" ]; then
-        tmux attach-session -t "$1"
+        run_tmux attach-session -t "$1"
     else
-        tmux switch-client -t "$1"
+        run_tmux switch-client -t "$1"
     fi
 }
 

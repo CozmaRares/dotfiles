@@ -121,8 +121,8 @@ function module.new(cfg)
       }, {
         top = dpi(5),
         bottom = dpi(5),
-        left = dpi(8),
-        right = dpi(8),
+        left = dpi(10),
+        right = dpi(10),
       }),
 
       id = "background_role",

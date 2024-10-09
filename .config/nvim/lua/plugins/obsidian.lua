@@ -13,23 +13,9 @@ return {
     dir = "~/Obsidian Vault",
     log_level = vim.log.levels.INFO,
 
-    daily_notes = {
-      folder = "notes/daily",
-      date_format = "%Y-%m-%d",
-      alias_format = "%B %-d, %Y",
-      default_tags = { "daily" },
-      template = "daily.md",
-    },
-
     completion = {
       nvim_cmp = true,
       min_chars = 1,
-    },
-    templates = {
-      folder = "templates",
-      date_format = "%Y-%m-%d",
-      time_format = "%H:%M",
-      substitutions = {},
     },
     picker = {
       name = "telescope.nvim",
