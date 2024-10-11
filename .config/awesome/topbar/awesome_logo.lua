@@ -1,9 +1,9 @@
 --Standard Modules
-local gears = require "gears"
+local awful = require "awful"
 local wibox = require "wibox"
 local beautiful = require "beautiful"
 local dpi = beautiful.xresources.apply_dpi
-local dashboard = require "popup.dashboard.main"
+local cmds = require("preferences").cmds
 
 local margin = dpi(5)
 
@@ -23,7 +23,7 @@ local widget = wibox.widget {
 }
 
 widget:connect_signal("button::release", function()
-  dashboard.toggle()
+  awful.spawn(cmds.launcher.apps)
 end)
 
 return widget
