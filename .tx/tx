@@ -1,5 +1,10 @@
 #! /bin/sh
 
+# Credits to
+# - tmuxifier: https://github.com/jimeh/tmuxifier
+# - shmux: https://github.com/typecraft-dev/shmux
+# - ThePrimeagen's sessionizer script: https://github.com/ThePrimeagen/.dotfiles/
+
 SESSIONS_ROOT="$TX_ROOT/sessions"
 DIRS="$SESSIONS_ROOT/dirs.txt"
 

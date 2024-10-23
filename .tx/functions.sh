@@ -1,6 +1,4 @@
 #! /bin/sh
-
-
 # Taken from https://github.com/typecraft-dev/shmux
 
 project_root() {
@@ -40,13 +38,18 @@ new_window() {
 }
 
 split_vertical() {
-    tmux split-window -t "$SESSION_NAME:$CURRENT_WINDOW.$CURRENT_PANE" -c "$ROOT" -v -l $1
+    tmux split-window -t "$SESSION_NAME:$CURRENT_WINDOW.$CURRENT_PANE" -c "$ROOT" -v -l "$1"
     set_current_pane $(($CURRENT_PANE + 1))
 }
 
 split_horizontal() {
-    tmux split-window -t "$SESSION_NAME:$CURRENT_WINDOW.$CURRENT_PANE" -c "$ROOT" -h -l $1
+    tmux split-window -t "$SESSION_NAME:$CURRENT_WINDOW.$CURRENT_PANE" -c "$ROOT" -h -l "$1"
     set_current_pane $(($CURRENT_PANE + 1))
+}
+
+select_pane() {
+    tmux select-pane -t "$SESSION_NAME:$CURRENT_WINDOW.$1"
+
 }
 
 rename_window() {
