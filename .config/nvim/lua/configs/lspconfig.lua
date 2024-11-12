@@ -28,6 +28,8 @@ local servers = {
     },
   },
 
+  gopls = {},
+
   html = {},
 
   jdtls = {},

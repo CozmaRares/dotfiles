@@ -111,7 +111,7 @@ sessionizer() {
     fi
 
     while is_session "$selected"; do
-        $selected=$RANDOM
+        selected="$RANDOM"
     done
 
     tmux new-session -d -s "$selected" -c "$dir" 2>/dev/null

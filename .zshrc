@@ -146,3 +146,6 @@ pick-zip() {
 }
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# bun completions
+[ -s "/home/raru/.bun/_bun" ] && source "/home/raru/.bun/_bun"
