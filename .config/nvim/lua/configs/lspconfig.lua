@@ -28,20 +28,21 @@ local servers = {
     },
   },
 
-  gopls = {},
-
   html = {},
-
-  jdtls = {},
 
   lua_ls = {},
 
   rust_analyzer = {
     filetypes = { "rust" },
     root_dir = root_pattern "Cargo.toml",
+    settings = {
+      ["rust-analyzer"] = {
+        diagnostics = {
+          disabled = "unlinked-file",
+        },
+      },
+    },
   },
-
-  svelte = {},
 
   tailwindcss = {
     filetypes = {
