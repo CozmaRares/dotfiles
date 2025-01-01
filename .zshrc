@@ -4,6 +4,7 @@ fi
 
 export EDITOR=nvim
 export ZSH="$HOME/.oh-my-zsh"
+export MANPAGER="nvim +Man!"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
@@ -122,6 +123,7 @@ alias clip="xclip -selection clipboard"
 alias ff="fastfetch | lolcat -r"
 
 alias dcu="docker compose up"
+alias dcub="docker compose up --build"
 alias dcd="docker compose down"
 
 alias open="xdg-open"

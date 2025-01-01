@@ -44,4 +44,8 @@ return {
       end
     end,
   },
+  {
+    "numToStr/Comment.nvim",
+    opts = {},
+  },
 }

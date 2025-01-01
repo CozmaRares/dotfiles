@@ -38,7 +38,7 @@ local servers = {
     settings = {
       ["rust-analyzer"] = {
         diagnostics = {
-          disabled = "unlinked-file",
+          disabled = { "unlinked-file" },
         },
       },
     },

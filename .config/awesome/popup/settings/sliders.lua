@@ -143,7 +143,7 @@ return {
   volume = crate_slider_widget(
     "Volume",
     create_slider("speaker", pref.cmds.volume.query_slider, pref.cmds.volume.set_slider, 0, 100),
-    create_button("Open Contol", "pavucontrol")
+    create_button("Open Control", "pavucontrol")
   ),
   brightness = crate_slider_widget(
     "Brightness",

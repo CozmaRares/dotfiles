@@ -15,8 +15,6 @@ return {
 
         markdown = { "markdownlint" },
 
-        java = { "google-java-format" },
-
         ["_"] = { "trim_whitespace" },
       },
     },
