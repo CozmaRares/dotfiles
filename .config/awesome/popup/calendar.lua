@@ -19,14 +19,14 @@ local calendar_widget = {}
 
 return function()
   local calendar_theme = {
-    bg = colors.bg_dark,
+    bg = colors.bg_normal,
     fg = colors.fg_normal,
     focus_date_bg = colors.blue,
     focus_date_fg = colors.bg_dark,
     weekend_day_bg = colors.bg_normal,
     weekday_fg = colors.lightblue,
     header_fg = colors.blue,
-    border = colors.bg_dark,
+    margin = 9,
   }
 
   local styles = {}
@@ -125,14 +125,23 @@ return function()
     widget = wibox.widget.calendar.month,
   }
 
+  local padded_cal = wibox.widget {
+    cal,
+    widget = wibox.container.margin,
+    top = calendar_theme.margin,
+    -- bottom = calendar_theme.margin,
+    right = calendar_theme.margin,
+    left = calendar_theme.margin,
+  }
+
   local popup = awful.popup {
     ontop = true,
     visible = false,
     shape = rounded_shape(beautiful.calendar_radius),
     offset = { y = 15 },
-    border_width = 9,
-    border_color = calendar_theme.border,
-    widget = cal,
+    widget = padded_cal,
+    opacity = 1,
+    bg = calendar_theme.bg,
   }
 
   local next_month = function()
@@ -140,7 +149,7 @@ return function()
     a.month = a.month + 1
     cal:set_date(nil)
     cal:set_date(a)
-    popup:set_widget(cal)
+    popup:set_widget(padded_cal)
   end
 
   local prev_month = function()
@@ -148,7 +157,7 @@ return function()
     a.month = a.month - 1
     cal:set_date(nil)
     cal:set_date(a)
-    popup:set_widget(cal)
+    popup:set_widget(padded_cal)
   end
 
   popup:buttons(
@@ -169,10 +178,11 @@ return function()
       cal:set_date(nil)
       cal:set_date(os.date "*t")
       popup:set_widget(nil)
-      popup:set_widget(cal)
+      popup:set_widget(padded_cal)
     else
       awful.placement.top_right(popup, { margins = { top = 30, right = 10 }, parent = awful.screen.focused() })
     end
+
     popup.visible = not popup.visible
   end
 

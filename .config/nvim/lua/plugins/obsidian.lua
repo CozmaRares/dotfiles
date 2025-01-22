@@ -52,5 +52,7 @@ return {
     map("n", "<leader>sa", function()
       return require("obsidian").util.smart_action()
     end, { desc = "obsidian smart action" })
+
+    vim.opt.colorcolumn = '80'
   end,
 }

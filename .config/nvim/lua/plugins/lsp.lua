@@ -13,8 +13,6 @@ return {
         typescriptreact = { "prettierd" },
         svelte = { "prettierd" },
 
-        markdown = { "markdownlint" },
-
         ["_"] = { "trim_whitespace" },
       },
     },
