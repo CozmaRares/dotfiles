@@ -13,6 +13,24 @@ FZF_ARGS="--color=dark,gutter:-1 --cycle"
 
 . $TX_ROOT/helpers.sh
 
+usage() {
+    cat <<EOF
+Usage:
+    -h | --help               --  show this help message
+    --ls | ls                 --  show running sessions and layouts
+    --ls-sessions | lss       --  list sessions only
+    --ls-layouts  | lsl       --  list layouts only
+    (--layout | -l) [layout]  --  create a new layout or edit existing one
+    --preview                 --  preview session or layout
+    --picker | -s             --  pick session or layout
+    --sessions | -s           --  open sessionizer
+    --add-sessions | -as      --  add a new directory to sessionizer
+    --rm-sessions | -rs       --  remove a directory from sessionizer
+    [layout]                  --  create new session from the given layout, or a blank session with the given name
+    (no arguments)            --  attach to the last active session
+EOF
+}
+
 list() {
     sessions=$(get_sessions)
 
@@ -33,7 +51,7 @@ list() {
 
 new_session() {
     if is_session $1; then
-        tmux_attach_or_switch $1
+        attach_or_switch $1
         return
     fi
 
@@ -42,15 +60,15 @@ new_session() {
         return
     fi
 
-    tmux new-session -d -s "$1"
-    tmux_attach_or_switch $1
+    run_tmux new-session -d -s "$1"
+    attach_or_switch $1
 }
 
 edit_layout() {
     file="$SESSIONS_ROOT/$1.layout.sh"
 
     if [[ ! -f $file ]] then
-        example_layout $1 $file
+        default_layout $1 $file
     fi
 
     $EDITOR $file
@@ -58,7 +76,7 @@ edit_layout() {
 
 preview() {
     if is_session $1; then
-        tmux capture-pane -ep -t "$1"
+        run_tmux capture-pane -ep -t "$1"
         return
     fi
 
@@ -114,8 +132,8 @@ sessionizer() {
         selected="$RANDOM"
     done
 
-    tmux new-session -d -s "$selected" -c "$dir" 2>/dev/null
-    tmux_attach_or_switch "$selected"
+    run_tmux new-session -d -s "$selected" -c "$dir"
+    attach_or_switch "$selected"
 }
 
 add_session_dir() {
@@ -185,7 +203,7 @@ if [[ $# -gt 0 ]]; then
     esac
 else
     if [ -z "$TMUX" ]; then
-        tmux attach
+        run_tmux attach
     else
         echo "Error: already attached"
         exit 1

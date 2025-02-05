@@ -4,7 +4,7 @@ run_tmux() {
     tmux "$@" 2>/dev/null
 }
 
-tmux_attach_or_switch() {
+attach_or_switch() {
     if [ -z "$TMUX" ]; then
         run_tmux attach-session -t "$1"
     else
@@ -28,25 +28,7 @@ is_layout() {
     ls "$SESSIONS_ROOT" | grep -qx "$1.layout.sh"
 }
 
-usage() {
-    cat <<EOF
-Usage:
-    -h | --help               --  show this help message
-    --ls | ls                 --  show running sessions and layouts
-    --ls-sessions | lss       --  list sessions only
-    --ls-layouts  | lsl       --  list layouts only
-    (--layout | -l) [layout]  --  create a new layout or edit existing one
-    --preview                 --  preview session or layout
-    --picker | -s             --  pick session or layout
-    --sessions | -s           --  open sessionizer
-    --add-sessions | -as      --  add a new directory to sessionizer
-    --rm-sessions | -rs       --  remove a directory from sessionizer
-    [layout]                  --  create new session from the given layout, or a blank session with the given name
-    (no arguments)            --  attach to the last active session
-EOF
-}
-
-example_layout() {
+default_layout() {
     cat > $2 <<EOF
 . $TX_ROOT/functions.sh
 
@@ -71,4 +53,3 @@ select_window "code"
 attach_to_session
 EOF
 }
-
