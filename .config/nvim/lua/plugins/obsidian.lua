@@ -12,7 +12,6 @@ return {
   opts = {
     dir = "~/Obsidian Vault",
     log_level = vim.log.levels.INFO,
-
     completion = {
       nvim_cmp = true,
       min_chars = 1,
@@ -21,11 +20,9 @@ return {
       name = "telescope.nvim",
     },
     mappings = {},
-
     ui = {
       enable = false,
     },
-
     follow_url_func = function(url)
       vim.fn.jobstart { "xdg-open", url }
     end,
@@ -53,6 +50,6 @@ return {
       return require("obsidian").util.smart_action()
     end, { desc = "obsidian smart action" })
 
-    vim.opt.colorcolumn = '80'
+    vim.opt.colorcolumn = "80"
   end,
 }
