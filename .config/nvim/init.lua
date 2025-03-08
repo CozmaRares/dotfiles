@@ -40,4 +40,4 @@ nvim.schedule(function()
   require "mappings"
 end)
 
-require("polish")
+require "polish"
