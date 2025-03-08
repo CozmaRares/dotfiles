@@ -7,6 +7,7 @@ return {
 
         css = { "prettierd" },
         html = { "prettierd" },
+        markdown = { "prettierd" },
         javascript = { "prettierd" },
         javascriptreact = { "prettierd" },
         typescript = { "prettierd" },

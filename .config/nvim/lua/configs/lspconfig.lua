@@ -60,7 +60,7 @@ local servers = {
       "vue",
       "svelte",
     },
-    root_dir = root_pattern("tailwind.config.js", "tailwind.config.cjs", "tailwind.config.mjs", "tailwind.config.ts"),
+    root_dir = root_pattern(".gitignore", ".git"),
     settings = {
       tailwindCSS = {
         classAttributes = { "class", "className", "class:list", "classList", "ngClass" },

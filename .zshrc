@@ -44,7 +44,6 @@ source $HOME/.cargo/env
 
 export TX_ROOT="$HOME/.tx"
 source "$TX_ROOT/_tx"
-source "$HOME/.gud/_gud"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
