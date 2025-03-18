@@ -29,12 +29,11 @@ fi
 
 echo ""
 echo "----------------------------------------------------"
-echo "CLEARING HOME CACHE"
-echo "----------------------------------------------------"
-echo "Clearing ~/.cache/..."
-rm -rf ~/.cache/
-echo ""
-echo "----------------------------------------------------"
 echo "CLEARING SYSTEM LOGS"
 echo "----------------------------------------------------"
 sudo journalctl --vacuum-time=7d
+echo ""
+echo ""
+echo "ATTENTION!!!"
+echo "Remember to clear your home cache!!"
+cd ~/.cache/
