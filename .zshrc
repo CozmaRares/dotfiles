@@ -115,8 +115,6 @@ alias password="pass show -c"
 alias wifi='~/.config/scripts/rofi-wifi-menu.sh'
 alias bluetooth='~/.config/scripts/rofi-bluetooth'
 alias pwrmgr='~/.config/scripts/rofi-power-manager.sh'
-alias nightmode="~/.config/scripts/awesome/nightmode"
-alias mvn-init="~/.config/scripts/mvn-init"
 
 alias clip="xclip -selection clipboard"
 alias ff="fastfetch | lolcat -r"
@@ -126,6 +124,8 @@ alias dcub="docker compose up --build"
 alias dcd="docker compose down"
 
 alias open="xdg-open"
+
+alias showkeys="screenkey -p fixed -g 400x60+1490+990 -s medium"
 
 xev_keyboard() {
   xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
@@ -144,6 +144,18 @@ gbak() {
 
 pick-zip() {
    find . -type f |  fzf --color=dark,gutter:-1 --multi --bind "tab:toggle+up" --bind "btab:toggle+down" --cycle | zip -@ $1
+}
+
+pick-sink() {
+  pamixer --list-sinks |\
+  tail -n +2 |\
+  fzf \
+    --color=dark,gutter:-1 \
+    --cycle \
+    --bind "tab:up" \
+    --bind "btab:down" |\
+  xargs -I {} pactl set-default-sink {}
+
 }
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
