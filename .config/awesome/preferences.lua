@@ -80,7 +80,7 @@ M.data = {
 }
 
 M.user = {
-  modkey = keys.mod.win,
+  modkey = keys.mod.alt,
 }
 
 M.startup = {

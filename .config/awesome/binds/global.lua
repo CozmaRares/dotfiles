@@ -163,7 +163,7 @@ return {
       description = "open terminal",
     },
     {
-      mods = { keys.mod.alt },
+      mods = { keys.mod.win },
       key = keys.special.space,
       fn = function()
         awful.spawn(pref.cmds.launcher.apps)
@@ -195,7 +195,7 @@ return {
       description = "open file explorer",
     },
     {
-      mods = { modkey },
+      mods = { keys.mod.win },
       key = "p",
       fn = function()
         awful.spawn(pref.apps.screen_editor)
@@ -361,7 +361,7 @@ return {
       description = "take screenshot",
     },
     {
-      mods = { modkey, keys.mod.shift },
+      mods = { keys.mod.win, keys.mod.shift },
       key = keys.letter.s,
       fn = function()
         awful.spawn(pref.cmds.screenshot.gui)
