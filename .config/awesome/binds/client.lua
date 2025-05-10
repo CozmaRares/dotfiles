@@ -55,6 +55,14 @@ return {
     },
     {
       mods = { modkey },
+      key = keys.letter.p,
+      fn = function(c)
+        c.sticky = not c.sticky
+      end,
+      description = "toggle sticky",
+    },
+    {
+      mods = { modkey },
       key = keys.letter.n,
       fn = function(c)
         c.minimized = true

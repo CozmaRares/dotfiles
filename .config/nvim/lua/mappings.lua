@@ -32,6 +32,7 @@ set("n", "<leader>q", "<cmd>confirm q<cr>", { desc = "quit" })
 set("n", "<leader>fd", function()
   require("telescope.builtin").diagnostics()
 end, { desc = "telescope find diagnostics" })
+set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
 
 set("n", "<leader>ts", function()
   require("auto-save").toggle()

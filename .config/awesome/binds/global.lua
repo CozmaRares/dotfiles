@@ -75,18 +75,18 @@ return {
   },
 
   tag = {
-    {
-      mods = { modkey },
-      key = keys.arrow.left,
-      fn = awful.tag.viewprev,
-      description = "view previous",
-    },
-    {
-      mods = { modkey },
-      key = keys.arrow.right,
-      fn = awful.tag.viewnext,
-      description = "view next",
-    },
+    -- {
+    --   mods = { modkey },
+    --   key = keys.arrow.left,
+    --   fn = awful.tag.viewprev,
+    --   description = "view previous",
+    -- },
+    -- {
+    --   mods = { modkey },
+    --   key = keys.arrow.right,
+    --   fn = awful.tag.viewnext,
+    --   description = "view next",
+    -- },
     {
       mods = { modkey },
       key = keys.special.esc,
