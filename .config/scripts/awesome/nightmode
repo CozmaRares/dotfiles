@@ -1,6 +1,6 @@
 #!/bin/sh
 
-NIGHT_TEMP="3500"
+NIGHT_TEMP="3000"
 DAY_TEMP="6500"
 CMD="redshift -P -O"
 FILE="/tmp/redshift"

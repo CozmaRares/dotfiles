@@ -171,7 +171,7 @@ return {
       description = "open desktop app",
     },
     {
-      mods = { keys.mod.alt },
+      mods = { modkey },
       key = keys.special.tab,
       fn = function()
         awful.spawn(pref.cmds.launcher.alttab)
@@ -254,7 +254,7 @@ return {
       description = "decrease the number of columns",
     },
     {
-      mods = { modkey },
+      mods = { keys.mod.alt },
       key = keys.special.space,
       fn = function()
         awful.layout.inc(1)
