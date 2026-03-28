@@ -5,6 +5,15 @@ fi
 export EDITOR=nvim
 export ZSH="$HOME/.oh-my-zsh"
 export MANPAGER="nvim +Man!"
+export PATH="$HOME/.local/bin:$PATH"
+export TX_ROOT="$HOME/.tx/data"
+export LD_LIBRARY_PATH="$HOME/.local/lib:$LD_LIBRARY_PATH"
+export CC="$HOME/.local/bin/clang"
+export CXX="$HOME/.local/bin/clang++"
+
+export LLVM_DIR="$HOME/.local/lib/cmake/llvm"
+export Clang_DIR="$HOME/.local/lib/cmake/clang"
+export MLIR_DIR="$HOME/.local/lib/cmake/mlir"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
@@ -42,8 +51,6 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 source $HOME/.cargo/env
 
-export TX_ROOT="$HOME/.tx"
-source "$TX_ROOT/_tx"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

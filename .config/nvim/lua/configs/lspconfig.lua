@@ -7,10 +7,12 @@ local capabilities = nvlsp.capabilities
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local lspconfig = require "lspconfig"
-local root_pattern = lspconfig.util.root_pattern
+-- local root_pattern = lspconfig.util.root_pattern
 
 local servers = {
-  "astro",
+  astro = {
+    filetypes = { "astro" },
+  },
   "clangd",
   "cssls",
   "emmet_ls",
@@ -20,12 +22,18 @@ local servers = {
   "ts_ls",
 }
 
-local callbacks = {
+local defaults = {
   on_attach = on_attach,
   on_init = on_init,
   capabilities = capabilities,
 }
 
-for _, server in ipairs(servers) do
-  lspconfig[server].setup(callbacks)
+for key, value in pairs(servers) do
+  if type(value) == "table" then
+    local config = vim.tbl_deep_extend('force', value, defaults)
+    lspconfig[key].setup(config)
+  else
+    lspconfig[value].setup(defaults)
+  end
+
 end

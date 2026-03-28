@@ -12,6 +12,7 @@ local options = {
     svelte = { "prettierd" },
     typescript = { "prettierd" },
     typescriptreact = { "prettierd" },
+    astro = { "prettierd" },
   },
 
   -- format_on_save = {
