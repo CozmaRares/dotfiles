@@ -1,0 +1,26 @@
+gui:
+  skipAmendWarning: true
+  showListFooter: false
+  showRandomTip: false
+  commitAuthorLongLength: 2
+  spinner:
+    frames:
+      - '⠋'
+      - '⠙'
+      - '⠹'
+      - '⠸'
+      - '⠼'
+      - '⠴'
+      - '⠦'
+      - '⠧'
+      - '⠇'
+      - '⠏'
+git:
+  mainBranches:
+    - master
+    - main
+  fetchAll: false
+  log:
+    order: default
+    showGraph: never
+disableStartupPopups: true

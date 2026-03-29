@@ -11,3 +11,11 @@
 	editor = nvim
 [push]
 	autoSetupRemote = true
+[alias]
+	co = checkout
+	st = status
+	c = commit
+	cam = commit --amend
+	cne = commit --amend --no-edit
+	l = log --oneline
+	cl = clone --depth=1
