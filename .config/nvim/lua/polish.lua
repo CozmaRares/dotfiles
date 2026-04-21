@@ -1,8 +1,6 @@
--- open nvim tree
--- recenter nv dash
 if #vim.v.argv <= 2 then
+  -- open nvim tree
   vim.cmd "NvimTreeFocus"
-  vim.cmd "Nvdash"
 end
 
 vim.api.nvim_create_autocmd("TextYankPost", {
