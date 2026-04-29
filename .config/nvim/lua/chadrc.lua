@@ -6,11 +6,8 @@
 local M = {}
 
 M.base46 = {
-	theme = "tokyonight",
+  theme = "tokyonight",
   transparency = true,
-
-  Comment = { italic = true, fg = "#ffd700" },
-  ["@comment"] = { italic = true, fg = "#ffd700" },
 }
 
 M.ui = {
